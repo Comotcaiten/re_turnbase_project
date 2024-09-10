@@ -1,4 +1,4 @@
 extends Resource
-class_name ItemsSlot
+class_name ItemzSlot
 
 enum Type {AnySlot, Mainhand, Head, Chest, Legs}

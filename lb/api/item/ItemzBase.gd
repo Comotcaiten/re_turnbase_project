@@ -1,5 +1,5 @@
 extends Resource
-class_name ItemsBase
+class_name ItemzBase
 
 @export var id: String
 @export var name: String
@@ -7,3 +7,5 @@ class_name ItemsBase
 
 @export var damage: int
 @export var unbreakable: bool
+
+@export var attributes: Array[ItemzAttribute]
