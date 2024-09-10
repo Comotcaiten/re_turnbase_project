@@ -1,0 +1,2 @@
+extends ItemzBase
+class_name ItemzWeaponBase
