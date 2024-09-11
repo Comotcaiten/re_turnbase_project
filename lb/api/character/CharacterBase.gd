@@ -16,3 +16,5 @@ enum Element {None, Physical, Fire, Water}
 @export var defense: int
 @export var speed: int
 @export var crit: int
+
+@export var skillLearables: Array[SkillLearnable]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1c4pom7oucpd"]
+
+[ext_resource type="Texture2D" uid="uid://cum3p16jja17c" path="res://icon.svg" id="1_4b0ox"]
+[ext_resource type="Script" path="res://lb/api/battle/BattleUnit.gd" id="1_33pcu"]
+
+[node name="character" type="Node2D"]
+script = ExtResource("1_33pcu")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("1_4b0ox")

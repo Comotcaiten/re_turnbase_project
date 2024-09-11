@@ -4,21 +4,24 @@ class_name BattleUnit
 @export var base: CharacterBase
 @export var level: int:
 	get:
-		if level < 0:
-			return 0
-		return level
+		return max(level, 0)
+@export var weapon: ItemzBase
+
 @export var isPlayerUnit: bool
 
-@export var hud: BattleHUD
+# @export var hud: BattleHUD
 
 var character: Character
 
 func SetUp():
 	character = Character.new(base, level)
+	EquipmentItemForHand(weapon)
 	# hud.SetData(character)
 	print("-----<BattelUnit SetUp>-----")
-	character.PrintStat()
+	character.PrintAttribute()
 	character.PrintSkill()
-	character.CheckTypeSkill(character.skills[0])
 	# hud.SetData(character)
 	print("-----</BattelUnit SetUp>-----")
+
+func EquipmentItemForHand(_weapon: ItemzWeaponBase):
+	character.EquipmentItemForHand(_weapon)

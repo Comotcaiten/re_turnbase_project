@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsjccjptx21yf"]
+
+[ext_resource type="Script" path="res://lb/api/battle/BattleSystem.gd" id="1_5r4jo"]
+[ext_resource type="PackedScene" uid="uid://c1c4pom7oucpd" path="res://test/character.tscn" id="2_x2l47"]
+[ext_resource type="Resource" uid="uid://cn0baomiff04h" path="res://Knight.tres" id="3_3iocd"]
+[ext_resource type="Resource" uid="uid://bywqbwevoakdd" path="res://Iron_Sword.tres" id="4_68qwd"]
+
+[node name="Level" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_5r4jo")
+player = NodePath("character")
+
+[node name="character" parent="." instance=ExtResource("2_x2l47")]
+position = Vector2(447, 210)
+base = ExtResource("3_3iocd")
+level = 5
+weapon = ExtResource("4_68qwd")
+isPlayerUnit = true
