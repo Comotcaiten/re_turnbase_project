@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemzArmorBase" load_steps=3 format=3 uid="uid://dq6ir2ljgqqme"]
+
+[ext_resource type="Script" path="res://lb/api/item/ItemzAttribute.gd" id="1_4jcix"]
+[ext_resource type="Script" path="res://lb/api/item/ItemzArmorBase.gd" id="2_427ir"]
+
+[resource]
+script = ExtResource("2_427ir")
+type = 0
+defense = 20
+id = ""
+name = "Head_Iron"
+damage = 0
+unbreakable = false
+attributes = Array[ExtResource("1_4jcix")]([])

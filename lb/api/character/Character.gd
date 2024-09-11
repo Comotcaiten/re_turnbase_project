@@ -8,7 +8,10 @@ var nameCharacter: String:
 	get:
 		return base.name
 
-var handSlot: ItemzBase
+var mainhandSlot: ItemzBase
+var headSlot: ItemzBase
+var chestSlot: ItemzBase
+var legsSlot: ItemzBase
 
 var attribute_base: Dictionary = {
 	CharacterBase.Attribute.Hp: 0,
@@ -72,25 +75,53 @@ func SetUpSkill():
 		if skill.level <= level:
 			skills.append(Skill.new(skill.base))
 
-func EquipmentItemForHand(_item: ItemzBase):
-	print("Trang bi ", _item, ", ", _item.name)
-	self.handSlot = _item
+
+func EquipItem(_item: ItemzBase, slotType: ItemzSlot.Type):
+	# enum Type {AnySlot, Mainhand, Head, Chest, Legs, Inventory}
+	match slotType:
+		ItemzSlot.Type.AnySlot:
+			print("AnySlot")
+		ItemzSlot.Type.Mainhand:
+			self.mainhandSlot = _item
+		ItemzSlot.Type.Head:
+			self.headSlot = _item
+		ItemzSlot.Type.Chest:
+			self.chestSlot = _item
+		ItemzSlot.Type.Legs:
+			self.legsSlot = _item
+		ItemzSlot.Type.Inventory:
+			print("Inventory")
+		_:
+			print("<!> Không thể trang bị/bỏ trong kho - Item is null/can result")
+
 
 func GetAttribute(attribute: CharacterBase.Attribute) -> int:
 	var amountBase = attribute_base[attribute]
 	var amountModified = attribute_modified[attribute]
 	
 	# Item
-	if handSlot != null:
+	# <Mainhand>
+	if mainhandSlot != null:
 		# <Extra>
 		if attribute == CharacterBase.Attribute.Attack:
-			amountBase += handSlot.damage
-			print("Attack Bonus ", handSlot.damage)
+			amountBase += mainhandSlot.damage
+			print("Attack Bonus ", mainhandSlot.damage)
 		# </Extra>
 		# <Attribute>
-		amountBase += handSlot.GetValueAttribute(attribute)
-		print(CharacterBase.Attribute.keys()[attribute], " Bonus ", handSlot.GetValueAttribute(attribute))
+		amountBase += mainhandSlot.GetValueAttribute(attribute)
+		print(CharacterBase.Attribute.keys()[attribute], " Bonus ", mainhandSlot.GetValueAttribute(attribute))
 		#	</Attribute>
+	# </MainHand>
+	# <Head>
+	if headSlot != null:
+		if (headSlot is ItemzArmorBase) and (attribute == CharacterBase.Attribute.Defense):
+			amountBase += headSlot.defense
+			print("Defense Bonus ", headSlot.defense)
+		# <Attribute>
+		amountBase += headSlot.GetValueAttribute(attribute)
+		print(CharacterBase.Attribute.keys()[attribute], " Bonus ", headSlot.GetValueAttribute(attribute))
+		#	</Attribute>
+	# </Head>
 	# /Item
 	
 	var amountCal = amountBase + ((amountModified * amountBase) / 100.0)
@@ -137,6 +168,23 @@ func PrintAttribute():
 	print("Attack: ", attack)
 	print("Defense: ", defense)
 	print("-----</Print_Attribute>-----")
+
+func item_info(item: ItemzBase) -> String:
+	if item:
+		return "{a} => {b}".format({"a": item, "b": item.name})
+	return "None"
+
+func PrintItemEquiped():
+	print("-----<Trang bi>-----")
+    
+	# Sử dụng hàm item_info để tạo chuỗi thông tin trang bị
+	print("Mainhand: ", item_info(mainhandSlot))
+	print("Head: ", item_info(headSlot))
+	print("Chest: ", item_info(chestSlot))
+	print("Legs: ", item_info(legsSlot))
+    
+	print("-----</Trang bi>-----")
+
 
 func RandomSkill() -> Skill:
 	return skills[randi() % skills.size()]
