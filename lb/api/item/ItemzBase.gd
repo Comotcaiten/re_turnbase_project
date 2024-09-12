@@ -9,7 +9,9 @@ class_name ItemzBase
 @export var name: String
 
 @export_group("Extras")
-@export var damage: int
+@export var damage: int:
+  get:
+    return max(damage, 0)
 @export var unbreakable: bool
 
 @export_group("Attributes")

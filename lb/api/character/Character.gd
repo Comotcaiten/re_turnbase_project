@@ -88,7 +88,14 @@ func ResetEquipment():
 func GetAttribute(attribute: CharacterBase.Attribute) -> int:
 	var amountBase = attribute_base[attribute]
 	var amountModified = attribute_modified[attribute]
-	
+
+	# <Equipments>
+	if equipments.size() > 0:
+		for item in equipments:
+			amountBase += item.GetValueAttribute(attribute)
+			print(CharacterBase.Attribute.keys()[attribute], " Bonus ", item.GetValueAttribute(attribute))
+	# </Equipments>	
+
 	var amountCal = amountBase + ((amountModified * amountBase) / 100.0)
 	return max(int(amountCal), 0)
 
@@ -104,7 +111,8 @@ func TakeDamage(_skill: Skill, _attacker: Character) -> bool:
 	var modifiers = randf_range(0.85, 1.0) * typeEff * critical
 	var a = ((2.0 * _attacker.level + 10.0) / 250.0)
 	var damage = int(a * modifiers)
-
+	for item in equipments:
+		damage += item.damage
 	hp -= damage
 	
 	print(nameCharacter, " took ", damage, " DMG")
