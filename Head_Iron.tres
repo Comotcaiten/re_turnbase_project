@@ -12,3 +12,4 @@ name = "Head_Iron"
 damage = 0
 unbreakable = false
 attributes = Array[ExtResource("1_4jcix")]([])
+maxAmount = 0

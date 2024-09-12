@@ -18,3 +18,4 @@ name = "Iron_Sword"
 damage = 10
 unbreakable = false
 attributes = Array[ExtResource("1_tddfs")]([SubResource("Resource_b7mlo")])
+maxAmount = 0

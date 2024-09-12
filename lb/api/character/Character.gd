@@ -8,10 +8,7 @@ var nameCharacter: String:
 	get:
 		return base.name
 
-var mainhandSlot: ItemzBase
-var headSlot: ItemzBase
-var chestSlot: ItemzBase
-var legsSlot: ItemzBase
+var equipments: Array[ItemzBase] = []
 
 var attribute_base: Dictionary = {
 	CharacterBase.Attribute.Hp: 0,
@@ -75,61 +72,29 @@ func SetUpSkill():
 		if skill.level <= level:
 			skills.append(Skill.new(skill.base))
 
+func EquipItem(_item: ItemzBase) -> bool:
+	if _item == null:
+		print("<!> Không thể trang bị/bỏ trong kho - Item is null/can result")
+		return false
+	if equipments.size() >= 6:
+		print("<!> Kho đã đầy")
+		return false
+	equipments.append(_item)
+	return true
 
-func EquipItem(_item: ItemzBase, slotType: ItemzSlot.Type):
-	# enum Type {AnySlot, Mainhand, Head, Chest, Legs, Inventory}
-	match slotType:
-		ItemzSlot.Type.AnySlot:
-			print("AnySlot")
-		ItemzSlot.Type.Mainhand:
-			self.mainhandSlot = _item
-		ItemzSlot.Type.Head:
-			self.headSlot = _item
-		ItemzSlot.Type.Chest:
-			self.chestSlot = _item
-		ItemzSlot.Type.Legs:
-			self.legsSlot = _item
-		ItemzSlot.Type.Inventory:
-			print("Inventory")
-		_:
-			print("<!> Không thể trang bị/bỏ trong kho - Item is null/can result")
-
+func ResetEquipment():
+	equipments = []
 
 func GetAttribute(attribute: CharacterBase.Attribute) -> int:
 	var amountBase = attribute_base[attribute]
 	var amountModified = attribute_modified[attribute]
 	
-	# Item
-	# <Mainhand>
-	if mainhandSlot != null:
-		# <Extra>
-		if attribute == CharacterBase.Attribute.Attack:
-			amountBase += mainhandSlot.damage
-			print("Attack Bonus ", mainhandSlot.damage)
-		# </Extra>
-		# <Attribute>
-		amountBase += mainhandSlot.GetValueAttribute(attribute)
-		print(CharacterBase.Attribute.keys()[attribute], " Bonus ", mainhandSlot.GetValueAttribute(attribute))
-		#	</Attribute>
-	# </MainHand>
-	# <Head>
-	if headSlot != null:
-		if (headSlot is ItemzArmorBase) and (attribute == CharacterBase.Attribute.Defense):
-			amountBase += headSlot.defense
-			print("Defense Bonus ", headSlot.defense)
-		# <Attribute>
-		amountBase += headSlot.GetValueAttribute(attribute)
-		print(CharacterBase.Attribute.keys()[attribute], " Bonus ", headSlot.GetValueAttribute(attribute))
-		#	</Attribute>
-	# </Head>
-	# /Item
-	
 	var amountCal = amountBase + ((amountModified * amountBase) / 100.0)
 	return max(int(amountCal), 0)
 
 func _init(_base: CharacterBase, _level: int):
-	self.base = _base
-	self.level = _level
+	base = _base
+	level = _level
 	SetUpAttribute()
 	SetUpSkill()
 
@@ -140,7 +105,7 @@ func TakeDamage(_skill: Skill, _attacker: Character) -> bool:
 	var a = ((2.0 * _attacker.level + 10.0) / 250.0)
 	var damage = int(a * modifiers)
 
-	self.hp -= damage
+	hp -= damage
 	
 	print(nameCharacter, " took ", damage, " DMG")
 	print(nameCharacter, " has ", hp, " HP")
@@ -176,15 +141,13 @@ func item_info(item: ItemzBase) -> String:
 
 func PrintItemEquiped():
 	print("-----<Trang bi>-----")
-    
-	# Sử dụng hàm item_info để tạo chuỗi thông tin trang bị
-	print("Mainhand: ", item_info(mainhandSlot))
-	print("Head: ", item_info(headSlot))
-	print("Chest: ", item_info(chestSlot))
-	print("Legs: ", item_info(legsSlot))
-    
+	print("[Equipments]: ", equipments)
+	for i in range(0, equipments.size()):
+		print("<", i + 1, "> ", item_info(equipments[i]))
 	print("-----</Trang bi>-----")
 
+func AddItem(_item: ItemzBase):
+	EquipItem(_item)
 
 func RandomSkill() -> Skill:
 	return skills[randi() % skills.size()]

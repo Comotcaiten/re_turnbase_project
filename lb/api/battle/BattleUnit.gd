@@ -5,20 +5,27 @@ class_name BattleUnit
 @export var level: int:
 	get:
 		return max(level, 0)
-@export var weapon: ItemzBase
-@export var head: ItemzBase
-
 @export var isPlayerUnit: bool
-
 # @export var hud: BattleHUD
+
+@export_group("Equipment")
+@export var slot1: ItemzBase
+@export var slot2: ItemzBase
+@export var slot3: ItemzBase
+@export var slot4: ItemzBase
+@export var slot5: ItemzBase
+@export var slot6: ItemzBase
+
+var equipments: Array[ItemzBase]:
+	get:
+		return [slot1, slot2, slot3, slot4, slot5, slot6]
 
 var character: Character
 
 func SetUp():
 	character = Character.new(base, level)
-	# EquipmentHand(weapon)
-	EquipmentItem(weapon, ItemzSlot.Type.Mainhand)
-	EquipmentItem(head, ItemzSlot.Type.Head)
+	EquipmentItem()
+	character.AddItem(slot1)
 	# hud.SetData(character)
 	print("-----<BattelUnit SetUp>-----")
 	character.PrintAttribute()
@@ -27,8 +34,6 @@ func SetUp():
 	# hud.SetData(character)
 	print("-----</BattelUnit SetUp>-----")
 
-func EquipmentHand(_weapon: ItemzWeaponBase):
-	character.EquipmentItemForHand(_weapon)
-
-func EquipmentItem(_item: ItemzBase, _slot: ItemzSlot.Type):
-	character.EquipItem(_item, _slot)
+func EquipmentItem():
+	for _item in equipments:
+		character.EquipItem(_item)
