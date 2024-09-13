@@ -8,6 +8,7 @@ var nameCharacter: String:
 	get:
 		return base.name
 
+var mainHand: ItemzBase
 var equipments: Array[ItemzBase] = []
 
 var attribute_base: Dictionary = {
@@ -83,7 +84,7 @@ func EquipItem(_item: ItemzBase) -> bool:
 	return true
 
 func ResetEquipment():
-	equipments = []
+	equipments.clear()
 
 func GetAttribute(attribute: CharacterBase.Attribute) -> int:
 	var amountBase = attribute_base[attribute]
@@ -94,7 +95,7 @@ func GetAttribute(attribute: CharacterBase.Attribute) -> int:
 		for item in equipments:
 			amountBase += item.GetValueAttribute(attribute)
 			print(CharacterBase.Attribute.keys()[attribute], " Bonus ", item.GetValueAttribute(attribute))
-	# </Equipments>	
+	# </Equipments>
 
 	var amountCal = amountBase + ((amountModified * amountBase) / 100.0)
 	return max(int(amountCal), 0)
@@ -106,19 +107,28 @@ func _init(_base: CharacterBase, _level: int):
 	SetUpSkill()
 
 func TakeDamage(_skill: Skill, _attacker: Character) -> bool:
+	hp -= CalculateDamageTaken(_skill, _attacker)
+	return hp == 0
+
+func CalculateDamageTaken(_skill: Skill, _attacker: Character) -> int:
+	if _attacker == null:
+		return 0
+	
 	var critical = 1.0
 	var typeEff = 1.0
-	var modifiers = randf_range(0.85, 1.0) * typeEff * critical
-	var a = ((2.0 * _attacker.level + 10.0) / 250.0)
-	var damage = int(a * modifiers)
-	for item in equipments:
-		damage += item.damage
-	hp -= damage
+
+	if _skill != null:
+		typeEff = ElementEffectiveness.GetEffectiveness(_attacker.base.element, base.element)
 	
+	var damage = int(((2.0 * _attacker.level + 10.0) / 250.0) * randf_range(0.85, 1.0) * typeEff * critical)
+
+	if _attacker.mainHand != null:
+		damage += int((damage * _attacker.mainHand * 1.0) / 100.0)
+
 	print(nameCharacter, " took ", damage, " DMG")
-	print(nameCharacter, " has ", hp, " HP")
-	
-	return hp == 0
+	print(nameCharacter, " has ", hp, "/", max_hp, " HP")
+
+	return damage
 
 func ResetAllAttributeModified():
 	for attr in attribute_modified.keys():
