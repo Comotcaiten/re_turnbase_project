@@ -94,7 +94,7 @@ func GetAttribute(attribute: CharacterBase.Attribute) -> int:
 	if equipments.size() > 0:
 		for item in equipments:
 			amountBase += item.GetValueAttribute(attribute)
-			print(CharacterBase.Attribute.keys()[attribute], " Bonus ", item.GetValueAttribute(attribute))
+			# print(CharacterBase.Attribute.keys()[attribute], " Bonus ", item.GetValueAttribute(attribute))
 	# </Equipments>
 
 	var amountCal = amountBase + ((amountModified * amountBase) / 100.0)
@@ -113,22 +113,23 @@ func TakeDamage(_skill: Skill, _attacker: Character) -> bool:
 func CalculateDamageTaken(_skill: Skill, _attacker: Character) -> int:
 	if _attacker == null:
 		return 0
-	
 	var critical = 1.0
 	var typeEff = 1.0
 
 	if _skill != null:
 		typeEff = ElementEffectiveness.GetEffectiveness(_attacker.base.element, base.element)
 	
-	var damage = int(((2.0 * _attacker.level + 10.0) / 250.0) * randf_range(0.85, 1.0) * typeEff * critical)
-
+	var attacker_damage = _attacker.attack
 	if _attacker.mainHand != null:
-		damage += int((damage * _attacker.mainHand * 1.0) / 100.0)
+		attacker_damage += _attacker.mainHand.damage
+	
+	var a = ((2.0 * _attacker.level + 10.0) / 250.0)
+	var damage = (((a * randf_range(0.85, 1.0) * typeEff * critical * (attacker_damage * 1.0)) / defense * 1.0)) + 2.0
 
 	print(nameCharacter, " took ", damage, " DMG")
 	print(nameCharacter, " has ", hp, "/", max_hp, " HP")
 
-	return damage
+	return int(damage)
 
 func ResetAllAttributeModified():
 	for attr in attribute_modified.keys():

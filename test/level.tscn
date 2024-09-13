@@ -6,9 +6,10 @@
 [ext_resource type="Resource" uid="uid://bywqbwevoakdd" path="res://Iron_Sword.tres" id="4_68qwd"]
 [ext_resource type="Resource" uid="uid://dq6ir2ljgqqme" path="res://Head_Iron.tres" id="5_tv6v3"]
 
-[node name="Level" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="Level" type="Node2D" node_paths=PackedStringArray("player", "attackButton")]
 script = ExtResource("1_5r4jo")
 player = NodePath("character")
+attackButton = NodePath("Control/Button")
 
 [node name="character" parent="." instance=ExtResource("2_x2l47")]
 position = Vector2(400, 200)
@@ -20,3 +21,25 @@ slot3 = ExtResource("4_68qwd")
 slot4 = ExtResource("4_68qwd")
 slot5 = ExtResource("4_68qwd")
 slot6 = ExtResource("5_tv6v3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1153.0
+offset_bottom = 647.0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.849957
+anchor_top = 0.738794
+anchor_right = 0.979957
+anchor_bottom = 0.970283
+offset_right = 0.109985
+offset_bottom = 0.22699
+grow_horizontal = 2
+grow_vertical = 2
+text = "Attack"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Control/Button" to="." method="_on_button_attack_pressed"]

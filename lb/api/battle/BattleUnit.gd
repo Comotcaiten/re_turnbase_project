@@ -28,12 +28,17 @@ func SetUp():
 	character.AddItem(slot1)
 	# hud.SetData(character)
 	print("-----<BattelUnit SetUp>-----")
-	character.PrintAttribute()
-	character.PrintSkill()
-	character.PrintItemEquiped()
+	# PrintCharacter()
 	# hud.SetData(character)
 	print("-----</BattelUnit SetUp>-----")
 
 func EquipmentItem():
 	for _item in equipments:
 		character.EquipItem(_item)
+
+func PrintCharacter():
+	if character == null:
+		print("<?> Chưa có dữ liệu")
+	character.PrintAttribute()
+	character.PrintSkill()
+	character.PrintItemEquiped()
