@@ -2,7 +2,8 @@ extends Node
 class_name BattleHUD
 
 @export var hpBar: HPBar
-@export var lable: Label
+@export var hpLable: Label
+@export var nameLable: Label
 
 var character: Character
 
@@ -12,12 +13,18 @@ var hpNormalized:
 
 func SetData(_character: Character):
 	self.character = _character
-	lable.text = character.nameCharacter
-	print(character.nameCharacter, " (|) ")
+	if nameLable != null:
+		nameLable.text = character.nameCharacter
+	else:
+		nameLable.text = "Null"
+	if hpLable != null:
+		hpLable.text = str(character.hp) + "/" + str(character.max_hp)
 	hpBar.SetHP(hpNormalized)
 
 func UpdateHP():
 	hpBar.SetHP(hpNormalized)
+	if hpLable != null:
+		hpLable.text = str(character.hp) + "/" + str(character.max_hp)
 
 # func UpdateHPSmoot():
 # 	hpBar.SetHPSmooth(hpNormalized)

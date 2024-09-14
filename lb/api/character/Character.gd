@@ -29,27 +29,30 @@ var attribute_modified: Dictionary = {
 
 var max_hp: int:
 	get:
-		return GetAttribute(CharacterBase.Attribute.Hp)
-var hp: int
+		return max(GetAttribute(CharacterBase.Attribute.Hp), 0)
+var hp: int:
+	get:
+		return max(hp, 0)
 
 var max_mp: int:
 	get:
-		return GetAttribute(CharacterBase.Attribute.Mp)
-var mp: int
+		return max(GetAttribute(CharacterBase.Attribute.Mp), 0)
+var mp: int:
+	get:
+		return max(mp, 0)
 
 var attack: int:
 	get:
-		return GetAttribute(CharacterBase.Attribute.Attack)
+		return max(GetAttribute(CharacterBase.Attribute.Attack), 0)
 var defense: int:
 	get:
-		return GetAttribute(CharacterBase.Attribute.Defense)
+		return max(GetAttribute(CharacterBase.Attribute.Defense), 0	)
 var speed: int:
 	get:
-		return GetAttribute(CharacterBase.Attribute.Speed)
+		return max(GetAttribute(CharacterBase.Attribute.Speed), 0)
 var crit: int:
 	get:
-		return GetAttribute(CharacterBase.Attribute.Crit)
-
+		return max(GetAttribute(CharacterBase.Attribute.Crit), 0)
 var skills: Array[Skill]
 
 func SetUpAttribute():
@@ -78,13 +81,26 @@ func EquipItem(_item: ItemzBase) -> bool:
 		print("<!> Không thể trang bị/bỏ trong kho - Item is null/can result")
 		return false
 	if equipments.size() >= 6:
-		print("<!> Kho đã đầy")
+		print("<!> Kho trang bị đã đầy")
 		return false
 	equipments.append(_item)
 	return true
 
+func EquipMainHand(_item: ItemzBase):
+	if _item == null:
+		print("<!> Không thể trang bị lên mainhand - Item is null/can result")
+		return false
+	if mainHand != null:
+		print("<!> Mainhand đã được trang bị")
+		return false
+	mainHand = _item
+	return true
+
 func ResetEquipment():
 	equipments.clear()
+
+func ResetMainHand():
+	mainHand = null
 
 func GetAttribute(attribute: CharacterBase.Attribute) -> int:
 	var amountBase = attribute_base[attribute]

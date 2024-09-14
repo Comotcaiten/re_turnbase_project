@@ -17,5 +17,6 @@ func SetDataBattleUnit():
 
 func _on_button_attack_pressed() -> void:
   player.character.TakeDamage(null, player.character)
+  player.hud.UpdateHP()
   # player.PrintCharacter()
   pass # Replace with function body.

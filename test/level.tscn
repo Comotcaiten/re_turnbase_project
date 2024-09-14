@@ -15,12 +15,12 @@ attackButton = NodePath("Control/Button")
 position = Vector2(400, 200)
 base = ExtResource("3_3iocd")
 level = 5
+mainHand = ExtResource("4_68qwd")
 slot1 = ExtResource("5_tv6v3")
 slot2 = ExtResource("5_tv6v3")
 slot3 = ExtResource("4_68qwd")
 slot4 = ExtResource("4_68qwd")
 slot5 = ExtResource("4_68qwd")
-slot6 = ExtResource("5_tv6v3")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
