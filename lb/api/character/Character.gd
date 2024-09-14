@@ -139,9 +139,8 @@ func CalculateDamageTaken(_skill: Skill, _attacker: Character) -> int:
 	if _attacker.mainHand != null:
 		attacker_damage += _attacker.mainHand.damage
 	
-	var a = ((2.0 * _attacker.level + 10.0) / 250.0)
-	var damage = (((a * randf_range(0.85, 1.0) * typeEff * critical * (attacker_damage * 1.0)) / defense * 1.0)) + 2.0
-
+	var a = (2.0 * attacker_damage + 10.0) * typeEff * critical * randf_range(0.85, 1.0)
+	var damage = ((a / (defense * 1.0))) + 2.0
 	print(nameCharacter, " took ", damage, " DMG")
 	print(nameCharacter, " has ", hp, "/", max_hp, " HP")
 
