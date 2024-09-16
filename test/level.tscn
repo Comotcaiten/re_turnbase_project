@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsjccjptx21yf"]
+[gd_scene load_steps=5 format=3 uid="uid://bsjccjptx21yf"]
 
 [ext_resource type="Script" path="res://lb/api/battle/BattleSystem.gd" id="1_5r4jo"]
 [ext_resource type="PackedScene" uid="uid://c1c4pom7oucpd" path="res://test/character.tscn" id="2_x2l47"]
 [ext_resource type="Resource" uid="uid://cn0baomiff04h" path="res://test/Knight.tres" id="3_3iocd"]
+[ext_resource type="Resource" uid="uid://dvkqao6fr7kqk" path="res://test/Steve.tres" id="4_loj1f"]
 
 [node name="Level" type="Node2D" node_paths=PackedStringArray("player", "enemy", "attackButton")]
 script = ExtResource("1_5r4jo")
@@ -11,13 +12,13 @@ enemy = NodePath("character2")
 attackButton = NodePath("Control/Button")
 
 [node name="character" parent="." instance=ExtResource("2_x2l47")]
-position = Vector2(200, 200)
+position = Vector2(782, 200)
 base = ExtResource("3_3iocd")
 level = 5
 
 [node name="character2" parent="." instance=ExtResource("2_x2l47")]
-position = Vector2(200, 200)
-base = ExtResource("3_3iocd")
+position = Vector2(367, 200)
+base = ExtResource("4_loj1f")
 level = 5
 
 [node name="Control" type="Control" parent="."]
