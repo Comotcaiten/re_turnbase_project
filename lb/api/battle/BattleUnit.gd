@@ -20,6 +20,10 @@ class_name BattleUnit
 
 var character: Character
 
+func SetData(_base: CharacterBase, _Level: int):
+	base = _base
+	level = _Level
+
 func SetUp():
 	character = Character.new(base, level)
 	EquipmentItem()

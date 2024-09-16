@@ -46,7 +46,7 @@ var attack: int:
 		return max(GetAttribute(CharacterBase.Attribute.Attack), 0)
 var defense: int:
 	get:
-		return max(GetAttribute(CharacterBase.Attribute.Defense), 0	)
+		return max(GetAttribute(CharacterBase.Attribute.Defense), 0)
 var speed: int:
 	get:
 		return max(GetAttribute(CharacterBase.Attribute.Speed), 0)
