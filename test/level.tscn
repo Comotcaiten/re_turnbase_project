@@ -1,45 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsjccjptx21yf"]
+[gd_scene load_steps=4 format=3 uid="uid://c7gveqxs684mw"]
 
-[ext_resource type="Script" path="res://lb/api/battle/BattleSystem.gd" id="1_5r4jo"]
-[ext_resource type="PackedScene" uid="uid://c1c4pom7oucpd" path="res://test/character.tscn" id="2_x2l47"]
-[ext_resource type="Resource" uid="uid://cn0baomiff04h" path="res://test/Knight.tres" id="3_3iocd"]
-[ext_resource type="Resource" uid="uid://dvkqao6fr7kqk" path="res://test/Steve.tres" id="4_loj1f"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[node name="Level" type="Node2D" node_paths=PackedStringArray("player", "enemy", "attackButton")]
-script = ExtResource("1_5r4jo")
-player = NodePath("character")
-enemy = NodePath("character2")
-attackButton = NodePath("Control/Button")
+[sub_resource type="Sky" id="Sky_dm12i"]
+sky_material = SubResource("ProceduralSkyMaterial_x6cia")
 
-[node name="character" parent="." instance=ExtResource("2_x2l47")]
-position = Vector2(782, 200)
-base = ExtResource("3_3iocd")
-level = 5
+[sub_resource type="Environment" id="Environment_3pgoa"]
+background_mode = 2
+sky = SubResource("Sky_dm12i")
+tonemap_mode = 2
 
-[node name="character2" parent="." instance=ExtResource("2_x2l47")]
-position = Vector2(367, 200)
-base = ExtResource("4_loj1f")
-level = 5
+[node name="level" type="Node3D"]
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1153.0
-offset_bottom = 647.0
-metadata/_edit_lock_ = true
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
 
-[node name="Button" type="Button" parent="Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.849957
-anchor_top = 0.738794
-anchor_right = 0.979957
-anchor_bottom = 0.970283
-offset_right = 0.109985
-offset_bottom = 0.22699
-grow_horizontal = 2
-grow_vertical = 2
-text = "Attack"
-metadata/_edit_use_anchors_ = true
-
-[connection signal="pressed" from="Control/Button" to="." method="_on_button_attack_pressed"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3pgoa")
