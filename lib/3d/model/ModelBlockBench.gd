@@ -1,7 +1,7 @@
 extends Node3D
 class_name ModelBlockBench
 
-@export var model: Resource # GLTF model resource
+@export var model: PackedScene # GLTF model resource
 
 @onready var blockbench_export = $point/blockbench_export
 @onready var point = $point
@@ -29,8 +29,8 @@ func load_model(_model: Resource):
         instance.rotation = blockbench_export.rotation
 
         # Replace
-        point.add_child(instance)
         point.remove_child(blockbench_export)
+        point.add_child(instance)
 
         # Save point
         child_model_point = instance

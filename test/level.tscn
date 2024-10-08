@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7gveqxs684mw"]
+[gd_scene load_steps=5 format=3 uid="uid://c7gveqxs684mw"]
 
 [ext_resource type="PackedScene" uid="uid://bamvml6mu8nuq" path="res://test/model.tscn" id="1_axmex"]
-[ext_resource type="PackedScene" uid="uid://b4wjyaisspt6w" path="res://test/model/character_samurai.gltf" id="2_0648f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -25,7 +24,6 @@ shadow_enabled = true
 environment = SubResource("Environment_3pgoa")
 
 [node name="model" parent="." instance=ExtResource("1_axmex")]
-model = ExtResource("2_0648f")
 
 [node name="Node3D" type="Node3D" parent="model"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
