@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck7vfx5ypo5of"]
+
+[ext_resource type="Script" path="res://lib/api/battle/BattleUnit.gd" id="1_hpvmo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hib47"]
+
+[node name="Character" type="Node3D" node_paths=PackedStringArray("model3D")]
+script = ExtResource("1_hpvmo")
+model3D = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_hib47")

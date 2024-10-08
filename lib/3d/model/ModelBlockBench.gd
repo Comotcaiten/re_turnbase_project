@@ -1,7 +1,6 @@
 extends Node3D
 class_name ModelBlockBench
 
-@export var model: PackedScene # GLTF model resource
 
 @onready var blockbench_export = $point/blockbench_export
 @onready var point = $point
@@ -10,11 +9,11 @@ var data
 
 var animation: AnimationPlayer
 
-func set_up():
-    if model == null or blockbench_export == null:
+func set_up(_model: PackedScene):
+    if _model == null or blockbench_export == null:
         print("[>] Model blockbench is Null")
     else:
-        load_model(model)
+        load_model(_model)
 
 func load_model(_model: Resource):
     # Init
@@ -23,7 +22,7 @@ func load_model(_model: Resource):
     print("[>] Instance: ", instance)
     print("[>] Exist: ", blockbench_export)
 
-    if instance or blockbench_export:
+    if instance and blockbench_export:
         print("[>] Load: Start")
 
         # Ready
@@ -42,7 +41,7 @@ func load_model(_model: Resource):
         print("[>] Animation: ", animation)
         print("[>] Model loaded successfully.")
     else:
-        print("[>] Failed to load the model. (Please check model and blockbench_export in point)")
+        print("[!] Failed to load the model. (Please check model and blockbench_export in point)")
 
 func run_animation(_name: String):
     if _name == null or _name.is_empty():
@@ -53,4 +52,4 @@ func run_animation(_name: String):
     if exist:
         animation.play(_name)
     else:
-        print("[>] Animation ", _name, " can not be found.")
+        print("[!] Animation ", _name, " can not be found.")

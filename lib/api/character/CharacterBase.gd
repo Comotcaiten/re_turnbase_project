@@ -8,6 +8,7 @@ enum Attribute {Hp, Mp, Attack, Defense, Speed, Crit}
 enum Element {None, Physical, Fire, Water}
 
 # Thông tin - Chỉ số cơ bản của nhân vật
+@export_group("Thông tin - Chỉ số cơ bản của nhân vật")
 @export var name: String
 @export var element: Element
 @export var hp: int
@@ -18,3 +19,7 @@ enum Element {None, Physical, Fire, Water}
 @export var crit: int
 
 @export var skillLearables: Array[SkillLearnable]
+
+
+@export_group("Model")
+@export var model3D: PackedScene

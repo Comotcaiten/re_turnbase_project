@@ -78,20 +78,20 @@ func SetUpSkill():
 
 func EquipItem(_item: ItemzBase) -> bool:
 	if _item == null:
-		print("<!> Không thể trang bị/bỏ trong kho - Item is null/can result")
+		print("[!] Không thể trang bị/bỏ trong kho - Item is null/can result")
 		return false
 	if equipments.size() >= 6:
-		print("<!> Kho trang bị đã đầy")
+		print("[!] Kho trang bị đã đầy")
 		return false
 	equipments.append(_item)
 	return true
 
 func EquipMainHand(_item: ItemzBase):
 	if _item == null:
-		print("<!> Không thể trang bị lên mainhand - Item is null/can result")
+		print("[!] Không thể trang bị lên mainhand - Item is null/can result")
 		return false
 	if mainHand != null:
-		print("<!> Mainhand đã được trang bị")
+		print("[!] Mainhand đã được trang bị")
 		return false
 	mainHand = _item
 	return true
@@ -141,8 +141,8 @@ func CalculateDamageTaken(_skill: Skill, _attacker: Character) -> int:
 	
 	var a = (2.0 * attacker_damage + 10.0) * typeEff * critical * randf_range(0.85, 1.0)
 	var damage = ((a / (defense * 1.0))) + 2.0
-	print(nameCharacter, " took ", damage, " DMG")
-	print(nameCharacter, " has ", hp, "/", max_hp, " HP")
+	print("[>] ", nameCharacter, " took ", damage, " DMG")
+	print("[>] ", nameCharacter, " has ", hp, "/", max_hp, " HP")
 
 	return int(damage)
 
@@ -153,19 +153,19 @@ func ResetAllAttributeModified():
 func PrintSkill():
 	print("-----<Print_Skill>-----")
 	if skills.size() <= 0:
-		print("<!> Chưa có danh sách kỹ năng - SkillLearables are null.")
+		print("[!] Chưa có danh sách kỹ năng - SkillLearables are null.")
 	for i in range(0, skills.size()):
-		print("<", i, ">", skills[i].base.name)
+		print("[>] ", "<", i, ">: ", skills[i].base.name)
 	print("-----</Print_Skill>-----")
 
 func PrintAttribute():
 	print("-----<Print_Attribute>-----")
-	print("Name: ", nameCharacter)
-	print("Level: ", level)
-	print("Hp: ", max_hp)
-	print("Mp: ", max_mp)
-	print("Attack: ", attack)
-	print("Defense: ", defense)
+	print("[>] Name: ", nameCharacter)
+	print("[>] Level: ", level)
+	print("[>] Hp: ", max_hp)
+	print("[>] Mp: ", max_mp)
+	print("[>] Attack: ", attack)
+	print("[>] Defense: ", defense)
 	print("-----</Print_Attribute>-----")
 
 func item_info(item: ItemzBase) -> String:
@@ -175,9 +175,9 @@ func item_info(item: ItemzBase) -> String:
 
 func PrintItemEquiped():
 	print("-----<Trang bi>-----")
-	print("[Equipments]: ", equipments)
+	print("[>] <Equipments>: ", equipments)
 	for i in range(0, equipments.size()):
-		print("<", i + 1, "> ", item_info(equipments[i]))
+		print("[>] <", i + 1, ">: ", item_info(equipments[i]))
 	print("-----</Trang bi>-----")
 
 func AddItem(_item: ItemzBase):

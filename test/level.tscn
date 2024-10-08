@@ -1,8 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7gveqxs684mw"]
+[gd_scene load_steps=5 format=3 uid="uid://c7gveqxs684mw"]
 
-[ext_resource type="PackedScene" uid="uid://bamvml6mu8nuq" path="res://test/model.tscn" id="1_axmex"]
 [ext_resource type="Script" path="res://lib/3d/index3D.gd" id="1_g7r8v"]
-[ext_resource type="PackedScene" uid="uid://b4wjyaisspt6w" path="res://test/model/character_samurai.gltf" id="2_0648f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,22 +14,13 @@ background_mode = 2
 sky = SubResource("Sky_dm12i")
 tonemap_mode = 2
 
-[node name="level" type="Node3D" node_paths=PackedStringArray("model")]
+[node name="level" type="Node3D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_g7r8v")
-model = NodePath("model")
+player = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 1.47562e-08, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3pgoa")
-
-[node name="model" parent="." instance=ExtResource("1_axmex")]
-model = ExtResource("2_0648f")
-
-[node name="Node3D" type="Node3D" parent="model"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="model/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20246, 2.54212)
