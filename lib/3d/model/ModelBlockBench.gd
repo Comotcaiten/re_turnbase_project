@@ -6,9 +6,11 @@ class_name ModelBlockBench
 @onready var blockbench_export = $point/blockbench_export
 @onready var point = $point
 
-var child_model_point
+var data
 
-func _ready():
+var animation: AnimationPlayer
+
+func set_up():
     if model == null or blockbench_export == null:
         print("[>] Model blockbench is Null")
     else:
@@ -33,9 +35,22 @@ func load_model(_model: Resource):
         point.add_child(instance)
 
         # Save point
-        child_model_point = instance
+        data = instance
+        animation = data.get_child(1)
 
         print("[>] Exist: ", blockbench_export)
+        print("[>] Animation: ", animation)
         print("[>] Model loaded successfully.")
     else:
         print("[>] Failed to load the model. (Please check model and blockbench_export in point)")
+
+func run_animation(_name: String):
+    if _name == null or _name.is_empty():
+        return
+    var exist = animation.has_animation(_name)
+    print("[>] Run animation ", _name)
+    print("[>] Get animation ", _name, ", ", exist)
+    if exist:
+        animation.play(_name)
+    else:
+        print("[>] Animation ", _name, " can not be found.")
