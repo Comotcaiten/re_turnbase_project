@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7gveqxs684mw"]
+[gd_scene load_steps=5 format=3 uid="uid://c7gveqxs684mw"]
+
+[ext_resource type="PackedScene" uid="uid://c8el32j26va3s" path="res://test/model.tscn" id="1_axmex"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,3 +22,8 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3pgoa")
+
+[node name="model" parent="." instance=ExtResource("1_axmex")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20246, 2.54212)
