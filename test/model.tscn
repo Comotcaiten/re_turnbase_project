@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8el32j26va3s"]
+
+[ext_resource type="PackedScene" uid="uid://dj0bthohv6xfa" path="res://test/model/test_model.gltf" id="1_jheei"]
+[ext_resource type="Script" path="res://lb/3d/model/ModelBlockBench.gd" id="1_wt651"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3sl16"]
+
+[node name="model" type="Node3D"]
+script = ExtResource("1_wt651")
+
+[node name="point" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="point"]
+mesh = SubResource("PlaneMesh_3sl16")
+skeleton = NodePath("../..")
+
+[node name="blockbench_export" parent="point" instance=ExtResource("1_jheei")]
