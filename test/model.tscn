@@ -15,4 +15,3 @@ mesh = SubResource("PlaneMesh_3sl16")
 skeleton = NodePath("../..")
 
 [node name="blockbench_export" parent="point" instance=ExtResource("1_jheei")]
-visible = false
