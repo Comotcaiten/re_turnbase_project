@@ -18,7 +18,7 @@ func _process(_delta: float):
     player.RunAnimation3D("fight3")
   if Input.is_action_just_pressed("ui_skill_4"):
     print("[>] Action")
-    player.RunAnimation3D("fight5")
+    player.RunAnimation3D("fight4")
   pass
 
 func set_up():
