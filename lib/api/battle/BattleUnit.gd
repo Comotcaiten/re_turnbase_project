@@ -57,11 +57,11 @@ func EquipMainHand():
 
 func PrintCharacter():
 	if character == null:
-		print("<!> Chưa có dữ liệu")
+		print("[!] Chưa có dữ liệu")
 	character.PrintAttribute()
 	character.PrintSkill()
 	character.PrintItemEquiped()
 
 # Run
-func RunAnimation3D(_name: String):
-	model3D.run_animation(_name)
+func RunAnimation3D(_name: String) -> int:
+	return model3D.run_animation(_name)

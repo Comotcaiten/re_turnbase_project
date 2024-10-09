@@ -10,9 +10,21 @@ var data
 var animation: AnimationPlayer
 
 func set_up(_model: PackedScene):
-    if _model == null or blockbench_export == null:
-        print("[>] Model blockbench is Null")
-    else:
+    var can_set_up: bool = true
+
+    if _model == null:
+        print("[>] Model blockbench is Null, ")
+        can_set_up = false
+    
+    if blockbench_export == null:
+        print("[>] Blockbench export is Null")
+        can_set_up = false
+
+    if point == null:
+        print("[>] Point is Null")
+        can_set_up = false
+
+    if can_set_up:
         load_model(_model)
 
 func load_model(_model: Resource):
@@ -43,9 +55,9 @@ func load_model(_model: Resource):
     else:
         print("[!] Failed to load the model. (Please check model and blockbench_export in point)")
 
-func run_animation(_name: String):
+func run_animation(_name: String) -> int:
     if _name == null or _name.is_empty():
-        return
+        return 0
     var exist = animation.has_animation(_name)
     print("[>] Run animation ", _name)
     print("[>] Get animation ", _name, ", ", exist)
@@ -53,3 +65,5 @@ func run_animation(_name: String):
         animation.play(_name)
     else:
         print("[!] Animation ", _name, " can not be found.")
+        return 0
+    return 1
