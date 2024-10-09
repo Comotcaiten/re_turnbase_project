@@ -29,6 +29,7 @@ environment = SubResource("Environment_3pgoa")
 
 [node name="Character" parent="." instance=ExtResource("2_buc68")]
 base = ExtResource("3_btfeh")
+level = 30
 
 [node name="Node3D" type="Node3D" parent="Character"]
 
