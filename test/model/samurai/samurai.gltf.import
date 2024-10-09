@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dj0bthohv6xfa"
-path="res://.godot/imported/test_model.gltf-4b55c1eb029e8595ecbe4022d20e0b34.scn"
+uid="uid://chd3wsbnxotwv"
+path="res://.godot/imported/samurai.gltf-62ba10fa6016fb7ecda2cd52e00d3ef0.scn"
 
 [deps]
 
-source_file="res://test/model/test_model.gltf"
-dest_files=["res://.godot/imported/test_model.gltf-4b55c1eb029e8595ecbe4022d20e0b34.scn"]
+source_file="res://test/model/samurai/samurai.gltf"
+dest_files=["res://.godot/imported/samurai.gltf-62ba10fa6016fb7ecda2cd52e00d3ef0.scn"]
 
 [params]
 

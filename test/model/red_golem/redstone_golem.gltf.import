@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b4wjyaisspt6w"
-path="res://.godot/imported/character_samurai.gltf-2f165c7a97a0afc97760ce29b430ac32.scn"
+uid="uid://meml7uica180"
+path="res://.godot/imported/redstone_golem.gltf-702b935381e66e09d8c79d9c5105bd8d.scn"
 
 [deps]
 
-source_file="res://test/model/character_samurai.gltf"
-dest_files=["res://.godot/imported/character_samurai.gltf-2f165c7a97a0afc97760ce29b430ac32.scn"]
+source_file="res://test/model/red_golem/redstone_golem.gltf"
+dest_files=["res://.godot/imported/redstone_golem.gltf-702b935381e66e09d8c79d9c5105bd8d.scn"]
 
 [params]
 

@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnujq0bl8ovs8"
-path="res://.godot/imported/character_samurai_1.png-f5509b7feac59c6a5d41b8574ac5e71d.ctex"
+uid="uid://bxdyibk3xaif5"
+path="res://.godot/imported/redstone_golem_0.png-127efeb63e9f5dab844339cb2ffcecf3.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "ef0cbfa2017ea9f365d0b3b2dce8426f"
+"md5": "b6ace4a812fa0e05c6fcb979850babf9"
 }
 
 [deps]
 
-source_file="res://test/model/character_samurai_1.png"
-dest_files=["res://.godot/imported/character_samurai_1.png-f5509b7feac59c6a5d41b8574ac5e71d.ctex"]
+source_file="res://test/model/red_golem/redstone_golem_0.png"
+dest_files=["res://.godot/imported/redstone_golem_0.png-127efeb63e9f5dab844339cb2ffcecf3.ctex"]
 
 [params]
 
