@@ -14,5 +14,5 @@ attack = 10
 defense = 10
 speed = 10
 crit = 10
-skillLearables = Array[ExtResource("2_bhyi8")]([])
+skill_learables = Array[ExtResource("2_bhyi8")]([])
 model3D = ExtResource("1_s4h4t")

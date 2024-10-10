@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7gveqxs684mw"]
+[gd_scene load_steps=13 format=3 uid="uid://c7gveqxs684mw"]
 
 [ext_resource type="Script" path="res://lib/3d/index3D.gd" id="1_g7r8v"]
 [ext_resource type="PackedScene" uid="uid://ck7vfx5ypo5of" path="res://test/character.tscn" id="2_buc68"]
 [ext_resource type="Resource" uid="uid://bf6mkcog668tu" path="res://test/assect/Samurai.tres" id="3_btfeh"]
+[ext_resource type="Resource" uid="uid://dw0h6oxjxvsw5" path="res://test/assect/red_golem.tres" id="4_8bomh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,9 +17,25 @@ background_mode = 2
 sky = SubResource("Sky_dm12i")
 tonemap_mode = 2
 
-[node name="level" type="Node3D" node_paths=PackedStringArray("player")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lhxj4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3oqay"]
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(0.223529, 0.819608, 0.282353, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nnb4v"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3s3w"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_odgda"]
+
+[node name="level" type="Node3D" node_paths=PackedStringArray("player", "enemy")]
+transform = Transform3D(0.999997, 0.00217356, -0.00113788, -0.00217605, 0.999995, -0.00220378, 0.0011331, 0.00220625, 0.999997, 0, 0, 0)
 script = ExtResource("1_g7r8v")
-player = NodePath("Character")
+player = NodePath("AreaBattle/PlayerParty/Character")
+enemy = NodePath("AreaBattle/EnemyParty/Character")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.250001, 1.47562e-08, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -27,11 +44,43 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3pgoa")
 
-[node name="Character" parent="." instance=ExtResource("2_buc68")]
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.002, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+material_override = SubResource("ShaderMaterial_lhxj4")
+material_overlay = SubResource("StandardMaterial3D_3oqay")
+mesh = SubResource("PlaneMesh_nnb4v")
+
+[node name="AreaBattle" type="Node3D" parent="."]
+
+[node name="PlayerParty" type="Node3D" parent="AreaBattle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.012, 0, 5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AreaBattle/PlayerParty"]
+visible = false
+mesh = SubResource("BoxMesh_f3s3w")
+metadata/_edit_lock_ = true
+
+[node name="Character" parent="AreaBattle/PlayerParty" instance=ExtResource("2_buc68")]
+transform = Transform3D(0.999997, 0.00196665, -0.00102931, -0.00196871, 0.999996, -0.001994, 0.00102537, 0.00199603, 0.999997, 0, 0, 0)
 base = ExtResource("3_btfeh")
 level = 30
+isPlayerUnit = true
 
-[node name="Node3D" type="Node3D" parent="Character"]
+[node name="Node3D" type="Node3D" parent="AreaBattle/PlayerParty/Character"]
+transform = Transform3D(-0.766044, 0, -0.642788, 0, 1, 0, 0.642788, 0, -0.766044, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Character/Node3D"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, -5)
+[node name="Camera3D" type="Camera3D" parent="AreaBattle/PlayerParty/Character/Node3D"]
+transform = Transform3D(-0.766044, -0.271654, 0.582563, 0, 0.906308, 0.422618, -0.642788, 0.323744, -0.694272, 0, 2.5, -2)
+
+[node name="EnemyParty" type="Node3D" parent="AreaBattle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AreaBattle/EnemyParty"]
+mesh = SubResource("BoxMesh_odgda")
+metadata/_edit_lock_ = true
+
+[node name="Character" parent="AreaBattle/EnemyParty" instance=ExtResource("2_buc68")]
+base = ExtResource("4_8bomh")
+level = 30

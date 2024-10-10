@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=4 format=3 uid="uid://dw0h6oxjxvsw5"]
+
+[ext_resource type="Script" path="res://lib/api/character/CharacterBase.gd" id="1_2won4"]
+[ext_resource type="PackedScene" uid="uid://c7cw5qxdhuof5" path="res://test/model/red_golem/redstone_golem.gltf" id="1_hqum3"]
+[ext_resource type="Script" path="res://lib/api/skill/SkillLearnable.gd" id="2_w4myv"]
+
+[resource]
+script = ExtResource("1_2won4")
+name = "red_golem"
+element = 2
+hp = 20
+mp = 20
+attack = 20
+defense = 20
+speed = 5
+crit = 20
+skill_learables = Array[ExtResource("2_w4myv")]([])
+model3D = ExtResource("1_hqum3")
