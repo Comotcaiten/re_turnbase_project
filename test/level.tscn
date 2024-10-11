@@ -55,7 +55,7 @@ mesh = SubResource("PlaneMesh_nnb4v")
 [node name="AreaBattle" type="Node3D" parent="."]
 
 [node name="PlayerParty" type="Node3D" parent="AreaBattle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.012, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 5)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AreaBattle/PlayerParty"]
 visible = false
@@ -72,7 +72,7 @@ isPlayerUnit = true
 transform = Transform3D(-0.766044, 0, -0.642788, 0, 1, 0, 0.642788, 0, -0.766044, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="AreaBattle/PlayerParty/Character/Node3D"]
-transform = Transform3D(-0.766044, -0.271654, 0.582563, 0, 0.906308, 0.422618, -0.642788, 0.323744, -0.694272, 0, 2.5, -2)
+transform = Transform3D(-0.955301, 0.0115925, 0.295408, 0.0847149, 0.968062, 0.235965, -0.283238, 0.250443, -0.925773, 2.38419e-07, 2.5, -5)
 
 [node name="EnemyParty" type="Node3D" parent="AreaBattle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)

@@ -3,27 +3,33 @@ extends Node
 @export var player: BattleUnit
 @export var enemy: BattleUnit
 
+var play_at_first: bool = true
+
 func _ready():
   set_up()
   pass
 
 func _process(_delta: float):
+  
   if Input.is_action_just_pressed("ui_skill_1"):
     print("[>] Action")
     player.RunAnimation3D("fight")
     enemy.RunAnimation3D("fight")
-  if Input.is_action_just_pressed("ui_skill_2"):
+  elif Input.is_action_just_pressed("ui_skill_2"):
     print("[>] Action")
     player.RunAnimation3D("fight2")
     enemy.RunAnimation3D("fight")
-  if Input.is_action_just_pressed("ui_skill_3"):
+  elif Input.is_action_just_pressed("ui_skill_3"):
     print("[>] Action")
     player.RunAnimation3D("fight3")
     enemy.RunAnimation3D("fight")
-  if Input.is_action_just_pressed("ui_skill_4"):
+  elif Input.is_action_just_pressed("ui_skill_4"):
     print("[>] Action")
     player.RunAnimation3D("fight4")
     enemy.RunAnimation3D("fight")
+  else:
+    player.RunAnimation3D('idle')
+    enemy.RunAnimation3D('idle')
   pass
 
 func set_up():
