@@ -10,6 +10,11 @@ func _ready():
   pass
 
 func _process(_delta: float):
+
+  if play_at_first:
+    player.RunAnimation3D('idle')
+    enemy.RunAnimation3D('idle')
+    play_at_first = false
   
   if Input.is_action_just_pressed("ui_skill_1"):
     print("[>] Action")
@@ -27,9 +32,6 @@ func _process(_delta: float):
     print("[>] Action")
     player.RunAnimation3D("fight4")
     enemy.RunAnimation3D("fight")
-  else:
-    player.RunAnimation3D('idle')
-    enemy.RunAnimation3D('idle')
   pass
 
 func set_up():

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CharacterBase" load_steps=4 format=3 uid="uid://dw0h6oxjxvsw5"]
 
 [ext_resource type="Script" path="res://lib/api/character/CharacterBase.gd" id="1_2won4"]
-[ext_resource type="PackedScene" uid="uid://cl0hdd2dfp4cv" path="res://test/model/red_golem/redstone_golem.gltf" id="1_hqum3"]
+[ext_resource type="PackedScene" uid="uid://ck7aojg1drjji" path="res://test/model/red_golem/redstone_golem.gltf" id="1_hqum3"]
 [ext_resource type="Script" path="res://lib/api/skill/SkillLearnable.gd" id="2_w4myv"]
 
 [resource]
