@@ -28,13 +28,14 @@ func SetData(_base: CharacterBase, _Level: int):
 	level = _Level
 
 func SetUp():
-	character = Character.new(base, level)
-	# EquipmentItem()
-	# character.AddItem(slot1)
+	# character = Character.new(base, level)
+	# # EquipmentItem()
+	# # character.AddItem(slot1)
 
-	print("-----<BattelUnit SetUp>-----")
-	hud.SetData(character)
-	print("-----</BattelUnit SetUp>-----")
+	# print("-----<BattelUnit SetUp>-----")
+	# hud.SetData(character)
+	# print("-----</BattelUnit SetUp>-----")
+	SetUpOnlyCharacter()
 
 func SetUpOnlyCharacter():
 	character = Character.new(base, level)
@@ -64,4 +65,5 @@ func PrintCharacter():
 
 # Run
 func RunAnimation3D(_name: String) -> int:
+	model3D.animations()
 	return model3D.run_animation(_name)

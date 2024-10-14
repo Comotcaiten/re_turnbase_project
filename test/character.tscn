@@ -15,3 +15,8 @@ visible = false
 mesh = SubResource("CapsuleMesh_hib47")
 
 [node name="model" parent="." instance=ExtResource("1_ehxmq")]
+
+[node name="HudCharacter" type="Node3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="HudCharacter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000309944, 2.58481, -0.00371838)
