@@ -7,7 +7,7 @@ class_name SkillAbility
 
 @export var mechanic: SkillMechanic
 
-func CanApply(_source: Character, _target: Character) -> bool:
+func CanApply(_source: Character, _target: Character, _skill: Skill) -> bool:
     var _get_target: Character
     match target:
         SkillBase.Target.Foe:
@@ -19,7 +19,7 @@ func CanApply(_source: Character, _target: Character) -> bool:
 
     if _CanRun(_source, _get_target):
         print("[>] Can run skill mechanic")
-        _RunMechanic(_source, _get_target)
+        _RunMechanic(_source, _get_target, _skill)
     else:
         print("[!] Can not run skill mechanic")
     return true
@@ -34,10 +34,10 @@ func _CanRun(_source: Character, _target: Character):
         return _condition_attr.IsConditionMet(_target)
     return false
 
-func _RunMechanic(_source: Character, _target: Character):
+func _RunMechanic(_source: Character, _target: Character, _skill: Skill):
     var _mechanic
     if mechanic is DamageMechanic:
         var _mechanic_dmg: DamageMechanic = mechanic
         _mechanic = _mechanic_dmg
-    _mechanic.Apply(_source, _target)
+    _mechanic.Apply(_source, _target, _skill)
     return 0

@@ -118,7 +118,7 @@ func MyCurrentSkill():
     _RunSkill(player, enemy, player.character.skills[current_skill - 1])
 
 func _RunSkill(_source: BattleUnit, _target: BattleUnit, _skill: Skill):
-  _skill.base._RunCore(_source.character, _target.character)
+  _skill.base._RunCore(_source.character, _target.character, _skill)
   return 0
 
 func _CheckHP():

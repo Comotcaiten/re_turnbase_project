@@ -7,6 +7,7 @@ var level: int:
 var nameCharacter: String:
 	get:
 		return base.name
+var element: CharacterBase.Element
 
 var mainHand: ItemzBase
 var equipments: Array[ItemzBase] = []
@@ -59,6 +60,7 @@ func SetUpAttribute():
 	SetUpAttributeBase()
 	hp = max_hp
 	mp = max_mp
+	element = base.element
 
 func SetUpAttributeBase():
 	attribute_base[CharacterBase.Attribute.Hp] = base.hp * level
@@ -122,29 +124,29 @@ func _init(_base: CharacterBase, _level: int):
 	SetUpAttribute()
 	SetUpSkill()
 
-func TakeDamage(_skill: Skill, _attacker: Character) -> bool:
-	hp -= CalculateDamageTaken(_skill, _attacker)
-	return hp == 0
+# func TakeDamage(_skill: Skill, _attacker: Character) -> bool:
+# 	hp -= CalculateDamageTaken(_skill, _attacker)
+# 	return hp == 0
 
-func CalculateDamageTaken(_skill: Skill, _attacker: Character) -> int:
-	if _attacker == null:
-		return 0
-	var critical = 1.0
-	var typeEff = 1.0
+# func CalculateDamageTaken(_skill: Skill, _attacker: Character) -> int:
+# 	if _attacker == null:
+# 		return 0
+# 	var critical = 1.0
+# 	var typeEff = 1.0
 
-	if _skill != null:
-		typeEff = ElementEffectiveness.GetEffectiveness(_attacker.base.element, base.element)
+# 	if _skill != null:
+# 		typeEff = ElementEffectiveness.GetEffectiveness(_attacker.base.element, base.element)
 	
-	var attacker_damage = _attacker.attack
-	if _attacker.mainHand != null:
-		attacker_damage += _attacker.mainHand.damage
+# 	var attacker_damage = _attacker.attack
+# 	if _attacker.mainHand != null:
+# 		attacker_damage += _attacker.mainHand.damage
 	
-	var a = (2.0 * attacker_damage + 10.0) * typeEff * critical * randf_range(0.85, 1.0)
-	var damage = ((a / (defense * 1.0))) + 2.0
-	print("[>] ", nameCharacter, " took ", damage, " DMG")
-	print("[>] ", nameCharacter, " has ", hp, "/", max_hp, " HP")
+# 	var a = (2.0 * attacker_damage + 10.0) * typeEff * critical * randf_range(0.85, 1.0)
+# 	var damage = ((a / (defense * 1.0))) + 2.0
+# 	print("[>] ", nameCharacter, " took ", damage, " DMG")
+# 	print("[>] ", nameCharacter, " has ", hp, "/", max_hp, " HP")
 
-	return int(damage)
+# 	return int(damage)
 
 func ResetAllAttributeModified():
 	for attr in attribute_modified.keys():

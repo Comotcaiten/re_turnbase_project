@@ -7,7 +7,9 @@
 
 [sub_resource type="Resource" id="Resource_4i1u4"]
 script = ExtResource("1_d64sa")
+damageType = 3
 power = 100
+trueDamage = false
 
 [sub_resource type="Resource" id="Resource_rn178"]
 script = ExtResource("2_b3i43")

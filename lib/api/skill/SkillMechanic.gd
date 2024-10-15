@@ -15,5 +15,5 @@ class_name SkillMechanic
 # }
 
 # Phương thức áp dụng cơ chế kỹ năng
-func Apply(_source: Character, _target: Character):
+func Apply(_source: Character, _target: Character, _skill: Skill):
   pass # Phương thức này sẽ được ghi đè trong các lớp kế thừa
