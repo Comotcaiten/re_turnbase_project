@@ -64,6 +64,10 @@ func _PerformPlayerTurn():
   state = TypeState.ActionChoice
   return
 
+func _PerformEnemyTurn():
+  state = TypeState.CharacterTurn
+  return
+
 func _PerformActionChoice():
   if Input.is_action_just_pressed("ui_skill_1"):
     current_action = 1
@@ -109,6 +113,8 @@ func _PerformSkillChoice():
   if Input.is_action_just_pressed("ui_accept"):
     MyCurrentSkill()
     _CheckHP()
+    if !enemy.hp <= 0:
+      state = TypeState.CharacterTurn
   return 0
 
 func MyCurrentSkill():
