@@ -1,15 +1,9 @@
-[gd_resource type="Resource" script_class="SkillBase" load_steps=10 format=3 uid="uid://dr1aum012owq2"]
+[gd_resource type="Resource" script_class="SkillBase" load_steps=8 format=3 uid="uid://dr1aum012owq2"]
 
 [ext_resource type="Script" path="res://lib/api/skill/mechanic/DamageMechanic.gd" id="1_d64sa"]
 [ext_resource type="Script" path="res://lib/api/skill/SkillBase.gd" id="1_iylbj"]
-[ext_resource type="Script" path="res://lib/api/skill/condition/AttributeCondition.gd" id="1_s8mr0"]
 [ext_resource type="Script" path="res://lib/api/skill/SkillAbility.gd" id="2_b3i43"]
 [ext_resource type="Script" path="res://lib/api/skill/SkillCore.gd" id="3_nocke"]
-
-[sub_resource type="Resource" id="Resource_a8dvf"]
-script = ExtResource("1_s8mr0")
-attribute = 1
-amount_range = Vector2(100, 500)
 
 [sub_resource type="Resource" id="Resource_4i1u4"]
 script = ExtResource("1_d64sa")
@@ -18,7 +12,6 @@ power = 100
 [sub_resource type="Resource" id="Resource_rn178"]
 script = ExtResource("2_b3i43")
 target = 0
-condition = SubResource("Resource_a8dvf")
 mechanic = SubResource("Resource_4i1u4")
 
 [sub_resource type="Resource" id="Resource_2milq"]

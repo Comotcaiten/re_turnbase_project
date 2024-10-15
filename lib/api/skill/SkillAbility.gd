@@ -17,25 +17,27 @@ func CanApply(_source: Character, _target: Character) -> bool:
             print("Self")
             _get_target = _source
 
-    if _CanRun(_get_target):
+    if _CanRun(_source, _get_target):
         print("[>] Can run skill mechanic")
-        _RunMechanic(_get_target)
+        _RunMechanic(_source, _get_target)
     else:
         print("[!] Can not run skill mechanic")
     return true
 
-func _CanRun(_target: Character):
+func _CanRun(_source: Character, _target: Character):
     print("[>] Check Skill Condition")
+    if condition == null:
+        return true
     if condition is AttributeCondition:
         print("[>] AttributeCondition")
         var _condition_attr: AttributeCondition = condition
         return _condition_attr.IsConditionMet(_target)
-    return 0
+    return false
 
-func _RunMechanic(_target: Character):
+func _RunMechanic(_source: Character, _target: Character):
     var _mechanic
     if mechanic is DamageMechanic:
         var _mechanic_dmg: DamageMechanic = mechanic
         _mechanic = _mechanic_dmg
-    _mechanic.Apply(_target)
+    _mechanic.Apply(_source, _target)
     return 0
