@@ -17,6 +17,9 @@ func IsConditionMet(target: Character) -> bool:
   # => target.GetAttribute(attribute)
   # Kiểm tra xem giá trị hiện tại có nằm trong khoảng cho phép không
   var amount = target.GetAttribute(attribute)
-  if amount_range.x <= amount <= amount_range.y:
+  print("[>] Amount: ", amount)
+  print("[>] Amount Range: ", amount_range)
+  print("[>] Is Conidition Met: ", amount_range.x <= (amount * 1.0) or (amount * 1.0) <= amount_range.y)
+  if amount_range.x <= (amount * 1.0) or (amount * 1.0) <= amount_range.y:
     return true
   return false

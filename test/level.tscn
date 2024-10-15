@@ -78,6 +78,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.3841
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AreaBattle/EnemyParty"]
+visible = false
 mesh = SubResource("BoxMesh_odgda")
 metadata/_edit_lock_ = true
 

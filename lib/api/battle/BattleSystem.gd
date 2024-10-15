@@ -5,30 +5,29 @@ class_name BattleSystem
 @export var enemy: BattleUnit
 # @export var attackButton: Button
 
-enum TypeTurn {CharacterTurn, ActionChoice, SkillChoice}
+enum TypeState {CharacterTurn, ActionChoice, SkillChoice}
 
-var turn: TypeTurn
+var state: TypeState
 
 var current_action: int
 var actions = ["Attack", "Defense"]
 
 var current_skill: int
-var skills = ["Skill 1", "Skill 2", "Skill 3", "Skill 4"]
 
 func _ready():
   print("[>] Set Data Battle Unit: ", SetDataBattleUnit())
-  current_action = TypeTurn.CharacterTurn
-  print("[>] Turn: ", TypeTurn.keys()[turn])
+  current_action = TypeState.CharacterTurn
+  print("[>] Turn: ", TypeState.keys()[state])
 
 func _process(_delta):
-  match turn:
-    TypeTurn.CharacterTurn:
+  match state:
+    TypeState.CharacterTurn:
       # print("Character Turn")
       _PerformCharacterTurn()
-    TypeTurn.ActionChoice:
+    TypeState.ActionChoice:
       _PerformActionChoice()
       # print("Action Choice")
-    TypeTurn.SkillChoice:
+    TypeState.SkillChoice:
       _PerformSkillChoice()
   pass
 
@@ -62,7 +61,7 @@ func _PerformCharacterTurn():
   return
 
 func _PerformPlayerTurn():
-  turn = TypeTurn.ActionChoice
+  state = TypeState.ActionChoice
   return
 
 func _PerformActionChoice():
@@ -83,9 +82,9 @@ func _PerformActionChoice():
     MyCurrentAction()
     match current_action:
       1:
-        turn = TypeTurn.SkillChoice
+        state = TypeState.SkillChoice
       _:
-        turn = TypeTurn.ActionChoice
+        state = TypeState.ActionChoice
   return 0
 
 func MyCurrentAction():
@@ -109,9 +108,19 @@ func _PerformSkillChoice():
   
   if Input.is_action_just_pressed("ui_accept"):
     MyCurrentSkill()
+    _CheckHP()
   return 0
 
 func MyCurrentSkill():
-  print("[>] current: ", current_skill - 1, ", skills: ", skills.size())
-  if (current_skill - 1) < skills.size():
-    print("[>] Action: ", skills[current_skill - 1])
+  print("[>] current: ", current_skill - 1, ", skills: ", player.character.skills.size())
+  if (current_skill - 1) < player.character.skills.size():
+    print("[>] Action: ", player.character.skills[current_skill - 1].name)
+    _RunSkill(player, enemy, player.character.skills[current_skill - 1])
+
+func _RunSkill(_source: BattleUnit, _target: BattleUnit, _skill: Skill):
+  _skill.base._RunCore(_source.character, _target.character)
+  return 0
+
+func _CheckHP():
+      print("[>] player: ", player.character.hp, "/", player.character.max_hp)
+      print("[>] enemy: ", enemy.character.hp, "/", enemy.character.max_hp)

@@ -150,6 +150,9 @@ func ResetAllAttributeModified():
 	for attr in attribute_modified.keys():
 		attribute_modified[attr] = 0
 
+# ------------------------------------------------------------- #
+# -<Un></Un>- #
+
 func PrintSkill():
 	print("-----<Print_Skill>-----")
 	if skills.size() <= 0:

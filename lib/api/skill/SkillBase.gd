@@ -26,3 +26,7 @@ func CanUse(character: Character) -> bool:
         CostType.OTHER:
             return false
     return false
+
+func _RunCore(_source: Character, _target: Character):
+    core._RunCore(_source, _target)
+    return
