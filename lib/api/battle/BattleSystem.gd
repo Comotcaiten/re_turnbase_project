@@ -86,7 +86,7 @@ func _PerformActionChoice():
   
   if Input.is_action_just_pressed("ui_accept"):
     MyCurrentAction()
-    match max(0, current_action-1):
+    match max(0, current_action - 1):
       0:
         state = TypeState.SkillChoice
       _:
@@ -118,7 +118,7 @@ func _PerformSkillChoice():
 func MyCurrentAction():
   var current = max(0, current_action - 1)
   print("[>] current: ", current, ", actions: ", actions.size())
-  if (current) <= actions.size():
+  if (current) < actions.size():
     print("[>] Action: ", actions[current])
 
 func MyCurrentSkill():
@@ -128,7 +128,6 @@ func MyCurrentSkill():
     player.RunAnimation3D("fight")
 
 func _RunSkill(_source: BattleUnit, _target: BattleUnit, _skill: Skill):
-  # _skill._RunCore(_source.character, _target.character, _skill)
   _skill._RunCore(_source.character, _target.character)
   return 0
 

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemzWeaponBase" load_steps=3 format=3 uid="uid://dx1rpal7g1wgh"]
+
+[ext_resource type="Script" path="res://lib/api/item/ItemzAttribute.gd" id="1_ow6gn"]
+[ext_resource type="Script" path="res://lib/api/item/ItemzWeaponBase.gd" id="2_i6qa7"]
+
+[resource]
+script = ExtResource("2_i6qa7")
+attribute = 0
+values = 0
+id = "K120"
+name = "Katana"
+damage = 100
+unbreakable = false
+attributes = Array[ExtResource("1_ow6gn")]([])
+maxAmount = 0
