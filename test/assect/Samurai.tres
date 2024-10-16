@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CharacterBase" load_steps=6 format=3 uid="uid://bf6mkcog668tu"]
 
+[ext_resource type="PackedScene" uid="uid://ck7aojg1drjji" path="res://test/model/red_golem/redstone_golem.gltf" id="1_0yu7r"]
 [ext_resource type="Script" path="res://lib/api/character/CharacterBase.gd" id="1_npux2"]
-[ext_resource type="PackedScene" uid="uid://b8luh6eikdjfb" path="res://test/model/samurai/samurai.gltf" id="1_s4h4t"]
 [ext_resource type="Script" path="res://lib/api/skill/SkillLearnable.gd" id="2_bhyi8"]
 [ext_resource type="Resource" uid="uid://dr1aum012owq2" path="res://test/assect/SKillA.tres" id="4_warsj"]
 
@@ -21,4 +21,4 @@ defense = 10
 speed = 10
 crit = 10
 skillLearables = Array[ExtResource("2_bhyi8")]([SubResource("Resource_2bvah")])
-model3D = ExtResource("1_s4h4t")
+model3D = ExtResource("1_0yu7r")

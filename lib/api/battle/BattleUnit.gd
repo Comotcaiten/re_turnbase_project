@@ -29,8 +29,6 @@ func SetData(_base: CharacterBase, _Level: int):
 
 func SetUp():
 	# character = Character.new(base, level)
-	# # EquipmentItem()
-	# # character.AddItem(slot1)
 
 	# print("-----<BattelUnit SetUp>-----")
 	# hud.SetData(character)
@@ -65,5 +63,5 @@ func PrintCharacter():
 
 # Run
 func RunAnimation3D(_name: String) -> int:
-	model3D.animations()
+	# model3D.animations()
 	return model3D.run_animation(_name)

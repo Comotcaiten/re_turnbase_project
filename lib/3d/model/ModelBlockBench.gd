@@ -59,6 +59,16 @@ func run_animation(_name: String) -> int:
     if _name == null or _name.is_empty():
         return 0
     var exist = animation.has_animation(_name)
+    if exist:
+        animation.play(_name)
+    else:
+        return 0
+    return 1
+
+func run_animation_debug(_name: String) -> int:
+    if _name == null or _name.is_empty():
+        return 0
+    var exist = animation.has_animation(_name)
     print("[>] Run animation ", _name)
     print("[>] Get animation ", _name, ", ", exist)
     if exist:

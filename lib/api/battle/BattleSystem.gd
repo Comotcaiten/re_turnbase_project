@@ -26,6 +26,7 @@ func _process(_delta):
       _PerformCharacterTurn()
     TypeState.ActionChoice:
       _PerformActionChoice()
+      player.RunAnimation3D("idle")
       # print("Action Choice")
     TypeState.SkillChoice:
       _PerformSkillChoice()
@@ -92,9 +93,10 @@ func _PerformActionChoice():
   return 0
 
 func MyCurrentAction():
-  print("[>] current: ", current_action - 1, ", actions: ", actions.size())
-  if (current_action - 1) < actions.size():
-    print("[>] Action: ", actions[current_action - 1])
+  var current = max(0, current_action - 1)
+  print("[>] current: ", current, ", actions: ", actions.size())
+  if (current) < actions.size():
+    print("[>] Action: ", actions[current])
 
 func _PerformSkillChoice():
   if Input.is_action_just_pressed("ui_skill_1"):
@@ -113,15 +115,15 @@ func _PerformSkillChoice():
   if Input.is_action_just_pressed("ui_accept"):
     MyCurrentSkill()
     _CheckHP()
-    if !enemy.hp <= 0:
+    if !enemy.character.hp <= 0:
       state = TypeState.CharacterTurn
   return 0
 
 func MyCurrentSkill():
   print("[>] current: ", current_skill - 1, ", skills: ", player.character.skills.size())
   if (current_skill - 1) < player.character.skills.size():
-    print("[>] Action: ", player.character.skills[current_skill - 1].name)
     _RunSkill(player, enemy, player.character.skills[current_skill - 1])
+    player.RunAnimation3D("fight")
 
 func _RunSkill(_source: BattleUnit, _target: BattleUnit, _skill: Skill):
   _skill.base._RunCore(_source.character, _target.character, _skill)
