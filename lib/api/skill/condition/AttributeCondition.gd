@@ -12,14 +12,14 @@ class_name AttributeCondition
     return amount_range
 
 # Kiểm tra xem điều kiện đã đạt hay không
-func IsConditionMet(target: Character) -> bool:
+func IsConditionMet(_source: Character, _target: Character, _skill: Skill) -> bool:
   # Lấy giá trị của chỉ số từ đối tượng nhân vật
   # => target.GetAttribute(attribute)
   # Kiểm tra xem giá trị hiện tại có nằm trong khoảng cho phép không
-  var amount = target.GetAttribute(attribute)
+  var amount = _target.GetAttribute(attribute)
   print("[>] Amount: ", amount)
   print("[>] Amount Range: ", amount_range)
-  print("[>] Is Conidition Met: ", amount_range.x <= (amount * 1.0) or (amount * 1.0) <= amount_range.y)
-  if amount_range.x <= (amount * 1.0) or (amount * 1.0) <= amount_range.y:
+  print("[>] Is Conidition Met: ", (amount_range.x <= (amount * 1.0)) and ((amount * 1.0) <= amount_range.y))
+  if (amount_range.x <= (amount * 1.0)) and ((amount * 1.0) <= amount_range.y):
     return true
   return false

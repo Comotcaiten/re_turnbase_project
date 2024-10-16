@@ -22,11 +22,10 @@ func _ready():
 func _process(_delta):
   match state:
     TypeState.CharacterTurn:
-      # print("Character Turn")
+      print("Character Turn")
       _PerformCharacterTurn()
     TypeState.ActionChoice:
       _PerformActionChoice()
-      player.RunAnimation3D("idle")
       # print("Action Choice")
     TypeState.SkillChoice:
       _PerformSkillChoice()
@@ -57,6 +56,8 @@ func _on_button_attack_pressed() -> void:
   # player.PrintCharacter()
   pass # Replace with function body.
 
+# <------------------------------------------------> #
+# <Perform>
 func _PerformCharacterTurn():
   _PerformPlayerTurn()
   return
@@ -85,18 +86,12 @@ func _PerformActionChoice():
   
   if Input.is_action_just_pressed("ui_accept"):
     MyCurrentAction()
-    match current_action:
-      1:
+    match max(0, current_action-1):
+      0:
         state = TypeState.SkillChoice
       _:
         state = TypeState.ActionChoice
   return 0
-
-func MyCurrentAction():
-  var current = max(0, current_action - 1)
-  print("[>] current: ", current, ", actions: ", actions.size())
-  if (current) < actions.size():
-    print("[>] Action: ", actions[current])
 
 func _PerformSkillChoice():
   if Input.is_action_just_pressed("ui_skill_1"):
@@ -118,6 +113,13 @@ func _PerformSkillChoice():
     if !enemy.character.hp <= 0:
       state = TypeState.CharacterTurn
   return 0
+# </Perform>
+
+func MyCurrentAction():
+  var current = max(0, current_action - 1)
+  print("[>] current: ", current, ", actions: ", actions.size())
+  if (current) <= actions.size():
+    print("[>] Action: ", actions[current])
 
 func MyCurrentSkill():
   print("[>] current: ", current_skill - 1, ", skills: ", player.character.skills.size())
@@ -126,9 +128,11 @@ func MyCurrentSkill():
     player.RunAnimation3D("fight")
 
 func _RunSkill(_source: BattleUnit, _target: BattleUnit, _skill: Skill):
-  _skill.base._RunCore(_source.character, _target.character, _skill)
+  # _skill._RunCore(_source.character, _target.character, _skill)
+  _skill._RunCore(_source.character, _target.character)
   return 0
 
 func _CheckHP():
       print("[>] player: ", player.character.hp, "/", player.character.max_hp)
+      print("[>] player:", player.character.attribute_modified)
       print("[>] enemy: ", enemy.character.hp, "/", enemy.character.max_hp)

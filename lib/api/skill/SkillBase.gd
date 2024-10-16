@@ -16,17 +16,3 @@ enum CostType { MP, HP, OTHER }
 
 @export_group("Core")
 @export var core: SkillCore
-
-# func CanUse(character: Character) -> bool:
-#     match cost_type:
-#         CostType.MP:
-#             return character.mp >= cost_amount
-#         CostType.HP:
-#             return character.hp >= cost_amount
-#         CostType.OTHER:
-#             return false
-#     return false
-
-func _RunCore(_source: Character, _target: Character,  _skill: Skill):
-    core._RunCore(_source, _target, _skill)
-    return
