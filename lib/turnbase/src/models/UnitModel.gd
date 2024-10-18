@@ -6,10 +6,11 @@ var level: int:
         return max(0, level)
 var skills: Array[SkillModel]
 
-var attributes_base: Dictionary = base.attributes
+var attributes_base: Dictionary
 var attributes_modified: Dictionary = {
     AttributeBase.Type.None: 0,
     AttributeBase.Type.Hp: 0,
+    AttributeBase.Type.Mp: 0,
     AttributeBase.Type.Attack: 0,
     AttributeBase.Type.Defense: 0,
     AttributeBase.Type.Speed: 0,
@@ -43,6 +44,7 @@ var critical: int:
 func _init(_base: CharacterBase, _level: int) -> void:
     base = _base
     level = _level
+    attributes_base = base.attributes
 # </init>
 
 # <Get>
@@ -57,5 +59,9 @@ func get_attribute(_attribute):
 
 # <Set>
 func set_attribute_modified(_attribute: AttributeBase.Type, _amount: int):
+    attributes_modified[_attribute] = _amount
+# </Set>t):
+    attributes_modified[_attribute] = _amount
+# </Set>):
     attributes_modified[_attribute] = _amount
 # </Set>

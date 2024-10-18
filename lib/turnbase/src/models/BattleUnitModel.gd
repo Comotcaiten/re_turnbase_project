@@ -9,13 +9,11 @@ class_name BattleUnitModel
 
 var unit: UnitModel
 
-func set_battle_unit():
-    unit = UnitModel.new(base, level)
-
 func set_data():
     unit = UnitModel.new(base, level)
+    load_model3D()
 
-func load_model() -> bool:
+func load_model3D() -> bool:
     if base.model3D == null:
         print("[!] Character base dont have a model3D")
         return false

@@ -1,8 +1,8 @@
 extends Node3D
 class_name LoadModelBlockBench
 
-@onready var blockbench_export: Node3D
-@onready var point: Node3D
+@export var blockbench_export: Node3D
+@export var point: Node3D
 
 var data
 

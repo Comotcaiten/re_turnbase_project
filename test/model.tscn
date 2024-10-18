@@ -1,11 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://bamvml6mu8nuq"]
+[gd_scene load_steps=3 format=3 uid="uid://bamvml6mu8nuq"]
+
+[ext_resource type="Script" path="res://lib/turnbase/src/utils/LoadModelBlockBench.gd" id="1_30i8y"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3sl16"]
 
-[node name="model" type="Node3D"]
+[node name="model" type="Node3D" node_paths=PackedStringArray("blockbench_export", "point")]
+script = ExtResource("1_30i8y")
+blockbench_export = NodePath("point/blockbench_export")
+point = NodePath("point")
 
 [node name="point" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="point"]
 mesh = SubResource("PlaneMesh_3sl16")
 skeleton = NodePath("../..")
+
+[node name="blockbench_export" type="Node3D" parent="point"]
