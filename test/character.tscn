@@ -1,22 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://ck7vfx5ypo5of"]
-
-[ext_resource type="PackedScene" uid="uid://bamvml6mu8nuq" path="res://test/model.tscn" id="1_ehxmq"]
-[ext_resource type="Script" path="res://lib/api/battle/BattleUnit.gd" id="1_hpvmo"]
+[gd_scene load_steps=2 format=3 uid="uid://ck7vfx5ypo5of"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hib47"]
 
-[node name="Character" type="Node3D" node_paths=PackedStringArray("model3D")]
-script = ExtResource("1_hpvmo")
-model3D = NodePath("model")
+[node name="Character" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 visible = false
 mesh = SubResource("CapsuleMesh_hib47")
-
-[node name="model" parent="." instance=ExtResource("1_ehxmq")]
-
-[node name="HudCharacter" type="Node3D" parent="."]
-
-[node name="Sprite3D" type="Sprite3D" parent="HudCharacter"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000309944, 2.58481, -0.00371838)
