@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=4 format=3 uid="uid://btmgoruo2jrsv"]
+
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/CharacterBase.gd" id="1_53sis"]
+[ext_resource type="PackedScene" uid="uid://k037i12rd5mo" path="res://lib/turnbase/assets/models/redstone_golem/redstone_golem.gltf" id="1_au3yi"]
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="2_imeji"]
+
+[resource]
+script = ExtResource("1_53sis")
+name = "red stone golem"
+element = 1
+hp = 15
+mp = 15
+attack = 15
+defense = 15
+speed = 15
+crit = 15
+skills = Array[ExtResource("2_imeji")]([])
+model3D = ExtResource("1_au3yi")

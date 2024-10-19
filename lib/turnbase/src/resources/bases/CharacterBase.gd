@@ -10,6 +10,8 @@ class_name CharacterBase
 @export var speed: int
 @export var crit: int
 
+@export var skills: Array[SkillBase]
+
 @export var model3D: PackedScene
 
 var attributes: Dictionary:

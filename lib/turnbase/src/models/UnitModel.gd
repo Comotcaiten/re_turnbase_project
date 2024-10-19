@@ -45,6 +45,7 @@ func _init(_base: CharacterBase, _level: int) -> void:
     base = _base
     level = _level
     attributes_base = base.attributes
+    set_skills()
 # </init>
 
 # <Get>
@@ -60,8 +61,11 @@ func get_attribute(_attribute):
 # <Set>
 func set_attribute_modified(_attribute: AttributeBase.Type, _amount: int):
     attributes_modified[_attribute] = _amount
-# </Set>t):
-    attributes_modified[_attribute] = _amount
-# </Set>):
-    attributes_modified[_attribute] = _amount
+    return
+
+func set_skills():
+    for skill in base.skills:
+        if skill == null:
+            continue
+        skills.append(SkillModel.new(skill))
 # </Set>

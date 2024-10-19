@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="CharacterBase" load_steps=3 format=3 uid="uid://b3rq63lvo161"]
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=5 format=3 uid="uid://b3rq63lvo161"]
 
 [ext_resource type="PackedScene" uid="uid://dy8tl0ddy6nug" path="res://lib/turnbase/assets/models/samurai/samurai.gltf" id="1_bgp2i"]
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/CharacterBase.gd" id="1_rjvvq"]
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="3_y0248"]
+[ext_resource type="Resource" uid="uid://bwv76nsjslvur" path="res://lib/turnbase/assets/skills/skill_a.tres" id="4_17ecw"]
 
 [resource]
 script = ExtResource("1_rjvvq")
@@ -13,4 +15,5 @@ attack = 10
 defense = 10
 speed = 10
 crit = 10
+skills = Array[ExtResource("3_y0248")]([ExtResource("4_17ecw")])
 model3D = ExtResource("1_bgp2i")

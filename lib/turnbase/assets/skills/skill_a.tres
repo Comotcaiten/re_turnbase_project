@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=2 format=3 uid="uid://bwv76nsjslvur"]
+
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="1_x1dtt"]
+
+[resource]
+script = ExtResource("1_x1dtt")
+name = "skill_a"
+element = 1

@@ -11,16 +11,16 @@ var state: TypeState
 
 var current_action: int:
   set(value):
-    if value >= actions.size():
-      current_action = current_action
-    else:
+    if !(value >= actions.size()):
       current_action = value
+    print("[>] current_action: ", current_action)
 var actions = ["Attack", "Defense"]
 
 var current_skill: int
 
 func _ready():
   player.set_data()
+  unit_service.print_skills(player.unit)
   state = TypeState.CharacterTurn
   pass
 
@@ -30,6 +30,8 @@ func _process(_delta):
       perform_state_player()
     TypeState.ActionChoice:
       perform_state_action()
+    TypeState.SkillChoice:
+      perform_state_skill()
   pass
 
 func perform_state_player():
@@ -50,7 +52,32 @@ func perform_state_action():
     perform_action_choice()
 
 func perform_action_choice():
-  print("[>] current_action: ", current_action)
   print("[>] actions: ", actions[current_action])
 
-  state = TypeState.CharacterTurn
+  match current_action:
+    0:
+      state = TypeState.SkillChoice
+    _:
+      state = TypeState.ActionChoice
+
+func perform_state_skill():
+  if Input.is_action_just_pressed("ui_skill_1"):
+    set_current_skill(0)
+  if Input.is_action_just_pressed("ui_skill_2"):
+    set_current_skill(1)
+  if Input.is_action_just_pressed("ui_skill_3"):
+    set_current_skill(2)
+  if Input.is_action_just_pressed("ui_skill_4"):
+    set_current_skill(3)
+
+  if Input.is_action_just_pressed("ui_accept"):
+    perform_skill_choice()
+
+func perform_skill_choice():
+  print("[>] skill: ", player.unit.skills[current_skill])
+
+func set_current_skill(_value: int):
+  if !(_value >= player.unit.skills.size()):
+    current_skill = _value
+  print("[>] current_skill: ", current_skill)
+  return
