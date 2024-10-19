@@ -2,6 +2,8 @@ extends Resource
 class_name ItemBase
 
 @export var name: String
+@export var description: String # Thêm mô tả cho vật phẩm
+@export var rarity: String # Thêm độ hiếm cho vật phẩm (Common, Rare, Legendary)
 
 @export_group("Extras")
 @export var unbreakable: bool
@@ -9,6 +11,7 @@ class_name ItemBase
   get:
     return max(0, damage)
 
+@export_group("Attributes")
 # @export_group("Food")
 # @export var nutrition: int:
 #   get:

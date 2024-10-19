@@ -45,6 +45,8 @@ func _init(_base: CharacterBase, _level: int) -> void:
     base = _base
     level = _level
     attributes_base = base.attributes
+    hp = max_hp
+    mp = max_mp
     set_skills()
 # </init>
 
