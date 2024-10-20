@@ -48,3 +48,23 @@ func calculated_damage(_target: UnitModel, _damage_detail: DamageDetailModel) ->
       target_defense = 1.0
     dmg = (dmg / target_defense) + 2.0
     return max(0, int(dmg))
+
+func take_attribute_effect(_target: UnitModel, _attr_eff: AttributeEffect) -> bool:
+  if _target == null or _attr_eff == null:
+    print("[!] take_attribute_effect: Null")
+    return 0
+  
+  if !(_target.attributes_modified.has(_attr_eff.attribute)):
+    print("[!] Target dont have this attribute")
+    return 0
+  _target.attributes_modified[_attr_eff.attribute] = calculated_attribute_effect(_target, _attr_eff)
+  return 1
+
+func calculated_attribute_effect(_target: UnitModel, _attr_eff: AttributeEffect):
+  if _target == null or _attr_eff == null:
+    return 0
+  
+  if !(_target.attributes_modified.has(_attr_eff.attribute)):
+    return 0
+  
+  return _target.attributes_modified[_attr_eff.attribute] + _attr_eff.amount

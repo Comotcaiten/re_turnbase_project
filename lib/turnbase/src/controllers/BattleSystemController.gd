@@ -86,7 +86,9 @@ func perform_skill_choice():
   var is_fainted = run_skill(enemy, player, player.unit.skills[current_skill])
   print("[>] is_fainted: ", is_fainted)
   print("[>] Player: ", unit_service.get_hp(player.unit))
+  unit_service.print_data(player.unit)
   print("[>] Enemy: ", unit_service.get_hp(enemy.unit))
+  unit_service.print_data(enemy.unit)
 
 func set_current_skill(_value: int):
   if !(_value >= player.unit.skills.size()):
