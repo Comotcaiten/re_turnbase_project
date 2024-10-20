@@ -8,20 +8,27 @@ enum TypeDamage {Damage, Multiplier, PercentLeft, PercentMising}
 @export var true_damage: bool
 
 func apply(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> bool:
-  _target.hp -= calculator_damage(_source, _target, _skill)
+  # _target.hp -= calculator_damage(_source, _target, _skill)
+  
+  UnitService.new().take_damage(_target, calculator_damage(_source, _target, _skill))
   return _target.hp <= 0
 
-func calculator_damage(_target: UnitModel, _source: UnitModel, _skill: SkillModel):
+func calculator_damage(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> DamageDetailModel:
+  var damage_detail = DamageDetailModel.new(0, ElementBase.Type.None, false, 0)
   if (_target == null) or (_source == null) or (_skill == null):
-    return 0
+    return damage_detail
   
   var critical = 1.0
   var type_eff = 1.0
 
+  var element: ElementBase.Type
+
   if _skill != null:
     type_eff = ElementService.get_effectiveness(_skill.element, _target.element)
+    element = _skill.element
   else:
     type_eff = ElementService.get_effectiveness(_source.element, _target.element)
+    element = _source.element
   
   var attacker_damage = _source.attack
   
@@ -50,5 +57,5 @@ func calculator_damage(_target: UnitModel, _source: UnitModel, _skill: SkillMode
 			# Gây sát thương dựa trên % máu đã mất của mục tiêu
       var missing_hp = _target.max_hp - _target.hp
       damage = missing_hp * (power / 100.0)
-  
-  return max(0, int(damage))
+
+  return DamageDetailModel.new(max(0, int(damage)), element, true_damage, 0)

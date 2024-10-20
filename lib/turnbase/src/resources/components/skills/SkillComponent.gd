@@ -3,6 +3,7 @@ class_name SkillComponent
 
 @export var target: SkillBase.Target
 
+@export var trigger: SkillComponentTrigger
 @export var condition: SkillComponentCondition
 @export var mechanic: SkillComponentMechanic
 
@@ -33,6 +34,9 @@ func check_condition(_target: UnitModel, _source: UnitModel, _skill: SkillModel)
 func apply_mechanic(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> bool:
   if mechanic == null:
     return true
+  if mechanic is SkillComponentMechanicDamage:
+    var mechanic_damage: SkillComponentMechanicDamage = mechanic
+    return mechanic_damage.apply(_target, _source, _skill)
   if mechanic is SkillComponentMechanic:
     return true
   return false

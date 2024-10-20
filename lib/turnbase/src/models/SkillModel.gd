@@ -7,13 +7,18 @@ func _init(_base: SkillBase) -> void:
     base = _base
     element = _base.element
 
-func use(_target: UnitModel, _source: UnitModel, _skill: SkillModel):
+func use(_target: UnitModel, _source: UnitModel):
     if base.component_if == null:
+        print("[!] component_if: null")
         return false
-    elif base.component_if.run_component(_target, _source, _skill):
+    elif base.component_if.run_component(_target, _source, self):
+        print("[!] component_if: true")
         return true
     elif base.component_else == null:
+        print("[!] component_ele: null")
         return false
-    elif base.component_if.run_component(_target, _source, _skill):
+    elif base.component_if.run_component(_target, _source, self):
+        print("[!] component_else: true")
         return true
+    print("[!] component: null")
     return false

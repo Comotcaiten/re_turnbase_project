@@ -11,7 +11,27 @@ class_name ItemBase
   get:
     return max(0, damage)
 
-@export_group("Attributes")
+@export_group("Attributes Bonus")
+@export var hp: int
+@export var mp: int
+@export var attack: int
+@export var defense: int
+@export var speed: int
+@export var crit: int
+
+var attributes: Dictionary:
+    get:
+        return {
+            AttributeBase.Type.None: 0,
+            AttributeBase.Type.Hp: hp,
+            AttributeBase.Type.Mp: mp,
+            AttributeBase.Type.Attack: attack,
+            AttributeBase.Type.Defense: defense,
+            AttributeBase.Type.Speed: speed,
+            AttributeBase.Type.Critical: crit,
+            AttributeBase.Type.Others: 0
+        }
+
 # @export_group("Food")
 # @export var nutrition: int:
 #   get:

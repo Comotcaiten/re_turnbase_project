@@ -11,6 +11,7 @@ var unit: UnitModel
 
 func set_data():
     unit = UnitModel.new(base, level)
+    is_player_unit()
     load_model3D()
 
 func load_model3D() -> bool:
@@ -18,3 +19,8 @@ func load_model3D() -> bool:
         print("[!] Character base dont have a model3D")
         return false
     return model3D.set_data(base.model3D)
+
+func is_player_unit():
+    if is_player:
+        return
+    self.rotation.y = deg_to_rad(180)

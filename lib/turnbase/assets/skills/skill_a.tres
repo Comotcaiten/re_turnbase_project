@@ -1,8 +1,22 @@
-[gd_resource type="Resource" script_class="SkillBase" load_steps=2 format=3 uid="uid://bwv76nsjslvur"]
+[gd_resource type="Resource" script_class="SkillBase" load_steps=6 format=3 uid="uid://bwv76nsjslvur"]
 
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/components/skills/SkillComponentMechanicDamage.gd" id="1_0cqsv"]
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="1_x1dtt"]
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/components/skills/SkillComponent.gd" id="2_nf2qo"]
+
+[sub_resource type="Resource" id="Resource_dmy77"]
+script = ExtResource("1_0cqsv")
+damage_type = 0
+power = 100
+true_damage = false
+
+[sub_resource type="Resource" id="Resource_jyiho"]
+script = ExtResource("2_nf2qo")
+target = 0
+mechanic = SubResource("Resource_dmy77")
 
 [resource]
 script = ExtResource("1_x1dtt")
 name = "skill_a"
 element = 1
+component_if = SubResource("Resource_jyiho")
