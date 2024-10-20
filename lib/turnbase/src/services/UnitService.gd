@@ -22,12 +22,8 @@ func print_skills(_source: UnitModel):
     print("[>] * ", index, ": ", _source.skills[index].base.name)
   return
 
-func take_damage(_target: UnitModel, _damage_detail: DamageDetailModel) -> bool:
-  if _target == null or _damage_detail == null:
-    return false
-  print("[>] ", _target.base.name, " take ", _damage_detail.damage, " DMG")
-  _target.hp -= _damage_detail.damage
-  return _target.hp <= 0
+func get_hp(_source: UnitModel) -> String:
+  return "HP: " + str(_source.hp) + "/" + str(_source.max_hp)
 
 func get_passive_skill():
   return
@@ -35,5 +31,20 @@ func get_passive_skill():
 func run_skill():
   return
 
-func get_hp(_source: UnitModel) -> String:
-  return "HP: " + str(_source.hp) + "/" + str(_source.max_hp)
+func take_damage(_target: UnitModel, _damage_detail: DamageDetailModel) -> bool:
+  if _target == null or _damage_detail == null:
+    return false
+  var dmg = calculated_damage(_target, _damage_detail)
+  print("[>] ", _target.base.name, " take ", dmg, " DMG")
+  _target.hp -= dmg
+  return _target.hp <= 0
+
+func calculated_damage(_target: UnitModel, _damage_detail: DamageDetailModel) -> int:
+    if _target == null or _damage_detail == null:
+      return 0
+    var dmg = _damage_detail.damage * 1.0
+    var target_defense = _target.defense * 1.0
+    if _damage_detail.true_damage:
+      target_defense = 1.0
+    dmg = (dmg / target_defense) + 2.0
+    return max(0, int(dmg))
