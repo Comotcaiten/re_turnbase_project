@@ -12,6 +12,8 @@ var unit: UnitModel
 var skills_combat: Array[SkillModel]
 var skills_passive: Array[SkillModel]
 
+var is_fainted: bool
+
 func set_data():
     unit = UnitModel.new(base, level)
     skills_combat = unit.skills_combat

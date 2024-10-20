@@ -1,7 +1,7 @@
 extends Resource
 class_name SkillComponent
 
-@export var target: SkillBase.Target
+# @export var target: SkillBase.Target
 
 @export var condition: SkillComponentCondition
 @export var mechanic: SkillComponentMechanic
@@ -10,12 +10,12 @@ func run_component(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -
 	if _target == null or _source == null or _skill == null:
 		return false
   
-	var get_target
-	match target:
-		SkillBase.Target.Foe:
-			get_target = _target
-		SkillBase.Target.Self:
-			get_target = _source
+	var get_target = _target
+	# match target:
+	# 	SkillBase.Target.Foe:
+	# 		get_target = _target
+	# 	SkillBase.Target.Self:
+	# 		get_target = _source
   
 	if check_condition(get_target, _source, _skill):
 		apply_mechanic(get_target, _source, _skill)

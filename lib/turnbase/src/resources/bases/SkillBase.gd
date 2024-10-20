@@ -1,7 +1,7 @@
 extends Resource
 class_name SkillBase
 
-enum Target {Foe, Self}
+# enum Target {Foe, Self}
 enum Trigger {Cast, Kill, Death, TookSkillDamage, Land}
 
 @export var name: String

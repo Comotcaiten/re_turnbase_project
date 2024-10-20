@@ -1,6 +1,10 @@
 class_name UnitModel
 
 var base: CharacterBase
+
+var name: String:
+    get:
+        return base.name
 var level: int:
     get:
         return max(0, level)
