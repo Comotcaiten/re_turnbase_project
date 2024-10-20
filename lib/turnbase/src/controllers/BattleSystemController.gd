@@ -99,3 +99,21 @@ func set_current_skill(_value: int):
 func run_skill(_target: BattleUnitModel, _source: BattleUnitModel, _skill: SkillModel):
   _skill.use(_target.unit, _source.unit)
   return _target.unit.hp <= 0
+
+
+# <For combat passive>
+func on_unit_killed(_target: UnitModel, _source: UnitModel):
+  # The _source killed _target
+  for skill in _source.skills_passive:
+    if skill.base.trigger == SkillBase.Trigger.Kill:
+      skill.use(_target, _source)
+  return
+
+func on_unit_death(_target: UnitModel, _source: UnitModel):
+  # The _target death by _source
+  # source: attacker, target: the death one
+  for skill in _target.skills_passive:
+    if skill.base.trigger == SkillBase.Trigger.Death:
+      skill.use(_target, _source)
+  return
+# </For combat passive>

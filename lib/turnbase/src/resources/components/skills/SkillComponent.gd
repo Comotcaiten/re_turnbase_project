@@ -3,7 +3,6 @@ class_name SkillComponent
 
 @export var target: SkillBase.Target
 
-@export var trigger: SkillComponentTrigger
 @export var condition: SkillComponentCondition
 @export var mechanic: SkillComponentMechanic
 

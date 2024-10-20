@@ -5,7 +5,10 @@ var level: int:
     get:
         return max(0, level)
 var element: ElementBase.Type
+
 var skills: Array[SkillModel]
+var skills_combat: Array[SkillModel]
+var skills_passive: Array[SkillModel]
 
 var attributes_base: Dictionary
 var attributes_modified: Dictionary = {
@@ -76,4 +79,20 @@ func set_skills():
         if skill == null:
             continue
         skills.append(SkillModel.new(skill))
+    for skill in skills:
+        match skill.base.trigger:
+            SkillBase.Trigger.Cast:
+                skills_combat.append(skill)
+            _:
+                skills_passive.append(skill)
 # </Set>
+
+# <Signals>
+func die():
+    # Logic chết đơn vị
+    return
+
+func on_kill_target():
+    # Gọi khi một đơn vị tiêu diệt một mục tiêu
+    return
+# </Signals>

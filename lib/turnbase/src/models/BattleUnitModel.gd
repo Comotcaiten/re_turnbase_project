@@ -9,8 +9,13 @@ class_name BattleUnitModel
 
 var unit: UnitModel
 
+var skills_combat: Array[SkillModel]
+var skills_passive: Array[SkillModel]
+
 func set_data():
     unit = UnitModel.new(base, level)
+    skills_combat = unit.skills_combat
+    skills_passive = unit.skills_passive
     is_player_unit()
     load_model3D()
 
