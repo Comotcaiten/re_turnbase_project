@@ -8,6 +8,7 @@ enum TypeDamage {Damage, Multiplier, PercentLeft, PercentMising}
 @export var true_damage: bool
 
 func apply(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> bool:
+  print("[>] TEST: ", _target.name)
   unit_service.take_damage(_target, calculator_damage(_source, _target, _skill))
   return _target.hp <= 0
 

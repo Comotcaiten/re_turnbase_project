@@ -8,6 +8,7 @@ func _init(_base: SkillBase) -> void:
 	element = _base.element
 
 func use(_target: UnitModel, _source: UnitModel):
+	print("[>] Skill use: target - ", _target.name, " get eff skill's source - ", _source.name)
 	if base.component_if == null:
 		print("[!] component_if: null")
 		return false

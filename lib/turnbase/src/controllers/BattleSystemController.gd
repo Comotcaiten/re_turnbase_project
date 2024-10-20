@@ -110,9 +110,9 @@ func run_skill(_target: BattleUnitModel, _source: BattleUnitModel, _skill: Skill
 # <For combat passive>
 func on_unit_killed(_target: UnitModel, _source: UnitModel):
   # The _source killed _target
-  # for skill in _source.skills_passive:
-  #   if skill.base.trigger == SkillBase.Trigger.Kill:
-  #     skill.use(_target, _source)
+  for skill in _source.skills_passive:
+    if skill.base.trigger == SkillBase.Trigger.Kill:
+      print("[>] Perform passive skill trigger by killed unit: ", skill.base.name, ", ", skill.use(_target, _source))
   print("[>] ", _source.name, " killed ", _target.name)
   return
 
