@@ -38,6 +38,11 @@ func apply_mechanic(_target: UnitModel, _source: UnitModel, _skill: SkillModel) 
 	if mechanic is SkillComponentMechanicAttribute:
 		var mechanic_attribute: SkillComponentMechanicAttribute = mechanic
 		return mechanic_attribute.apply(_target, _source, _skill)
+
+	if mechanic is SkillComponentMechanicReven:
+		var reven: SkillComponentMechanicReven = mechanic
+		return reven.apply(_target, _source, _skill)
+
 	if mechanic is SkillComponentMechanic:
 		return true
 	return false

@@ -1,10 +1,25 @@
 extends Node
 class_name BattleSystemController
 
-enum TypeState {CharacterTurn, ActionChoice, SkillChoice}
+enum TypeState {CharacterTurn, ActionChoice, TargetChoice, SkillChoice}
 
 @export var player: BattleUnitModel
-@export var enemy: BattleUnitModel
+
+var units_player: Array[BattleUnitModel]:
+  get:
+    return [player]
+
+@export var units_enmey: Array[BattleUnitModel]:
+  get:
+    var arr: Array[BattleUnitModel] = []
+    for unit in units_enmey:
+      if unit != null:
+        arr.append(unit)
+    return arr
+
+var units: Array[BattleUnitModel]:
+  get:
+    return units_player + units_enmey
 
 var unit_service: UnitService = UnitService.new()
 
@@ -17,13 +32,21 @@ var current_action: int:
     print("[>] current_action: ", current_action)
 var actions = ["Attack", "Defense"]
 
+var current_target: int:
+  set(_value):
+    if !(_value >= units.size()):
+      current_target = _value
+    print("[>] current_target: ", current_target)
+    print("[>] target: ", units[current_target].unit.name)
+
 var current_skill: int
 
 func _ready():
-  player.set_data()
-  enemy.set_data()
-  unit_service.print_data(player.unit)
-  unit_service.print_data(enemy.unit)
+  print("[>] units: ", units)
+  for unit in units:
+    unit.set_data()
+    unit_service.print_data(unit.unit)
+
   state = TypeState.CharacterTurn
   pass
 
@@ -63,7 +86,21 @@ func perform_action_choice():
     _:
       state = TypeState.ActionChoice
 
+func perform_state_target():
+  if Input.is_action_just_pressed("ui_left"):
+    current_target -= 1
+    if current_target == 0:
+      current_target = units.size() - 1
+    return
+  if Input.is_action_just_pressed("ui_right"):
+    current_target += 1
+    if current_target == units.size():
+      current_target = units.size() - 1
+    return
+  return
+
 func perform_state_skill():
+  perform_state_target()
   if Input.is_action_just_pressed("ui_skill_1"):
     set_current_skill(0)
   if Input.is_action_just_pressed("ui_skill_2"):
@@ -76,24 +113,35 @@ func perform_state_skill():
   if Input.is_action_just_pressed("ui_accept"):
     perform_skill_choice()
 
+
 func perform_skill_choice():
   if player.unit.skills == []:
     return
   if player.unit.skills[current_skill] == null:
     return
+  
+  if units[current_target].unit.hp <= 0:
+    print("[>] _target have hp <= 0")
+    return
   print("[>] skill: ", player.unit.skills[current_skill])
 
-  var is_fainted = run_skill(enemy, player, player.unit.skills[current_skill])
+  var is_fainted = run_skill(units[current_target], player, player.unit.skills[current_skill])
+
   print("[>] Player: ", unit_service.get_hp(player.unit))
   unit_service.print_data(player.unit)
-  print("[>] Enemy: ", unit_service.get_hp(enemy.unit))
-  unit_service.print_data(enemy.unit)
+
   print("[>] is_fainted: ", is_fainted)
-  if is_fainted and !enemy.is_fainted:
-    enemy.is_fainted = is_fainted
-    on_unit_death(enemy.unit, player.unit)
-    on_unit_killed(enemy.unit, player.unit)
-    print("[>] ------")
+
+  if is_fainted and !(units[current_target].is_fainted):
+    units[current_target].is_fainted = is_fainted
+    on_unit_death(units[current_target].unit, player.unit)
+    on_unit_killed(units[current_target].unit, player.unit)
+
+    print("[>] END")
+    unit_service.print_data(player.unit)
+    unit_service.print_data(units[current_target].unit)
+    print("[>] Player: ", unit_service.get_hp(player.unit))
+    print("[>] Target: ", unit_service.get_hp(units[current_target].unit))
 
 func set_current_skill(_value: int):
   if !(_value >= player.unit.skills.size()):
@@ -119,9 +167,9 @@ func on_unit_killed(_target: UnitModel, _source: UnitModel):
 func on_unit_death(_target: UnitModel, _source: UnitModel):
   # The _target death by _source
   # source: attacker, target: the death one
-  # for skill in _target.skills_passive:
-  #   if skill.base.trigger == SkillBase.Trigger.Death:
-  #     skill.use(_target, _source)
+  for skill in _target.skills_passive:
+    if skill.base.trigger == SkillBase.Trigger.Death:
+      skill.use(_target, _source)
   print("[>] ", _target.name, " death by ", _source.name)
   return
 # </For combat passive>

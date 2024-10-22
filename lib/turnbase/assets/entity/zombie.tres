@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=4 format=3 uid="uid://b64sy1726o1wn"]
+
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/CharacterBase.gd" id="1_2568y"]
+[ext_resource type="PackedScene" uid="uid://cbuwbx7ny3ae3" path="res://lib/turnbase/assets/models/zombie/zome.gltf" id="1_hoqs1"]
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="2_3lk4b"]
+
+[resource]
+script = ExtResource("1_2568y")
+name = "zombie"
+element = 1
+hp = 5
+mp = 5
+attack = 5
+defense = 5
+speed = 5
+crit = 5
+skills = Array[ExtResource("2_3lk4b")]([])
+model3D = ExtResource("1_hoqs1")

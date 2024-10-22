@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/CharacterBase.gd" id="1_rjvvq"]
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="3_hc07d"]
 [ext_resource type="Resource" uid="uid://bwv76nsjslvur" path="res://lib/turnbase/assets/skills/skill_a.tres" id="4_pyayh"]
-[ext_resource type="Resource" uid="uid://ccp10shywoium" path="res://lib/turnbase/assets/skills/skill_passive.tres" id="5_nt2mg"]
+[ext_resource type="Resource" uid="uid://ccp10shywoium" path="res://lib/turnbase/assets/skills/retrun_from_death.tres" id="5_nt2mg"]
 
 [resource]
 script = ExtResource("1_rjvvq")
