@@ -8,7 +8,6 @@ enum TypeDamage {Damage, Multiplier, PercentLeft, PercentMising}
 @export var true_damage: bool
 
 func apply(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> bool:
-  print("[>] TEST: ", _target.name)
   unit_service.take_damage(_target, calculator_damage(_source, _target, _skill))
   return _target.hp <= 0
 
@@ -29,7 +28,12 @@ func calculator_damage(_target: UnitModel, _source: UnitModel, _skill: SkillMode
     type_eff = ElementService.get_effectiveness(_source.element, _target.element)
     element = _source.element
   
-  var attacker_damage = _source.attack
+  var item_damage = 0.0
+  if _source.item != null:
+    item_damage = _source.item.base.damage * 1.0
+    print("[>] Item damage: ", item_damage)
+
+  var attacker_damage = (_source.attack * 1.0) + item_damage
 
   var damage = 0
   match damage_type:

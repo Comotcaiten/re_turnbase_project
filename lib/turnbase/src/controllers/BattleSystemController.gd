@@ -127,19 +127,18 @@ func perform_skill_choice():
 
   var is_fainted = run_skill(units[current_target], player, player.unit.skills[current_skill])
 
-  print("[>] Player: ", unit_service.get_hp(player.unit))
-  unit_service.print_data(player.unit)
-
   print("[>] is_fainted: ", is_fainted)
+
+  print("[>] <Before>")
+  print("[>] Player: ", player.unit.name, ": ", unit_service.get_hp(player.unit))
+  print("[>] Target: ", units[current_target].unit.name, ": ", unit_service.get_hp(units[current_target].unit))
 
   if is_fainted and !(units[current_target].is_fainted):
     units[current_target].is_fainted = is_fainted
     on_unit_death(units[current_target].unit, player.unit)
     on_unit_killed(units[current_target].unit, player.unit)
 
-    print("[>] END")
-    unit_service.print_data(player.unit)
-    unit_service.print_data(units[current_target].unit)
+    print("[>] <After>")
     print("[>] Player: ", unit_service.get_hp(player.unit))
     print("[>] Target: ", unit_service.get_hp(units[current_target].unit))
 
@@ -160,8 +159,7 @@ func on_unit_killed(_target: UnitModel, _source: UnitModel):
   # The _source killed _target
   for skill in _source.skills_passive:
     if skill.base.trigger == SkillBase.Trigger.Kill:
-      print("[>] Perform passive skill trigger by killed unit: ", skill.base.name, ", ", skill.use(_target, _source))
-  print("[>] ", _source.name, " killed ", _target.name)
+      print("[>] Perform passive skill trigger by killed: ", _source.name, " killed ", _target.name)
   return
 
 func on_unit_death(_target: UnitModel, _source: UnitModel):
@@ -169,7 +167,7 @@ func on_unit_death(_target: UnitModel, _source: UnitModel):
   # source: attacker, target: the death one
   for skill in _target.skills_passive:
     if skill.base.trigger == SkillBase.Trigger.Death:
-      skill.use(_target, _source)
-  print("[>] ", _target.name, " death by ", _source.name)
+      skill.use(_source, _target)
+  print("[>] [>] Perform passive skill trigger by death: ", _target.name, " death by ", _source.name)
   return
 # </For combat passive>

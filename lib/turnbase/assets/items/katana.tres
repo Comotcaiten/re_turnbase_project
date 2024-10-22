@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=2 format=3 uid="uid://v8g1213gotek"]
+
+[ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/ItemBase.gd" id="1_2l5h4"]
+
+[resource]
+script = ExtResource("1_2l5h4")
+name = "katana"
+description = "katana"
+unbreakable = true
+damage = 10
+hp = 0
+mp = 0
+attack = -10
+defense = 0
+speed = 0
+crit = 0

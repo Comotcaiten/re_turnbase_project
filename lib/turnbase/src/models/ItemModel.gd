@@ -1,6 +1,6 @@
 class_name ItemModel
 
-var base: SkillBase
+var base: ItemBase
 
-func _init(_base: SkillBase) -> void:
+func _init(_base: ItemBase) -> void:
   base = _base

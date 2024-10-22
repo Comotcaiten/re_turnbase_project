@@ -28,11 +28,11 @@ func load_model(_model: Resource):
     # Init
     var instance = _model.instantiate()
     
-    print("[>] Instance: ", instance)
-    print("[>] Exist: ", blockbench_export)
+    # print("[>] Instance: ", instance)
+    # print("[>] Exist: ", blockbench_export)
 
     if instance and blockbench_export:
-        print("[>] Load: Start")
+        # print("[>] Load: Start")
 
         # Ready
         instance.position = blockbench_export.position
@@ -46,9 +46,9 @@ func load_model(_model: Resource):
         data = instance
         animation = data.get_child(1)
 
-        print("[>] Exist: ", blockbench_export)
-        print("[>] Animation: ", animation)
-        print("[>] Model loaded successfully.")
+        # print("[>] Exist: ", blockbench_export)
+        # print("[>] Animation: ", animation)
+        # print("[>] Model loaded successfully.")
     else:
         print("[!] Failed to load the model. (Please check model and blockbench_export in point)")
 
@@ -66,8 +66,8 @@ func run_animation_debug(_name: String) -> int:
     if _name == null or _name.is_empty():
         return 0
     var exist = animation.has_animation(_name)
-    print("[>] Run animation ", _name)
-    print("[>] Get animation ", _name, ", ", exist)
+    # print("[>] Run animation ", _name)
+    # print("[>] Get animation ", _name, ", ", exist)
     if exist:
         animation.play(_name)
     else:

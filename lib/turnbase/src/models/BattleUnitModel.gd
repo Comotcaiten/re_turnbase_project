@@ -4,6 +4,9 @@ class_name BattleUnitModel
 @export var base: CharacterBase
 @export var level: int
 @export var is_player: bool
+
+@export var item: ItemBase
+
 @export var hud: BattleHUD
 @export var model3D: LoadModelBlockBench
 
@@ -15,7 +18,7 @@ var skills_passive: Array[SkillModel]
 var is_fainted: bool
 
 func set_data():
-    unit = UnitModel.new(base, level)
+    unit = UnitModel.new(base, level, item)
     skills_combat = unit.skills_combat
     skills_passive = unit.skills_passive
     is_player_unit()

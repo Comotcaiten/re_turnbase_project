@@ -15,12 +15,16 @@ func run_component(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -
 			get_target = _target
 		SkillBase.Target.Self:
 			get_target = _source
+	
+	# if _source == _target:
+	# 	print("[>] <> True")
+	# else:
+	# 	print("[>] <> False")
   
 	if check_condition(get_target, _source, _skill):
-		apply_mechanic(get_target, _source, _skill)
+		return apply_mechanic(get_target, _source, _skill)
 	else:
-		print("[!] Skill Condition is false")
-	return true
+		return false
 
 func check_condition(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> bool:
 	if condition == null:

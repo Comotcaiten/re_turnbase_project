@@ -3,7 +3,7 @@ class_name ItemBase
 
 @export var name: String
 @export var description: String # Thêm mô tả cho vật phẩm
-@export var rarity: String # Thêm độ hiếm cho vật phẩm (Common, Rare, Legendary)
+# @export var rarity: String # Thêm độ hiếm cho vật phẩm (Common, Rare, Legendary)
 
 @export_group("Extras")
 @export var unbreakable: bool
@@ -31,7 +31,6 @@ var attributes: Dictionary:
             AttributeBase.Type.Critical: crit,
             AttributeBase.Type.Others: 0
         }
-
 # @export_group("Food")
 # @export var nutrition: int:
 #   get:

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7gveqxs684mw"]
+[gd_scene load_steps=13 format=3 uid="uid://c7gveqxs684mw"]
 
 [ext_resource type="Script" path="res://lib/turnbase/src/controllers/BattleSystemController.gd" id="1_qodbm"]
 [ext_resource type="PackedScene" uid="uid://ck7vfx5ypo5of" path="res://test/character.tscn" id="2_buc68"]
 [ext_resource type="Resource" uid="uid://b3rq63lvo161" path="res://lib/turnbase/assets/entity/samurai.tres" id="3_gjypw"]
 [ext_resource type="Resource" uid="uid://btmgoruo2jrsv" path="res://lib/turnbase/assets/entity/redstone_golem.tres" id="4_hnpt7"]
-[ext_resource type="Resource" uid="uid://b64sy1726o1wn" path="res://lib/turnbase/assets/entity/zombie.tres" id="5_w87xc"]
+[ext_resource type="Resource" uid="uid://v8g1213gotek" path="res://lib/turnbase/assets/items/katana.tres" id="4_r36ww"]
+[ext_resource type="Resource" path="res://lib/turnbase/assets/entity/zombie.tres" id="5_w87xc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -52,6 +53,7 @@ transform = Transform3D(1, 6.63022e-10, 0, -6.99856e-10, 1, 6.98492e-10, -3.4924
 base = ExtResource("3_gjypw")
 level = 10
 is_player = true
+item = ExtResource("4_r36ww")
 
 [node name="Enemy" parent="BattleArea" instance=ExtResource("2_buc68")]
 transform = Transform3D(1, 1.97815e-10, 0, -2.3374e-10, 1, 2.32831e-10, -1.16415e-10, -2.32831e-10, 1, 0, 0, -5)
