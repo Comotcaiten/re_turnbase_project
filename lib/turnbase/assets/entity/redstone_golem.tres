@@ -9,11 +9,11 @@
 script = ExtResource("1_53sis")
 name = "red stone golem"
 element = 1
-hp = 15
-mp = 15
-attack = 15
-defense = 15
-speed = 15
-crit = 15
+hp = 10
+mp = 5
+attack = 8
+defense = 10
+speed = 6
+crit = 5
 skills = Array[ExtResource("2_imeji")]([ExtResource("4_yb1bp")])
 model3D = ExtResource("1_au3yi")

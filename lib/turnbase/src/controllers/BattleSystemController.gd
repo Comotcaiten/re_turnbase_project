@@ -29,13 +29,13 @@ var actions = ["Attack", "Defense"]
 
 var current_action: int:
   set(value):
-    if !(value > actions.size() - 1):  # Sửa ở đây
+    if !(value > actions.size() - 1): # Sửa ở đây
       current_action = value
     print("[>] current_action: ", current_action)
 
 var current_target: int:
   set(_value):
-    if !(_value > units.size() - 1):  # Sửa ở đây
+    if !(_value > units.size() - 1): # Sửa ở đây
       current_target = _value
     print("[>] current_target: ", current_target)
     print("[>] target: ", units[current_target].unit.name)
@@ -72,26 +72,28 @@ func _process(_delta):
   pass
 
 func next_turn():
+  if check_fainted_units(units_player) or check_fainted_units(units_enemy):
+    state = TypeState.EndBattle
+    print("[>] <END>-------------------------------------</END>")
+    return
+  else:
+    print("[>] ------------------------------------------------")
+  
   current_unit_index += 1
   if current_unit_index >= turn_queue.size():
-      current_unit_index = 0  # Quay lại đơn vị đầu tiên nếu hết lượt
+      current_unit_index = 0 # Quay lại đơn vị đầu tiên nếu hết lượt
     
   var current_unit = turn_queue[current_unit_index]
   if current_unit.is_fainted:
-    print("[>] Đơn vị ", turn_queue[current_unit_index].name , " is fainted, Skip")
-    next_turn()  # Nếu đơn vị đã bị hạ gục, bỏ qua và chuyển lượt
+    print("[>] Đơn vị ", turn_queue[current_unit_index].name, " is fainted, Skip")
+    next_turn() # Nếu đơn vị đã bị hạ gục, bỏ qua và chuyển lượt
   else:
     print("[>] Lượt của đơn vị: ", current_unit.unit.name)
-    state = TypeState.CharacterTurn  # Quay lại trạng thái để xử lý lượt của đơn vị
+    state = TypeState.CharacterTurn # Quay lại trạng thái để xử lý lượt của đơn vị
 
 # <Perform>
 func perform_state_character():
   # Logic để xử lý lượt của người chơi (như chọn hành động, mục tiêu, kỹ năng, v.v.)
-
-  if check_fainted_units(units_player) or check_fainted_units(units_enemy):
-    state = TypeState.EndBattle
-  else:
-    print("[>] ------------------------------------------------")
 
   if turn_queue[current_unit_index].is_player:
     print("[>] Player state")
@@ -179,8 +181,8 @@ func perform_state_is_fainted(_target: BattleUnitModel, _source: BattleUnitModel
     on_unit_death(units[current_target].unit, player.unit)
     on_unit_killed(units[current_target].unit, player.unit)
   
-  if !check_fainted_units(units_player) or !check_fainted_units(units_enemy):
-    next_turn()
+  # if !check_fainted_units(units_player) or !check_fainted_units(units_enemy):
+  next_turn()
   return
 
 func perform_run_skill(_target: BattleUnitModel, _source: BattleUnitModel, _skill: SkillModel):
