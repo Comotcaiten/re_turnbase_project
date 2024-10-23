@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/CharacterBase.gd" id="1_53sis"]
 [ext_resource type="PackedScene" uid="uid://k037i12rd5mo" path="res://lib/turnbase/assets/models/redstone_golem/redstone_golem.gltf" id="1_au3yi"]
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="2_imeji"]
-[ext_resource type="Resource" uid="uid://ccp10shywoium" path="res://lib/turnbase/assets/skills/retrun_from_death.tres" id="4_qe4xv"]
+[ext_resource type="Resource" uid="uid://bwv76nsjslvur" path="res://lib/turnbase/assets/skills/skill_a.tres" id="4_yb1bp"]
 
 [resource]
 script = ExtResource("1_53sis")
@@ -15,5 +15,5 @@ attack = 15
 defense = 15
 speed = 15
 crit = 15
-skills = Array[ExtResource("2_imeji")]([ExtResource("4_qe4xv")])
+skills = Array[ExtResource("2_imeji")]([ExtResource("4_yb1bp")])
 model3D = ExtResource("1_au3yi")

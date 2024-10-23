@@ -39,8 +39,9 @@ func load_model(_model: Resource):
         instance.rotation = blockbench_export.rotation
 
         # Replace
-        point.remove_child(blockbench_export)
-        point.add_child(instance)
+        # point.remove_child(blockbench_export)
+        # point.add_child(instance)
+        blockbench_export.add_child(instance)
 
         # Save point
         data = instance

@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://b3rq63lvo161" path="res://lib/turnbase/assets/entity/samurai.tres" id="3_gjypw"]
 [ext_resource type="Resource" uid="uid://btmgoruo2jrsv" path="res://lib/turnbase/assets/entity/redstone_golem.tres" id="4_hnpt7"]
 [ext_resource type="Resource" uid="uid://v8g1213gotek" path="res://lib/turnbase/assets/items/katana.tres" id="4_r36ww"]
-[ext_resource type="Resource" path="res://lib/turnbase/assets/entity/zombie.tres" id="5_w87xc"]
+[ext_resource type="Resource" uid="uid://b64sy1726o1wn" path="res://lib/turnbase/assets/entity/zombie.tres" id="5_w87xc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -29,11 +29,11 @@ albedo_color = Color(0.223529, 0.819608, 0.282353, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_nnb4v"]
 size = Vector2(20, 20)
 
-[node name="level" type="Node3D" node_paths=PackedStringArray("player", "units_enmey")]
+[node name="level" type="Node3D" node_paths=PackedStringArray("player", "units_enemy")]
 transform = Transform3D(0.999997, 0.00217356, -0.00113788, -0.00217605, 0.999995, -0.00220378, 0.0011331, 0.00220625, 0.999997, 0, 0, 0)
 script = ExtResource("1_qodbm")
 player = NodePath("BattleArea/Player")
-units_enmey = [NodePath("BattleArea/Enemy"), NodePath("BattleArea/Enemy2")]
+units_enemy = [NodePath("BattleArea/Enemy")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3pgoa")

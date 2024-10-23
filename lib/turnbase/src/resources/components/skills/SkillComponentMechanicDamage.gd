@@ -12,7 +12,7 @@ func apply(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> bool:
   return _target.hp <= 0
 
 func calculator_damage(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> DamageDetailModel:
-  var damage_detail = DamageDetailModel.new(0, ElementBase.Type.None, false, 0)
+  var damage_detail = DamageDetailModel.new(0, ElementBase.Type.None, false, _source, 0)
   if (_target == null) or (_source == null) or (_skill == null):
     return damage_detail
   
@@ -31,7 +31,6 @@ func calculator_damage(_target: UnitModel, _source: UnitModel, _skill: SkillMode
   var item_damage = 0.0
   if _source.item != null:
     item_damage = _source.item.base.damage * 1.0
-    print("[>] Item damage: ", item_damage)
 
   var attacker_damage = (_source.attack * 1.0) + item_damage
 
@@ -56,4 +55,4 @@ func calculator_damage(_target: UnitModel, _source: UnitModel, _skill: SkillMode
       var missing_hp = _target.max_hp - _target.hp
       damage = missing_hp * (power / 100.0)
 
-  return DamageDetailModel.new(max(0, int(damage)), element, true_damage, 0)
+  return DamageDetailModel.new(max(0, int(damage)), element, true_damage, _source, 0)
