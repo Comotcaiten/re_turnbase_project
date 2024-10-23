@@ -6,8 +6,8 @@ static var type_eff = [
     #   Fire
     #   Water
     [1.0, 1.0, 1.0],
-    [1.0, 1.0, 1.0],
-    [1.0, 1.0, 1.0]
+    [1.0, 1.0, 0.0],
+    [1.0, 2.5, 1.0]
 ]
 
 static func get_effectiveness(_attacker: ElementBase.Type, _defender: ElementBase.Type):

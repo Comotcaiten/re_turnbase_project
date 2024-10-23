@@ -75,7 +75,7 @@ func get_attribute(_attribute):
 
 	var amount_cal = amount_base + ((amount_base * amount_modified) / 100.0)
 
-	return int(amount_cal)
+	return max(0, int(amount_cal))
 
 func get_attributes_item(_attr: AttributeBase.Type) -> int:
 	if item == null:

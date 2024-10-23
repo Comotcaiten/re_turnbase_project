@@ -11,14 +11,16 @@ func use(_target: UnitModel, _source: UnitModel):
 	if base.component_if == null:
 		# print("[!] component_if: null")
 		return false
-	elif base.component_if.run_component(_target, _source, self):
+	
+	if base.component_if.run_component(_target, _source, self):
 		# print("[!] component_if: true")
 		return true
 	elif base.component_else == null:
 		# print("[!] component_ele: null")
 		return false
-	elif base.component_if.run_component(_target, _source, self):
+	elif base.component_else.run_component(_target, _source, self):
 		# print("[!] component_else: true")
 		return true
-	# print("[!] component: null")
-	return false
+	else:
+		# print("[!] component if, else: false")
+		return false

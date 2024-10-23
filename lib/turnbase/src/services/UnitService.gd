@@ -57,6 +57,7 @@ func take_attribute_effect(_target: UnitModel, _attr_eff: AttributeEffect) -> bo
   if !(_target.attributes_modified.has(_attr_eff.attribute)):
     print("[!] Target dont have this attribute")
     return 0
+  print("[>] ", _target.base.name, " take eff")
   _target.attributes_modified[_attr_eff.attribute] = calculated_attribute_effect(_target, _attr_eff)
   return 1
 

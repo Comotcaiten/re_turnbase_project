@@ -3,8 +3,10 @@ class_name BattleSystemController
 
 enum TypeState {CharacterTurn, ActionChoice, TargetChoice, SkillChoice, EndBattle}
 
-@export var player: BattleUnitModel
+var unit_service: UnitService = UnitService.new()
 
+# <Units in Battle>
+@export var player: BattleUnitModel
 var units_player: Array[BattleUnitModel]:
   get:
     return [player]
@@ -20,11 +22,11 @@ var units_player: Array[BattleUnitModel]:
 var units: Array[BattleUnitModel]:
   get:
     return units_player + units_enemy
-
-var unit_service: UnitService = UnitService.new()
+# </Units in Battle>
 
 var state: TypeState
 
+# <Action>
 var actions = ["Attack", "Defense"]
 
 var current_action: int:
@@ -32,23 +34,31 @@ var current_action: int:
     if !(value > actions.size() - 1): # Sửa ở đây
       current_action = value
     print("[>] current_action: ", current_action)
+# </Action>
 
+# <Target>
 var current_target: int:
   set(_value):
     if !(_value > units.size() - 1): # Sửa ở đây
       current_target = _value
+  get:
     print("[>] current_target: ", current_target)
     print("[>] target: ", units[current_target].unit.name)
-  get:
     return max(0, current_target)
+# </Target>
 
+# <Skill>
 var current_skill: int:
   get:
     return max(0, current_skill)
-  
+# </Skill>
+
+# <Turn queue>
 var turn_queue: Array[BattleUnitModel] = []
 var current_unit_index: int = 0
+# </Turn queue>
 
+# <Game>
 func _ready():
   print("[>] units: ", units)
   for unit in units:
@@ -70,6 +80,7 @@ func _process(_delta):
     TypeState.EndBattle:
       perform_state_end_battle()
   pass
+# </Game>
 
 func next_turn():
   if check_fainted_units(units_player) or check_fainted_units(units_enemy):
@@ -233,6 +244,9 @@ func on_unit_death(_target: UnitModel, _source: UnitModel):
 func update_hp():
   for unit in units:
     print("[>] ", unit.unit.name, " :", unit.unit.hp, "/", unit.unit.max_hp, " HP")
+    print("[>] <Data>")
+    unit_service.print_data(unit.unit)
+    print("[>] </Data>")
 
 func check_fainted_units(_units: Array[BattleUnitModel]) -> bool:
   for unit in _units:
