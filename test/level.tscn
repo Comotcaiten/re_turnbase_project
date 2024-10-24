@@ -29,10 +29,10 @@ albedo_color = Color(0.223529, 0.819608, 0.282353, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_nnb4v"]
 size = Vector2(20, 20)
 
-[node name="level" type="Node3D" node_paths=PackedStringArray("player", "units_enemy")]
+[node name="level" type="Node3D" node_paths=PackedStringArray("units_player", "units_enemy")]
 transform = Transform3D(0.999997, 0.00217356, -0.00113788, -0.00217605, 0.999995, -0.00220378, 0.0011331, 0.00220625, 0.999997, 0, 0, 0)
 script = ExtResource("1_qodbm")
-player = NodePath("BattleArea/Player")
+units_player = [NodePath("BattleArea/Player"), NodePath("BattleArea/Player2")]
 units_enemy = [NodePath("BattleArea/Enemy")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -60,9 +60,11 @@ transform = Transform3D(1, 1.97815e-10, 0, -2.3374e-10, 1, 2.32831e-10, -1.16415
 base = ExtResource("4_hnpt7")
 level = 10
 
-[node name="Enemy2" parent="BattleArea" instance=ExtResource("2_buc68")]
+[node name="Player2" parent="BattleArea" instance=ExtResource("2_buc68")]
 transform = Transform3D(1, -2.0016e-06, -3.83356e-06, 2.00847e-06, 0.999998, 0.00176278, 3.82937e-06, -0.00176278, 0.999998, -5, 0, 0)
 base = ExtResource("5_w87xc")
+level = 5
+is_player = true
 
 [node name="PointCamera" type="Node3D" parent="BattleArea"]
 transform = Transform3D(0.707107, 1.97815e-10, -0.707107, 1.16415e-10, 1, 2.32831e-10, 0.707107, -2.32831e-10, 0.707107, 0, 0, 0)

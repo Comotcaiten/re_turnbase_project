@@ -6,18 +6,14 @@ enum TypeState {CharacterTurn, ActionChoice, TargetChoice, SkillChoice, EndBattl
 var unit_service: UnitService = UnitService.new()
 
 # <Units in Battle>
-@export var player: BattleUnitModel
-var units_player: Array[BattleUnitModel]:
+var player: BattleUnitModel
+@export var units_player: Array[BattleUnitModel]:
   get:
-    return [player]
+    return get_units_party(units_player, true)
 
 @export var units_enemy: Array[BattleUnitModel]:
   get:
-    var arr: Array[BattleUnitModel] = []
-    for unit in units_enemy:
-      if unit != null:
-        arr.append(unit)
-    return arr
+    return get_units_party(units_enemy, false)
 
 var units: Array[BattleUnitModel]:
   get:
@@ -30,20 +26,13 @@ var state: TypeState
 var actions = ["Attack", "Defense"]
 
 var current_action: int:
-  set(value):
-    if !(value > actions.size() - 1): # Sửa ở đây
-      current_action = value
-    print("[>] current_action: ", current_action)
+  get:
+    return max(0, current_action)
 # </Action>
 
 # <Target>
 var current_target: int:
-  set(_value):
-    if !(_value > units.size() - 1): # Sửa ở đây
-      current_target = _value
   get:
-    print("[>] current_target: ", current_target)
-    print("[>] target: ", units[current_target].unit.name)
     return max(0, current_target)
 # </Target>
 
@@ -60,6 +49,8 @@ var current_unit_index: int = 0
 
 # <Game>
 func _ready():
+  print("[>] player: ", units_player)
+  print("[>] enemy: ", units_enemy)
   print("[>] units: ", units)
   for unit in units:
     unit.set_data()
@@ -108,6 +99,7 @@ func perform_state_character():
 
   if turn_queue[current_unit_index].is_player:
     print("[>] Player state")
+    player = turn_queue[current_unit_index]
     state = TypeState.ActionChoice
   else:
     print("[>] Enemy state")
@@ -126,13 +118,13 @@ func perform_state_enemy_turn():
 func perform_state_action():
 
   if Input.is_action_just_pressed("ui_skill_1"):
-    current_action = 0
+    set_current_action(0)
   if Input.is_action_just_pressed("ui_skill_2"):
-    current_action = 1
+    set_current_action(1)
   if Input.is_action_just_pressed("ui_skill_3"):
-    current_action = 2
+    set_current_action(2)
   if Input.is_action_just_pressed("ui_skill_4"):
-    current_action = 3
+    set_current_action(3)
   
   if Input.is_action_just_pressed("ui_accept"):
     perform_action_choice()
@@ -221,6 +213,15 @@ func set_current_skill(_value: int):
     current_skill = _value
   print("[>] current_skill: ", player.skills_combat[current_skill].base.name)
   return
+
+func set_current_action(_value: int):
+    if !(_value > actions.size() - 1):
+      current_action = _value
+    print("[>] current_action: ", current_action)
+
+func set_current_target(_value: int):
+    if !(_value > units.size() - 1): # Sửa ở đây
+      current_target = _value
 # </Set>
 
 # <For combat passive>
@@ -254,3 +255,10 @@ func check_fainted_units(_units: Array[BattleUnitModel]) -> bool:
       return false
   state = TypeState.EndBattle
   return true
+
+func get_units_party(_units: Array[BattleUnitModel], _is_player: bool) -> Array[BattleUnitModel]:
+  var arr: Array[BattleUnitModel] = []
+  for unit in _units:
+    if (unit != null) and (unit.is_player == _is_player):
+      arr.append(unit)
+  return arr
