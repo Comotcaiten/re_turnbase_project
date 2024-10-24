@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/CharacterBase.gd" id="1_rjvvq"]
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="3_hc07d"]
 [ext_resource type="Resource" uid="uid://bwv76nsjslvur" path="res://lib/turnbase/assets/skills/skill_a.tres" id="4_pyayh"]
-[ext_resource type="Resource" uid="uid://biftx7d5h5wqg" path="res://lib/turnbase/assets/skills/water_cut.tres" id="5_c6w85"]
+[ext_resource type="Resource" uid="uid://cibx2gxstch4u" path="res://lib/turnbase/assets/skills/water_cut.tres" id="5_c6w85"]
 
 [resource]
 script = ExtResource("1_rjvvq")

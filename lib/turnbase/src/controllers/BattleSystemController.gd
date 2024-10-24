@@ -49,14 +49,16 @@ var current_unit_index: int = 0
 
 # <Game>
 func _ready():
-  print("[>] player: ", units_player)
-  print("[>] enemy: ", units_enemy)
-  print("[>] units: ", units)
+  # print("[>] units: ", units)
   for unit in units:
     unit.set_data()
 
+  units = BatlleUnitArrayModel.sort_by_speed(units)
+
+  print("[>] units: ", units)
+
   # Tạo hàng đợi lượt từ các đơn vị
-  turn_queue = units_player + units_enemy
+  turn_queue = units
   state = TypeState.CharacterTurn
   pass
 
@@ -100,6 +102,7 @@ func perform_state_character():
   if turn_queue[current_unit_index].is_player:
     print("[>] Player state")
     player = turn_queue[current_unit_index]
+    print("[>] player: ", player.name, "/", player.unit.name)
     state = TypeState.ActionChoice
   else:
     print("[>] Enemy state")
@@ -140,14 +143,16 @@ func perform_action_choice():
 
 func perform_state_target():
   if Input.is_action_just_pressed("ui_left"):
-    current_target -= 1
     if current_target == 0:
-      current_target = units.size() - 1
+      set_current_target(units.size() - 1)
+      return
+    set_current_target(current_target - 1)
     return
   if Input.is_action_just_pressed("ui_right"):
-    current_target += 1
-    if current_target == units.size():
-      current_target = units.size() - 1
+    if current_target == max(0, (units.size() - 1)):
+      set_current_target(0)
+      return
+    set_current_target(current_target + 1)
     return
   return
 
@@ -209,19 +214,22 @@ func get_random_target_player():
 
 # <Set>
 func set_current_skill(_value: int):
+  if player.unit.skills.is_empty() or player.unit.skills_combat.is_empty():
+    return
   if !(_value >= player.unit.skills_combat.size()):
     current_skill = _value
   print("[>] current_skill: ", player.skills_combat[current_skill].base.name)
   return
 
 func set_current_action(_value: int):
-    if !(_value > actions.size() - 1):
-      current_action = _value
-    print("[>] current_action: ", current_action)
+  if !(_value > actions.size() - 1):
+    current_action = _value
+  print("[>] current_action: ", current_action)
 
 func set_current_target(_value: int):
-    if !(_value > units.size() - 1): # Sửa ở đây
-      current_target = _value
+  if !(_value > units.size() - 1): # Sửa ở đây
+    current_target = _value
+  print("[>] current target: ", current_target, " - ", units[current_target].name, " / ", units[current_target].unit.name)    
 # </Set>
 
 # <For combat passive>

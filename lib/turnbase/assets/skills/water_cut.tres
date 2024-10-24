@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillBase" load_steps=11 format=3 uid="uid://biftx7d5h5wqg"]
+[gd_resource type="Resource" script_class="SkillBase" load_steps=11 format=3 uid="uid://cibx2gxstch4u"]
 
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/bases/SkillBase.gd" id="1_jejhg"]
 [ext_resource type="Script" path="res://lib/turnbase/src/resources/components/skills/SkillComponentMechanicAttribute.gd" id="1_oxlj3"]
