@@ -10,7 +10,7 @@ class_name UnitModel
 @export var is_player: bool
 var is_fainted: bool
 
-var speed_changed: bool = false  # Thêm biến này để theo dõi sự thay đổi tốc độ
+var speed_changed: bool = false # Thêm biến này để theo dõi sự thay đổi tốc độ
 # </In Battle>
 
 # <Controller>
@@ -39,7 +39,7 @@ func initialize() -> bool:
 func get_skills() -> Array[SkillModel]:
     return skills_controller.get_skills()
 
-func get_skill_by_id(_id: int) -> SkillModel: 
+func get_skill_by_id(_id: int) -> SkillModel:
     return skills_controller.get_skill_by_id(_id)
 
 func get_random_skill():
@@ -53,7 +53,7 @@ func has_skill(_skill: SkillModel):
 func use_skill(_target: UnitModel, _skill: SkillModel):
     if _target == null or _skill == null:
         return false
-    print ("[UnitModel] use_skill: ", _skill.base.name, " on ", _target.name)
+    print("[UnitModel] use_skill: ", _skill.base.name, " on ", _target.name)
     var is_run: bool = _skill.run(_target, self)
     if is_run:
         on_signal_use_skill(_target, _skill)

@@ -35,17 +35,17 @@ func _ready():
 	print(unit_combatants)
 	pass
 
-func _process(_delta):
-	match state:
-		State.Start:
-			perform_state_start()
-		State.CharacterTurn:
-			perform_state_character()
-		State.SkillChoice:
-			perform_state_skill_choice()
-		State.End:
-			perform_state_end()
-	pass
+# func _process(_delta):
+# 	match state:
+# 		State.Start:
+# 			perform_state_start()
+# 		State.CharacterTurn:
+# 			perform_state_character()
+# 		State.SkillChoice:
+# 			perform_state_skill_choice()
+# 		State.End:
+# 			perform_state_end()
+# 	pass
 
 func initialize():
 	unit_combatant_player.initialize()
@@ -68,14 +68,14 @@ func sort_combined_queue():
 	update_turn_order()
 	pass
 
+func filter_is_not_fainted(a: UnitModel):
+	return a.is_player
+
 func reset_cycle():
 	count_cycle += 1
 	current_queue = -1
 	sort_combined_queue()
 	perform_next_turn()
-
-func filter_is_not_fainted(a: UnitModel):
-	return a.is_fainted
 
 # Hàm kiểm tra xem tất cả các unit không phải player có ngã hay không
 func all_units_enemy_fainted() -> bool:
@@ -97,9 +97,7 @@ func perform_next_turn():
 		# Kiểm tra nếu tất cả các unit không phải người chơi đã ngã
 		state = State.End # Cập nhật trạng thái thành End
 		return
-
-	print("[Next turn] ", current_queue)
-	# current_queue += 1
+	current_queue += 1
 
 	while unit_combatants[current_queue].is_fainted:
 		current_queue += 1
@@ -109,6 +107,7 @@ func perform_next_turn():
 		return
 
 	var current_unit = unit_combatants[current_queue]
+	print(unit_combatants)
 	print("[Next turn] Unit next turn: ", current_unit.name)
 	current_unit.speed_changed = false # Reset lại flag tốc độ
 
@@ -156,7 +155,6 @@ func perform_state_skill_choice():
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		var skill = player_unit.get_skill_by_id(current_skill)
-		perform_next_turn()
 		print("[Perform Action Skill]", player_unit.name, " use skill on ", unit_combatants[current_target].name)
 		perform_run_skill(unit_combatants[current_target], player_unit, skill)
 	pass
@@ -186,8 +184,19 @@ func perform_info_target():
 	# print(unit_combatants)
 	print("[Perform info target] Target: ", unit_combatants[current_target].name)
 
-func get_random_unit():
+func get_random_unit() -> UnitModel:
+	if unit_combatants.is_empty():
+		return null
 	return unit_combatants[randi() % unit_combatants.size()]
+
+func get_random_unit_player() -> UnitModel:
+	var units_player_filler = unit_combatants.filter(filter_is_not_fainted)
+	if units_player_filler.is_empty():
+		return null
+	return units_player_filler[randi() % units_player_filler.size()]
+
+func filter_is_player(a: UnitModel):
+	return a.is_player
 # </Target>
 
 # <Skill>
