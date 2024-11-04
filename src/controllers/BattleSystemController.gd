@@ -35,17 +35,17 @@ func _ready():
 	print(unit_combatants)
 	pass
 
-# func _process(_delta):
-# 	match state:
-# 		State.Start:
-# 			perform_state_start()
-# 		State.CharacterTurn:
-# 			perform_state_character()
-# 		State.SkillChoice:
-# 			perform_state_skill_choice()
-# 		State.End:
-# 			perform_state_end()
-# 	pass
+func _process(_delta):
+	match state:
+		State.Start:
+			perform_state_start()
+		State.CharacterTurn:
+			perform_state_character()
+		State.SkillChoice:
+			perform_state_skill_choice()
+		State.End:
+			perform_state_end()
+	pass
 
 func initialize():
 	unit_combatant_player.initialize()
@@ -126,6 +126,7 @@ func perform_state_character():
 	var current_unit = unit_combatants[current_queue]
 
 	if current_unit.is_player:
+		print("Player đi lượt này")
 		state = State.SkillChoice
 		player_unit = current_unit
 		return
@@ -170,13 +171,13 @@ func perform_select_target():
 		if current_target >= unit_combatants.size():
 			current_target = 0
 		perform_info_target()
-		print("[UI RIGHT] ", current_target)
+		# print("[UI RIGHT] ", current_target)
 			
 	if Input.is_action_just_pressed("ui_left"):
 		current_target -= 1
 		if current_target < 0:
 			current_target = unit_combatants.size() - 1
-		print("[UI LEFT] ", current_target)
+		# print("[UI LEFT] ", current_target)
 		perform_info_target()
 	return
 
@@ -220,7 +221,7 @@ func perform_run_skill(_target: UnitModel, _source: UnitModel, _skill: SkillMode
 	pass
 
 func perform_get_info_skill():
-	print("[Current] ", unit_combatants[current_queue].name, " - Player: ", player_unit.name)
+	# print("[Current] ", unit_combatants[current_queue].name, " - Player: ", player_unit.name)
 	print("[Skills]: ", player_unit.get_skill_by_id(current_skill).base.name)
 
 func set_current_skill(_value: int):

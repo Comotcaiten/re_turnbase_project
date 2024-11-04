@@ -29,7 +29,7 @@ func initialize(_unit_model: UnitModel):
 		return false
 	unit_model = _unit_model
 	stats_base = unit_model.base.get_stats()
-	stats_modified= unit_model.base.get_stats_default()
+	stats_modified = unit_model.base.get_stats_default()
 	
 	health = max_health
 	return true
@@ -46,13 +46,14 @@ func set_stat(_stat: CharacterBase.StatType, _amount: int):
 		return false
 	if _stat == CharacterBase.StatType.Speed:
 		# Nếu tốc độ bị thay đổi, có thể cần thêm logic để thông báo cho combat system
-		unit_model.speed_changed = true  # Đánh dấu là tốc độ đã thay đổ
+		unit_model.speed_changed = true # Đánh dấu là tốc độ đã thay đổ
 	stats_base[_stat] = _amount
 	return true
 # </Get>
 
 # <Set>
 func set_health(_value: int):
+	unit_model.on_signal_set_health()
 	health = max(0, _value)
 # </Set>
 

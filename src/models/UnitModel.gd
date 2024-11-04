@@ -53,7 +53,7 @@ func has_skill(_skill: SkillModel):
 func use_skill(_target: UnitModel, _skill: SkillModel):
     if _target == null or _skill == null:
         return false
-    print("[UnitModel] use_skill: ", _skill.base.name, " on ", _target.name)
+    
     var is_run: bool = _skill.run(_target, self)
     if is_run:
         on_signal_use_skill(_target, _skill)
@@ -65,23 +65,20 @@ func take_damage(_source: UnitModel, _skill: SkillModel):
     var detail = _skill.damage_detail
     var defense = stats_controller.defense * 1.0
     var damage = detail.damage * 1.0
-    print("[Damage Before] ", damage)
     if detail.true_damage:
         defense = 1.0
     damage = int(damage / defense)
-    print("[Defense] ", defense)
     stats_controller.set_health(stats_controller.health - damage)
     if stats_controller.health <= 0:
         on_signal_die(_source)
     print("[UnitModel] ", name, " take ", damage, " DMG")
-    print("[UnitModel] ", name, " health: ", stats_controller.health, "/", stats_controller.max_health)
     
 # </Battle>
 
 # <On Signal> Get - Set
 func on_signal_use_skill(_target: UnitModel, _skill: SkillModel):
     # # Gọi khi unit sử dụng skill
-    print("[UnitModel] on_signal_use_skill")
+    print("[UnitModel] ", name, " on_signal_use_skill")
     # if _skill and _target:
     #     print("[UnitModel] Using skill on target.")
     #     _target.on_signal_take_damage(_skill, self)
@@ -91,7 +88,7 @@ func on_signal_use_skill(_target: UnitModel, _skill: SkillModel):
 
 func on_signal_take_damage(_skill: SkillModel, _source: UnitModel):
     # # Gọi khi unit nhận sát thương từ skill
-    print("[UnitModel] on_signal_take_damage")
+    print("[UnitModel] ", name, " on_signal_take_damage")
     # if _skill:
     #     stats_controller.apply_damage(_skill.damage)
     #     print("[UnitModel] Taking damage.")
@@ -102,7 +99,7 @@ func on_signal_take_damage(_skill: SkillModel, _source: UnitModel):
 
 func on_signal_take_effect(_skill: SkillModel, _source: UnitModel):
     # # Gọi khi unit chịu ảnh hưởng từ skill (debuff, buff, ...)
-    print("[UnitModel] on_signal_take_effect")
+    print("[UnitModel] ", name, " on_signal_take_effect")
     # if _skill:
     #     stats_controller.apply_effect(_skill.effect)
     #     print("[UnitModel] Effect applied.")
@@ -110,24 +107,19 @@ func on_signal_take_effect(_skill: SkillModel, _source: UnitModel):
 
 func on_signal_die(_source: UnitModel):
     # Gọi khi unit chết
-    print("[UnitModel] on_signal_died.")
-    print("[UnitModel] Unit has died.")
+    print("[UnitModel] ", name, " on_signal_died.")
     is_fainted = true
     # Có thể thêm các logic như xóa unit khỏi trận đấu
     pass
 
 func on_signal_killed(_target: UnitModel):
     # Gọi khi unit giết một unit khác
-    print("[UnitModel] Target has been killed.")
+    print("[UnitModel] ", name, " on_signal_killed.")
     # Thực hiện các hành động khi giết địch như tăng điểm kinh nghiệm, kích hoạt kỹ năng
     pass
 
-func on_signal_set_health(_new_health: int, _source: UnitModel):
-    # Gọi để cập nhật lại health của unit
-    stats_controller.set_health(_new_health)
-    print("[UnitModel] Health set to ", _new_health)
-    if stats_controller.health <= 0:
-        on_signal_die(_source)
+func on_signal_set_health():
+    print("[UnitModel] ", name, " on_signal_set_health.")
     pass
 # </On Signal>
 

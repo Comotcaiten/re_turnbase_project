@@ -8,7 +8,7 @@ enum TypeDamage {Damage, Multiplier, PercentLeft, PercentMising}
 @export var true_damage: bool
 
 func apply_mechanic(_target: UnitModel, _source: UnitModel, _skill: SkillModel):
-    print("[SkillMechanicDamage]")
+    # print("[SkillMechanicDamage]")
     
     var detail: DamageDetailModel = calculatro_damage(_target, _source, _skill)
     _skill.damage_detail = detail

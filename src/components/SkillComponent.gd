@@ -18,7 +18,7 @@ enum ConditionCheckMode {One, Amount, All} # Lấy bao nhiêu điều kiện (On
 @export var mechanics: Array[SkillMechanic]
 
 func active(_target: UnitModel, _source: UnitModel, _skill: SkillModel) -> bool:
-	print("[SkillComponent] Active ", name)
+	# print("[SkillComponent] Active ", name)
 	if _target == null or _source == null or _skill == null:
 		return false
 
