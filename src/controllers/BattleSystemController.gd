@@ -90,8 +90,8 @@ func all_units_fainted() -> bool:
 
 # # <Perform State>
 func perform_next_turn():
-	if all_units_fainted():  # Kiểm tra nếu tất cả các unit không phải người chơi đã ngã
-		state = State.End  # Cập nhật trạng thái thành End
+	if all_units_fainted(): # Kiểm tra nếu tất cả các unit không phải người chơi đã ngã
+		state = State.End # Cập nhật trạng thái thành End
 		return
 
 	print("[Next turn] ", current_queue)
@@ -106,7 +106,7 @@ func perform_next_turn():
 	current_unit.speed_changed = false # Reset lại flag tốc độ
 
 	if current_unit.is_player:
-		player_unit = current_unit	
+		player_unit = current_unit
 	else:
 		player_unit = null
 	state = State.CharacterTurn

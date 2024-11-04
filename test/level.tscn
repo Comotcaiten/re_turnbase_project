@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://crvusjndvbo1u"]
+[gd_scene load_steps=8 format=3 uid="uid://c7gveqxs684mw"]
 
 [ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_8atru"]
-[ext_resource type="PackedScene" uid="uid://ww3w0k51gs74" path="res://test/unit.tscn" id="1_nqmwn"]
+[ext_resource type="PackedScene" path="res://test/unit.tscn" id="1_nqmwn"]
 [ext_resource type="Script" path="res://src/controllers/UnitCombatantController.gd" id="2_4646e"]
 [ext_resource type="Resource" uid="uid://cp36dl66gwval" path="res://assets/characters/Lue.tres" id="2_mbaxg"]
 [ext_resource type="Resource" uid="uid://cpxjloxdlffox" path="res://assets/characters/Haljo.tres" id="5_hsvfe"]
