@@ -38,16 +38,12 @@ func _ready():
 func _process(_delta):
 	match state:
 		State.Start:
-			print("[1]")
 			perform_state_start()
 		State.CharacterTurn:
-			print("[2]")
 			perform_state_character()
 		State.SkillChoice:
-			# print("[3]")
 			perform_state_skill_choice()
 		State.End:
-			print("[4]")
 			perform_state_end()
 	pass
 
@@ -82,20 +78,31 @@ func filter_is_not_fainted(a: UnitModel):
 	return a.is_fainted
 
 # Hàm kiểm tra xem tất cả các unit không phải player có ngã hay không
-func all_units_fainted() -> bool:
+func all_units_enemy_fainted() -> bool:
 	for _unit in unit_combatants:
 		if not _unit.is_fainted and not _unit.is_player:
 			return false
 	return true
 
+# Hàm kiểm tra xem tất cả các unit player có ngã hay không
+func all_units_player_fainted() -> bool:
+	for _unit in unit_combatants:
+		if not _unit.is_fainted and _unit.is_player:
+			return false
+	return true
+
 # # <Perform State>
 func perform_next_turn():
-	if all_units_fainted(): # Kiểm tra nếu tất cả các unit không phải người chơi đã ngã
+	if all_units_enemy_fainted() or all_units_player_fainted():
+		# Kiểm tra nếu tất cả các unit không phải người chơi đã ngã
 		state = State.End # Cập nhật trạng thái thành End
 		return
 
 	print("[Next turn] ", current_queue)
-	current_queue += 1
+	# current_queue += 1
+
+	while unit_combatants[current_queue].is_fainted:
+		current_queue += 1
 
 	if current_queue >= unit_combatants.size():
 		reset_cycle()
@@ -105,12 +112,12 @@ func perform_next_turn():
 	print("[Next turn] Unit next turn: ", current_unit.name)
 	current_unit.speed_changed = false # Reset lại flag tốc độ
 
-	if current_unit.is_player:
-		player_unit = current_unit
-	else:
-		player_unit = null
+	# if !current_unit.is_player:
+	# 	player_unit = current_unit
+	# else:
+	# 	player_unit = null
 	state = State.CharacterTurn
-	pass
+	return
 
 func perform_state_start():
 	state = State.CharacterTurn
@@ -121,12 +128,14 @@ func perform_state_character():
 
 	if current_unit.is_player:
 		state = State.SkillChoice
+		player_unit = current_unit
 		return
 	else:
-		# var skill = current_unit.get_random_skill()
-		print("Enemy bỏ lượt")
-		perform_next_turn()
-		# perform_run_skill(player_unit, current_unit, skill)
+		print("Enemy đi lượt này")
+		player_unit = null
+		var skill = current_unit.get_random_skill()
+		var unit_random = get_random_unit()
+		perform_run_skill(unit_random, current_unit, skill)
 	return
 
 func perform_state_skill_choice():
@@ -145,11 +154,11 @@ func perform_state_skill_choice():
 		print("[UI Input] R - 4")
 		set_current_skill(3)
 	
-	# if Input.is_action_just_pressed("ui_accept"):
-	# 	# var skill = player_unit.get_skill_by_id(current_skill)
-	# 	perform_next_turn()
-	# 	# player.use_skill(unit2, skill)
-	# 	# perform_run_skill(player_unit, unit2, skill)
+	if Input.is_action_just_pressed("ui_accept"):
+		var skill = player_unit.get_skill_by_id(current_skill)
+		perform_next_turn()
+		print("[Perform Action Skill]", player_unit.name, " use skill on ", unit_combatants[current_target].name)
+		perform_run_skill(unit_combatants[current_target], player_unit, skill)
 	pass
 
 func perform_state_end():
@@ -174,8 +183,11 @@ func perform_select_target():
 	return
 
 func perform_info_target():
-	print(unit_combatants)
+	# print(unit_combatants)
 	print("[Perform info target] Target: ", unit_combatants[current_target].name)
+
+func get_random_unit():
+	return unit_combatants[randi() % unit_combatants.size()]
 # </Target>
 
 # <Skill>
@@ -193,6 +205,8 @@ func perform_run_skill(_target: UnitModel, _source: UnitModel, _skill: SkillMode
 	current_skill = 0
 	enemy_unit_choice = null
 
+	update_hp()
+
 	perform_next_turn()
 	pass
 
@@ -202,7 +216,7 @@ func perform_get_info_skill():
 
 func set_current_skill(_value: int):
 	if player_unit == null:
-		print("[Skills]: Player unit null")
+		print("[Skills]: Player unit null: ", player_unit)
 		return
 	var size = player_unit.get_skills().size()
 	if _value >= size:
@@ -211,3 +225,11 @@ func set_current_skill(_value: int):
 	current_skill = _value
 	perform_get_info_skill()
 # </Skill>
+
+# <Update>
+func update_hp():
+	print("[----------------------------------------]")
+	for _unit in unit_combatants:
+		print("[", _unit.name, "] HP: ", _unit.stats_controller.health, "/", _unit.stats_controller.max_health)
+	print("[----------------------------------------]")
+# </Update>

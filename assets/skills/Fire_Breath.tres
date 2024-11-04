@@ -1,10 +1,30 @@
-[gd_resource type="Resource" script_class="SkillBase" load_steps=3 format=3 uid="uid://rppmluq4cbct"]
+[gd_resource type="Resource" script_class="SkillBase" load_steps=9 format=3 uid="uid://rppmluq4cbct"]
 
 [ext_resource type="Script" path="res://src/base/SkillBase.gd" id="1_wqtac"]
 [ext_resource type="Script" path="res://src/components/SkillComponent.gd" id="1_wurxi"]
+[ext_resource type="Script" path="res://src/components/SkillCondition.gd" id="2_gkrmf"]
+[ext_resource type="Script" path="res://src/components/SkillMechanic.gd" id="3_p7um7"]
+[ext_resource type="Script" path="res://src/components/SkillMechanicDamage.gd" id="4_v01w8"]
+
+[sub_resource type="Resource" id="Resource_so7ii"]
+script = ExtResource("2_gkrmf")
+
+[sub_resource type="Resource" id="Resource_myacs"]
+script = ExtResource("4_v01w8")
+damage_type = 0
+power = 100
+true_damage = false
+
+[sub_resource type="Resource" id="Resource_gkgh0"]
+script = ExtResource("1_wurxi")
+name = ""
+condition_mode = 0
+amount_for_mode_amount = 0
+conditions = Array[ExtResource("2_gkrmf")]([SubResource("Resource_so7ii")])
+mechanics = Array[ExtResource("3_p7um7")]([SubResource("Resource_myacs")])
 
 [resource]
 script = ExtResource("1_wqtac")
 name = "Fire Breath"
 target_type = 0
-components = Array[ExtResource("1_wurxi")]([])
+components = Array[ExtResource("1_wurxi")]([SubResource("Resource_gkgh0")])
