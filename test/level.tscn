@@ -1,83 +1,47 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7gveqxs684mw"]
+[gd_scene load_steps=8 format=3 uid="uid://crvusjndvbo1u"]
 
-[ext_resource type="Script" path="res://lib/turnbase/src/controllers/BattleSystemController.gd" id="1_qodbm"]
-[ext_resource type="PackedScene" uid="uid://ck7vfx5ypo5of" path="res://test/character.tscn" id="2_buc68"]
-[ext_resource type="Resource" uid="uid://b3rq63lvo161" path="res://lib/turnbase/assets/entity/samurai.tres" id="3_gjypw"]
-[ext_resource type="Resource" uid="uid://btmgoruo2jrsv" path="res://lib/turnbase/assets/entity/redstone_golem.tres" id="4_hnpt7"]
-[ext_resource type="Resource" uid="uid://v8g1213gotek" path="res://lib/turnbase/assets/items/katana.tres" id="4_r36ww"]
-[ext_resource type="Resource" uid="uid://b64sy1726o1wn" path="res://lib/turnbase/assets/entity/zombie.tres" id="5_w87xc"]
-[ext_resource type="Resource" uid="uid://b11ns0a502wv4" path="res://lib/turnbase/assets/items/boots_fairy.tres" id="7_xjldr"]
+[ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_8atru"]
+[ext_resource type="PackedScene" uid="uid://ww3w0k51gs74" path="res://test/unit.tscn" id="1_nqmwn"]
+[ext_resource type="Script" path="res://src/controllers/UnitCombatantController.gd" id="2_4646e"]
+[ext_resource type="Resource" uid="uid://cp36dl66gwval" path="res://assets/characters/Lue.tres" id="2_mbaxg"]
+[ext_resource type="Resource" uid="uid://cpxjloxdlffox" path="res://assets/characters/Haljo.tres" id="5_hsvfe"]
+[ext_resource type="Resource" uid="uid://cd1wso37u8q48" path="res://assets/characters/Mujei.tres" id="6_ql54b"]
+[ext_resource type="Resource" uid="uid://bx34dtvdrrsls" path="res://assets/characters/Ona.tres" id="7_4sc0h"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x6cia"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[node name="Level" type="Node2D" node_paths=PackedStringArray("unit_combatant_player", "unit_combatant_enemy")]
+script = ExtResource("1_8atru")
+unit_combatant_player = NodePath("UnitsCombatant")
+unit_combatant_enemy = NodePath("UnitsCombatant2")
 
-[sub_resource type="Sky" id="Sky_dm12i"]
-sky_material = SubResource("ProceduralSkyMaterial_x6cia")
+[node name="UnitsCombatant" type="Node2D" parent="."]
+visible = false
+position = Vector2(-1, 0)
+script = ExtResource("2_4646e")
+is_player_party = true
 
-[sub_resource type="Environment" id="Environment_3pgoa"]
-background_mode = 2
-sky = SubResource("Sky_dm12i")
-tonemap_mode = 2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lhxj4"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3oqay"]
-vertex_color_use_as_albedo = true
-vertex_color_is_srgb = true
-albedo_color = Color(0.223529, 0.819608, 0.282353, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_nnb4v"]
-size = Vector2(20, 20)
-
-[node name="level" type="Node3D" node_paths=PackedStringArray("units_player", "units_enemy")]
-transform = Transform3D(0.999997, 0.00217356, -0.00113788, -0.00217605, 0.999995, -0.00220378, 0.0011331, 0.00220625, 0.999997, 0, 0, 0)
-script = ExtResource("1_qodbm")
-units_player = [NodePath("BattleArea/Player"), NodePath("BattleArea/Player2")]
-units_enemy = [NodePath("BattleArea/Enemy"), NodePath("BattleArea/Enemy2")]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_3pgoa")
-
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.002, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
-material_override = SubResource("ShaderMaterial_lhxj4")
-material_overlay = SubResource("StandardMaterial3D_3oqay")
-mesh = SubResource("PlaneMesh_nnb4v")
-
-[node name="BattleArea" type="Node3D" parent="."]
-
-[node name="Player" parent="BattleArea" instance=ExtResource("2_buc68")]
-transform = Transform3D(1, 6.63022e-10, 0, -6.99856e-10, 1, 6.98492e-10, -3.49246e-10, -6.98492e-10, 1, 0, 0, 5)
-base = ExtResource("3_gjypw")
-level = 10
+[node name="Unit" parent="UnitsCombatant" instance=ExtResource("1_nqmwn")]
+visible = false
+base = ExtResource("2_mbaxg")
+level = 5
 is_player = true
-item = ExtResource("4_r36ww")
 
-[node name="Enemy" parent="BattleArea" instance=ExtResource("2_buc68")]
-transform = Transform3D(1, 1.97815e-10, 0, -2.3374e-10, 1, 2.32831e-10, -1.16415e-10, -2.32831e-10, 1, 0, 0, -5)
-base = ExtResource("4_hnpt7")
-level = 10
-
-[node name="Player2" parent="BattleArea" instance=ExtResource("2_buc68")]
-transform = Transform3D(1, -2.0016e-06, -3.83356e-06, 2.00847e-06, 0.999998, 0.00176278, 3.82937e-06, -0.00176278, 0.999998, -5, 0, 0)
-base = ExtResource("5_w87xc")
-level = 6
+[node name="Unit2" parent="UnitsCombatant" instance=ExtResource("1_nqmwn")]
+base = ExtResource("5_hsvfe")
+level = 5
 is_player = true
-item = ExtResource("7_xjldr")
 
-[node name="PointCamera" type="Node3D" parent="BattleArea"]
-transform = Transform3D(0.707107, 1.97815e-10, -0.707107, 1.16415e-10, 1, 2.32831e-10, 0.707107, -2.32831e-10, 0.707107, 0, 0, 0)
+[node name="UnitsCombatant2" type="Node2D" parent="."]
+visible = false
+position = Vector2(-1, 0)
+script = ExtResource("2_4646e")
 
-[node name="Camera3D" type="Camera3D" parent="BattleArea/PointCamera"]
-transform = Transform3D(-1, -1.35394e-08, -7.22939e-08, 6.60521e-10, 1, 6.98492e-10, 8.77772e-08, -6.98492e-10, -1, 2, 2, -10)
+[node name="Unit3" parent="UnitsCombatant2" instance=ExtResource("1_nqmwn")]
+visible = false
+base = ExtResource("6_ql54b")
+level = 5
+is_player = true
 
-[node name="Enemy2" parent="BattleArea" instance=ExtResource("2_buc68")]
-base = ExtResource("3_gjypw")
-level = 8
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.25, 1.47847e-08, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 0, 0)
-shadow_enabled = true
+[node name="Unit4" parent="UnitsCombatant2" instance=ExtResource("1_nqmwn")]
+base = ExtResource("7_4sc0h")
+level = 5
+is_player = true

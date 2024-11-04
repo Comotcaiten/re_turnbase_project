@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ww3w0k51gs74"]
+
+[ext_resource type="Script" path="res://src/controllers/StatsController.gd" id="1_1b7v5"]
+[ext_resource type="Script" path="res://src/models/UnitModel.gd" id="1_f1wog"]
+[ext_resource type="Script" path="res://src/controllers/SkillsController.gd" id="3_q7d6f"]
+
+[node name="Unit" type="Node2D" node_paths=PackedStringArray("stats_controller", "skills_controller")]
+script = ExtResource("1_f1wog")
+stats_controller = NodePath("Controller/StatsController")
+skills_controller = NodePath("Controller/SkillsController")
+
+[node name="Controller" type="Node2D" parent="."]
+
+[node name="StatsController" type="Node2D" parent="Controller"]
+script = ExtResource("1_1b7v5")
+
+[node name="SkillsController" type="Node2D" parent="Controller"]
+script = ExtResource("3_q7d6f")

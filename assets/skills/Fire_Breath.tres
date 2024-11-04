@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=3 format=3 uid="uid://rppmluq4cbct"]
+
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="1_wqtac"]
+[ext_resource type="Script" path="res://src/components/SkillComponent.gd" id="1_wurxi"]
+
+[resource]
+script = ExtResource("1_wqtac")
+name = "Fire Breath"
+target_type = 0
+components = Array[ExtResource("1_wurxi")]([])

@@ -1,0 +1,158 @@
+# extends Node
+# class_name BattleSystemController
+
+# enum State {Start, CharacterTurn, SkillChoice, End}
+
+# @export var unit: UnitModel
+# @export var unit2: UnitModel
+
+# var player: UnitModel
+
+# var players: Array[UnitModel]:
+# 	get:
+# 		return [unit, unit2]
+# var sorted_array: Array[UnitModel]
+# var current_queue: int = -1
+
+# var state: State
+
+# var current_skill: int
+
+# var current_target: UnitModel
+
+# var count_cycle: int
+
+# # <Init> Khởi tạo
+# func initialize():
+# 	unit.initialize()
+# 	unit2.initialize()
+# 	state = State.Start
+# 	pass
+# # </Init>
+
+# # <Ready>
+# func _ready():
+# 	print("[BattleSystemController]")
+# 	initialize()
+# 	sort_combined_queue()
+# 	pass    
+# # </Ready>
+
+# # <Progess>
+# func _process(_delta):
+# 	match state:
+# 		State.Start:
+# 			print("[1]")
+# 			perform_state_start()
+# 		State.CharacterTurn:
+# 			print("[2]")
+# 			perform_state_character()
+# 		State.SkillChoice:
+# 			perform_state_skill_choice()
+# 		State.End:
+# 			perform_state_end()
+# 	pass
+# # </Progess>
+
+# # <Perform>
+# func perform_next_turn():
+# 	if all_units_fainted():  # Kiểm tra nếu tất cả các unit không phải người chơi đã ngã
+# 		state = State.End  # Cập nhật trạng thái thành End
+# 		return
+# 	print("[Next turn] ", current_queue)
+# 	current_queue += 1
+# 	if current_queue >= sorted_array.size():
+# 		print("[RESET CYCLE]")
+# 		reset_cycle()
+# 		return
+# 	var current_unit = sorted_array[current_queue]
+# 	current_unit.speed_changed = false # Reset lại flag tốc độ
+# 	if current_unit.is_player:
+# 		player = current_unit
+# 	pass
+
+
+# func perform_state_start():
+# 	state = State.CharacterTurn
+
+# func perform_state_character():
+# 	print("[Perform Character]: ", sorted_array[current_queue].name)
+# 	var current_unit = sorted_array[current_queue]
+# 	if current_unit.is_player:
+# 		state = State.SkillChoice
+# 		return
+# 	else:
+# 		var skill = current_unit.get_random_skill()
+# 		perform_run_skill(player, current_unit, skill)
+
+# 	pass
+
+# func perform_state_skill_choice():
+# 	if Input.is_action_just_pressed("ui_right"):
+# 		print("[UI Input Right]")
+# 		current_skill += 1
+# 		if current_skill >= player.get_skills().size():
+# 			current_skill = 0
+# 		print("[Skills]: ", player.get_skill_by_id(current_skill).base.name)
+# 	if Input.is_action_just_pressed("ui_left"):
+# 		print("[UI Input Left]")
+# 		current_skill -= 1
+# 		if current_skill < 0:
+# 			current_skill = player.get_skills().size() - 1
+# 		print("[Skills]: ", player.get_skill_by_id(current_skill).base.name)
+	
+# 	if Input.is_action_just_pressed("ui_accept"):
+# 		var skill = player.get_skill_by_id(current_skill)
+# 		# player.use_skill(unit2, skill)
+# 		perform_run_skill(player, unit2, skill)
+# 	pass
+
+# func perform_state_end():
+# 	pass
+
+# func perform_run_skill(_target: UnitModel, _source: UnitModel, _skill: SkillModel):
+# 	print("[Perform run skill] ")
+# 	if _skill == null or _target == null or _source == null:
+# 		print("[Perform run skill] > [Perform next turn] because Null")
+# 		perform_next_turn()
+# 		return
+# 	print("[Perform run skill] ", _skill.base.name)
+# 	_source.use_skill(_target, _skill)
+
+# 	if _target.speed_changed:
+# 		print("[Is speed change] ", true)
+# 		update_turn_order()
+
+# 	perform_next_turn()
+# 	pass
+
+# func perform_state_target():
+# 	pass
+# # </Perform>
+
+# func sort_combined_queue():
+# 	var player_array: Array[UnitModel]
+# 	for _player in players:
+# 		player_array.append(_player)
+# 	sorted_array = player_array
+# 	sorted_array.sort_custom(sort_by_time)
+# 	pass
+
+# func sort_by_time(a, b):
+# 	return a.stats_controller.speed > b.stats_controller.speed
+
+# func reset_cycle():
+# 	count_cycle += 1
+# 	current_queue = -1
+# 	sort_combined_queue()
+# 	perform_next_turn()
+
+# func update_turn_order():
+# 	sorted_array.sort_custom(sort_by_time)
+
+# # Hàm kiểm tra xem tất cả các unit không phải player có ngã hay không
+# func all_units_fainted() -> bool:
+# 	for _unit in sorted_array:
+# 		if not _unit.is_fainted and not _unit.is_player:
+# 			return false
+# 	return true
