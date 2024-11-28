@@ -40,7 +40,9 @@ func get_stat(_stat: CharacterBase.StatType):
 	var amount_base = (stats_base.get(_stat, 0) * unit_model.level) * 1.0
 	var amount_modified = stats_modified.get(_stat, 0) * 1.0
 	return max(0, int(amount_base + ((amount_base * amount_modified) / 100.0)))
+# </Get>
 
+# <Set>
 func set_stat(_stat: CharacterBase.StatType, _amount: int):
 	if !stats_base.has(_stat) or !stats_modified.has(_stat):
 		return false
@@ -49,9 +51,7 @@ func set_stat(_stat: CharacterBase.StatType, _amount: int):
 		unit_model.speed_changed = true # Đánh dấu là tốc độ đã thay đổ
 	stats_base[_stat] = _amount
 	return true
-# </Get>
 
-# <Set>
 func set_health(_value: int):
 	unit_model.on_signal_set_health()
 	health = max(0, _value)

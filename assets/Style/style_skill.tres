@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bbf3oypfepsx4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlrs4"]
+bg_color = Color(0.128036, 0.58425, 0.79338, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = null
+Button/styles/normal = SubResource("StyleBoxFlat_nlrs4")
+Button/styles/pressed = null

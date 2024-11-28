@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7gveqxs684mw"]
+[gd_scene load_steps=20 format=3 uid="uid://c7gveqxs684mw"]
 
 [ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_8atru"]
 [ext_resource type="PackedScene" uid="uid://ww3w0k51gs74" path="res://test/unit.tscn" id="1_nqmwn"]
@@ -7,41 +7,220 @@
 [ext_resource type="Resource" uid="uid://cpxjloxdlffox" path="res://assets/characters/Haljo.tres" id="5_hsvfe"]
 [ext_resource type="Resource" uid="uid://cd1wso37u8q48" path="res://assets/characters/Mujei.tres" id="6_ql54b"]
 [ext_resource type="Resource" uid="uid://bx34dtvdrrsls" path="res://assets/characters/Ona.tres" id="7_4sc0h"]
+[ext_resource type="Texture2D" uid="uid://b3bgconmdhubk" path="res://assets/texture/texture_san.png" id="8_obemo"]
+[ext_resource type="Theme" uid="uid://bahxlxgvag2yd" path="res://assets/Style/syle_button.tres" id="9_lvpmf"]
+[ext_resource type="PackedScene" uid="uid://binq0yux0x3xc" path="res://test/button_skill.tscn" id="10_qe7me"]
 
-[node name="Level" type="Node2D" node_paths=PackedStringArray("unit_combatant_player", "unit_combatant_enemy")]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gjfeg"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_3isp6"]
+sky_material = SubResource("ProceduralSkyMaterial_gjfeg")
+
+[sub_resource type="Environment" id="Environment_d4c81"]
+background_mode = 2
+sky = SubResource("Sky_3isp6")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0w54"]
+albedo_texture = ExtResource("8_obemo")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_70cm4"]
+size = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kexig"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrequ"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_3i72w"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fksmf"]
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("unit_combatant_player", "unit_combatant_enemy", "camera_point")]
 script = ExtResource("1_8atru")
-unit_combatant_player = NodePath("UnitsCombatant")
-unit_combatant_enemy = NodePath("UnitsCombatant2")
+unit_combatant_player = NodePath("UnitCombatants/UnitsCombatant")
+unit_combatant_enemy = NodePath("UnitCombatants/UnitsCombatant2")
+camera_point = NodePath("CameraPoint")
 
-[node name="UnitsCombatant" type="Node2D" parent="."]
-visible = false
-position = Vector2(-1, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_d4c81")
+
+[node name="UnitCombatants" type="Node3D" parent="."]
+
+[node name="UnitsCombatant" type="Node3D" parent="UnitCombatants"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 script = ExtResource("2_4646e")
 is_player_party = true
 
-[node name="Unit" parent="UnitsCombatant" instance=ExtResource("1_nqmwn")]
+[node name="Unit" parent="UnitCombatants/UnitsCombatant" instance=ExtResource("1_nqmwn")]
 visible = false
 base = ExtResource("2_mbaxg")
 level = 5
 is_player = true
 
-[node name="Unit2" parent="UnitsCombatant" instance=ExtResource("1_nqmwn")]
+[node name="Unit2" parent="UnitCombatants/UnitsCombatant" instance=ExtResource("1_nqmwn")]
 base = ExtResource("5_hsvfe")
 level = 5
 is_player = true
 
-[node name="UnitsCombatant2" type="Node2D" parent="."]
-visible = false
-position = Vector2(-1, 0)
+[node name="UnitsCombatant2" type="Node3D" parent="UnitCombatants"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 script = ExtResource("2_4646e")
 
-[node name="Unit3" parent="UnitsCombatant2" instance=ExtResource("1_nqmwn")]
+[node name="Unit3" parent="UnitCombatants/UnitsCombatant2" instance=ExtResource("1_nqmwn")]
 visible = false
 base = ExtResource("6_ql54b")
 level = 5
 is_player = true
 
-[node name="Unit4" parent="UnitsCombatant2" instance=ExtResource("1_nqmwn")]
+[node name="Unit4" parent="UnitCombatants/UnitsCombatant2" instance=ExtResource("1_nqmwn")]
 base = ExtResource("7_4sc0h")
 level = 5
 is_player = true
+
+[node name="Arena" type="Node3D" parent="."]
+
+[node name="BackgroundFloor" type="Node3D" parent="Arena"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/BackgroundFloor"]
+material_override = SubResource("StandardMaterial3D_m0w54")
+mesh = SubResource("PlaneMesh_70cm4")
+
+[node name="CameraPoint" type="Node3D" parent="."]
+transform = Transform3D(0.996194, 0, 0.0871557, 0, 1, 0, -0.0871557, 0, 0.996194, 1.5, 1.5, 2)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPoint"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel_Action" type="Panel" parent="Control"]
+visible = false
+use_parent_material = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.711111
+anchor_right = 0.987
+anchor_bottom = 0.978
+offset_right = 0.640015
+theme_override_styles/panel = SubResource("StyleBoxFlat_kexig")
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_Attack" type="Button" parent="Control/Panel_Action"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0526315
+anchor_top = 0.0833333
+anchor_right = 0.477752
+anchor_bottom = 0.416344
+offset_right = -1.23653
+offset_bottom = 0.0619659
+theme = ExtResource("9_lvpmf")
+text = "Action"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_Skill" type="Button" parent="Control/Panel_Action"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.526316
+anchor_top = 0.0833333
+anchor_right = 0.94791
+anchor_bottom = 0.416959
+offset_right = -0.164612
+offset_bottom = -0.0560684
+theme = ExtResource("9_lvpmf")
+text = "Skill"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_Bag" type="Button" parent="Control/Panel_Action"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0526315
+anchor_top = 0.5
+anchor_right = 0.470763
+anchor_bottom = 0.833333
+offset_right = 0.88797
+offset_bottom = -1.52588e-05
+theme = ExtResource("9_lvpmf")
+text = "Bag"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_Run" type="Button" parent="Control/Panel_Action"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.526316
+anchor_top = 0.5
+anchor_right = 0.947425
+anchor_bottom = 0.828458
+offset_right = -0.0171509
+offset_bottom = 0.935989
+theme = ExtResource("9_lvpmf")
+text = "Run"
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.99975
+anchor_bottom = 1.00044
+offset_right = 0.32
+offset_bottom = -0.32
+theme_override_styles/panel = SubResource("StyleBoxFlat_xrequ")
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_Skill" parent="Control/Panel" instance=ExtResource("10_qe7me")]
+layout_mode = 1
+anchor_left = 0.531
+anchor_top = 0.721778
+anchor_right = 0.67525
+anchor_bottom = 0.977889
+offset_left = 0.319946
+offset_top = 0.320007
+offset_right = -0.320068
+offset_bottom = -0.0799561
+
+[node name="Button_Skill2" parent="Control/Panel" instance=ExtResource("10_qe7me")]
+layout_mode = 1
+anchor_left = 0.844
+anchor_top = 0.722444
+anchor_right = 0.987
+anchor_bottom = 0.977445
+offset_left = -0.320068
+offset_top = -0.159973
+offset_right = 0.639893
+offset_bottom = 0.23999
+
+[node name="Button_Skill3" parent="Control/Panel" instance=ExtResource("10_qe7me")]
+layout_mode = 1
+anchor_left = 0.6875
+anchor_top = 0.722222
+anchor_right = 0.83075
+anchor_bottom = 0.978222
+offset_top = 0.0
+offset_right = 0.640015
+offset_bottom = -0.319977
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Control/Panel"]
+visible = false
+position = Vector2(1184, 608)
+scale = Vector2(194.22, 192)
+mesh = SubResource("SphereMesh_3i72w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12401, 0)
+mesh = SubResource("CapsuleMesh_fksmf")
