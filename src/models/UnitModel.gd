@@ -4,19 +4,23 @@ class_name UnitModel
 @export var character_base: CharacterBase
 @export var level: int
 
+var is_fainted: bool = false
+
+var element: CharacterBase.Element:
+  get:
+    return character_base.element
+
+var in_battle: bool = false
+var first_call: bool = false
+
 var stats_base: Dictionary:
   get:
     return character_base.get_stats()
 
 var stats_modified: Dictionary = CharacterBase.get_stats_default()
 
-var is_fainted: bool = false
-
-var element: CharacterBase.Element:
-  get:
-    return character_base.element
 #--------------------------------------------------------------------------------
-# Thông số
+# Chỉ số
 var health: int
 var max_health: int:
   get:
@@ -64,17 +68,18 @@ func get_defense(_type_attack: DamageDetailModel.TypeAttack):
     DamageDetailModel.TypeAttack.Magic:
       return defense_physical
 
-func get_damage(damage_detail: DamageDetailModel, _source: UnitModel):
+func get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
   # Step 1
-  var defense: int = get_defense(damage_detail.type_attack)
-  var damage_amount = damage_detail.damage_amount
+  var defense: int = get_defense(_damage_detail.type_attack)
+  var damage_amount = _damage_detail.damage_amount
 
-  if damage_detail.true_damage:
+  if _damage_detail.true_damage:
     defense = 0
   damage_amount = int((damage_amount * 1.0) / max(1.0, defense * 1.0))
-
   # Step 2
   set_health(damage_amount, _source)
+  # Step 3
+  signal_get_damage(_damage_detail, _source)
   pass
 
 func set_stat_modified(_stat: CharacterBase.StatType, _amount: int):
@@ -89,6 +94,15 @@ func set_health(_amount_add: int, _source: UnitModel):
   health += _amount_add
   # Step 2
   signal_set_health(_amount_add, _source)
+  pass
+
+func signal_get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
+  print("> signal_get_damage: ", _damage_detail)
+  pass
+
+func signal_get_in_battle():
+  # Signal này được gọi khi unit này xuất hiện lần đầu trong trận đấu
+  print("> signal_get_in_battle: ", in_battle, " | ", first_call)
   pass
 
 func signal_set_stat_modified(_stat: CharacterBase.StatType, _amount: int):
