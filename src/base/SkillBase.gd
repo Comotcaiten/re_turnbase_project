@@ -7,5 +7,5 @@ enum TargetType {Enemy, Self}
 
 @export var target_type: TargetType
 
-@export_group("Components")
-@export var components: Array[SkillComponent]
+# @export_group("Components")
+# @export var components: Array[SkillComponent]

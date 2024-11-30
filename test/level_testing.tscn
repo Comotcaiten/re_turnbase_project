@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkuj22drsxyp"]
+
+[ext_resource type="Script" path="res://src/testing/level_testing.gd" id="1_fk7od"]
+[ext_resource type="Script" path="res://src/models/UnitModel.gd" id="2_ltqd0"]
+[ext_resource type="Resource" uid="uid://cr1p67phm535x" path="res://asset/character_base/Lien.tres" id="3_3xxbe"]
+
+[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("unit_model_test")]
+script = ExtResource("1_fk7od")
+unit_model_test = NodePath("Node3D")
+
+[node name="Node3D" type="Node3D" parent="."]
+script = ExtResource("2_ltqd0")
+character_base = ExtResource("3_3xxbe")
+level = 5
