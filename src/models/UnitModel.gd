@@ -4,6 +4,8 @@ class_name UnitModel
 @export var character_base: CharacterBase
 @export var level: int
 
+@export var is_player: bool
+
 var is_fainted: bool = false
 
 var element: CharacterBase.Element:

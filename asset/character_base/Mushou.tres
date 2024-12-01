@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=3 format=3 uid="uid://dbf3msp251kf7"]
+
+[ext_resource type="Script" path="res://src/base/CharacterBase.gd" id="1_uul4k"]
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_878kr"]
+
+[resource]
+script = ExtResource("1_uul4k")
+name = "Mushou"
+element = 1
+max_health = 50
+attack_physical = 5
+attack_magic = 5
+defense_physical = 5
+defense_magic = 5
+speed = 5
+skills = Array[ExtResource("2_878kr")]([])
