@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bkuj22drsxyp"]
+[gd_scene load_steps=12 format=3 uid="uid://bkuj22drsxyp"]
 
 [ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_ttxq4"]
 [ext_resource type="PackedScene" uid="uid://bt07g12qxu7mf" path="res://asset/tres/unit_model.tscn" id="2_8fed3"]
+[ext_resource type="Script" path="res://src/models/UnitGroupModel.gd" id="2_j7rkn"]
 [ext_resource type="Resource" uid="uid://cr1p67phm535x" path="res://asset/character_base/Lien.tres" id="3_3xxbe"]
 [ext_resource type="Resource" uid="uid://dbf3msp251kf7" path="res://asset/character_base/Mushou.tres" id="4_4w7vw"]
 [ext_resource type="Resource" uid="uid://doboyyijgqmvw" path="res://asset/character_base/IronLion.tres" id="5_0jh0x"]
@@ -31,10 +32,10 @@ Button/styles/hover = null
 Button/styles/normal = SubResource("StyleBoxFlat_jpxvx")
 Button/styles/pressed = null
 
-[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("player_group", "enemy_group", "label_count_cycle", "lable_state", "lable_action", "label_turn", "panel_skill")]
+[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("player_unit_group", "enemy_unit_group", "label_count_cycle", "lable_state", "lable_action", "label_turn", "panel_skill")]
 script = ExtResource("1_ttxq4")
-player_group = [NodePath("PlayerGroup/UnitModel_1"), NodePath("PlayerGroup/UnitModel_2")]
-enemy_group = [NodePath("EnemyGroup/UnitModel_3"), NodePath("EnemyGroup/UnitModel_4")]
+player_unit_group = NodePath("PlayerGroup")
+enemy_unit_group = NodePath("EnemyGroup")
 label_count_cycle = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer/LableCycleInput")
 lable_state = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer2/LableStateInput")
 lable_action = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer3/LableActionInput")
@@ -43,6 +44,8 @@ panel_skill = NodePath("Control/PanelSkill")
 max_cycle = null
 
 [node name="PlayerGroup" type="Node3D" parent="."]
+script = ExtResource("2_j7rkn")
+is_group_player = true
 
 [node name="UnitModel_1" parent="PlayerGroup" instance=ExtResource("2_8fed3")]
 character_base = ExtResource("3_3xxbe")
@@ -55,6 +58,7 @@ level = 2
 is_player = true
 
 [node name="EnemyGroup" type="Node3D" parent="."]
+script = ExtResource("2_j7rkn")
 
 [node name="UnitModel_3" parent="EnemyGroup" instance=ExtResource("2_8fed3")]
 character_base = ExtResource("5_0jh0x")

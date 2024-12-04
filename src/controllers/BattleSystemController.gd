@@ -5,8 +5,15 @@ enum Cycle {StartCycle, InsideCycle, EndCycle}
 enum State {StartState, ActionState, SkillState, EndState}
 
 # -------------------------------------------------------------------------------------
-@export var player_group: Array[UnitModel]
-@export var enemy_group: Array[UnitModel]
+@export var player_unit_group: UnitGroupModel
+@export var enemy_unit_group: UnitGroupModel
+
+var player_group: Array[UnitModel]:
+  get:
+    return player_unit_group.get_units()
+var enemy_group: Array[UnitModel]:
+  get:
+    return enemy_unit_group.get_units()
 
 @export var label_count_cycle: Label
 @export var lable_state: Label
@@ -48,6 +55,8 @@ func _ready():
   pass
 
 func _process(_delta):
+  if (player_unit_group == null) or (enemy_unit_group == null):
+    return
   match cycle:
     Cycle.StartCycle:
       perform_start_cycle()
@@ -55,7 +64,7 @@ func _process(_delta):
       perform_inside_cycle()
     Cycle.EndCycle:
       perform_end_cycle()
-  pass
+  return
 
 # Cycle
 # - Step 1
