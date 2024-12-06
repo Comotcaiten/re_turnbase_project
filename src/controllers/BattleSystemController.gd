@@ -1,8 +1,7 @@
 extends Node
 class_name BattleSystemController
 
-enum Cycle {StartCycle, InsideCycle, EndCycle}
-enum State {StartState, ActionState, SkillState, EndState}
+enum State {StartState, StartCycleState, UnitTurnState, ActionState, SkillState, EndCycleState, EndState}
 
 # -------------------------------------------------------------------------------------
 @export var player_unit_group: UnitGroupModel
@@ -31,7 +30,6 @@ var turn_queue: Array[UnitModel]:
   get:
     return get_turn_queue(player_group, enemy_group)
 
-var cycle: Cycle
 var state: State
 
 var current_queue: int
@@ -57,77 +55,24 @@ func _ready():
 func _process(_delta):
   if (player_unit_group == null) or (enemy_unit_group == null):
     return
-  match cycle:
-    Cycle.StartCycle:
-      perform_start_cycle()
-    Cycle.InsideCycle:
-      perform_inside_cycle()
-    Cycle.EndCycle:
-      perform_end_cycle()
   return
 
 # Cycle
-# - Step 1
-func perform_start_cycle():
-  # print("Cycle: ", count_cycle)
-
-  if label_count_cycle != null:
-    label_count_cycle.text = str(count_cycle)
-
-  cycle = Cycle.InsideCycle
-  pass
-# - Step 2
-func perform_inside_cycle():
-  if lable_state != null:
-    lable_state.text = State.find_key(state)
-  # Step 1
-  match state:
-    # Step 1.1
-    State.StartState:
-      perform_start_state()
-      pass
-    # Step 1.2
-    State.ActionState:
-      perform_action_state()
-      pass
-    # Step 1.3
-    State.SkillState:
-      perform_skill_state()
-      pass
-    # Step 1.4
-    State.EndState:
-      perform_end_state()
-      pass
-  # Step 2
-  pass
-# - Step 3
-func perform_end_cycle():
-  # Step 1
-  if count_cycle >= max_cycle:
-    return
-
-  count_cycle += 1
-
-  # Check xem các tất cả unit của các group có bị fainted hết không
-  if get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group):
-    # Nếu tất cả unit của một trong các group đều fainted hết thì trả về và coi như dừng vòng lặp cycle
-    return
-  
-  # Step 2
-  # Nếu vẫn còn unit của một trong các group chưa bị fainted thì tiếp tục cycle
-  # Reset cycle và bắt đầu cycle mới khi turn_queue/ Tất cả unit đi hết lượt của mình trong turn_queue
-  reset_cycle()
-  cycle = Cycle.StartCycle
-
 func reset_cycle():
   current_queue = 0
+  state = State.StartCycleState
   pass
   
 # State
-# - Step 1
 func perform_start_state():
-  if label_turn != null:
-    label_turn.text = turn_queue[current_queue].name + " - " + str(turn_queue[current_queue].is_player)
+  state = State.StartCycleState
+  pass
+
+func perform_start_cycle_state():
+  state = State.UnitTurnState
+  pass
+
+func perform_unit_turn_state():
   if turn_queue[current_queue].is_player:
     print("[Player]")
     state = State.ActionState
@@ -135,66 +80,31 @@ func perform_start_state():
     # Nếu không phải player thì thực hiện các hành động
     print("[Enemy]")
     state = State.EndState
-    pass
-  pass
-# - Step 2
+  return
+
 func perform_action_state():
-  # state = State.SkillState
-
-  if Input.is_action_just_pressed("ui_action_1"):
-    current_action = 0
-    get_perform_action_state("Attack")
-  if Input.is_action_just_pressed("ui_action_2"):
-    current_action = 1
-    get_perform_action_state("Bag")
-  if Input.is_action_just_pressed("ui_action_3"):
-    current_action = 2
-    get_perform_action_state("Skill")
-  if Input.is_action_just_pressed("ui_action_4"):
-    current_action = 3
-    get_perform_action_state("Run")
-  
-  if Input.is_action_just_pressed("ui_accept"):
-    match current_action:
-      0:
-        pass
-      1:
-        pass
-      2:
-        state = State.SkillState
-        pass
-      3:
-        state = State.EndState
-        pass
+  state = State.SkillState
   pass
 
-func get_perform_action_state(_context: String):
-  if lable_action != null:
-    lable_action.text = str(current_action) + " - " + _context
-
-# - Step 3
 func perform_skill_state():
-  # state = State.EndState
-  set_panel_skill_visible(true)
+  state = State.EndCycleState
   pass
-# - Step 4
-func perform_end_state():
-  if Input.is_action_just_pressed("ui_accept"):
-    # Step 1: Check xem các tất cả unit của các group có bị fainted hết không
-    print(get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group))
-    if get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group):
-      # Thoát vòng lặp state
-      cycle = Cycle.EndCycle
-      return
-    
-    if current_queue >= turn_queue.size() - 1:
-      cycle = Cycle.EndCycle
-      return
-    
-    # Step 2: Tiếp tục với unit tiếp theo
-    state = State.StartState
 
-    get_next_turn()
+func perform_end_cycle_state():
+  if !(max_cycle <= 0) and (count_cycle >= max_cycle):
+    state = State.EndState
+    return
+  
+  # Check xem các tất cả unit của các group có bị fainted hết không
+  if get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group):
+    state = State.EndState
+    return
+
+  count_cycle += 1
+  reset_cycle()
+  return
+
+func perform_end_state():
   return
 
 # TurnQueue

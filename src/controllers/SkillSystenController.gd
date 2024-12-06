@@ -83,6 +83,8 @@ func perform_get_select_target(_skill: SkillModel, _source: UnitModel):
       group_current_target = group_target.slice(start, end - start)
       pass
 
+func run_skill(_targets: Array[UnitModel], _source: UnitModel):
+  pass
 
 func reset_perform():
   group_target.clear()
