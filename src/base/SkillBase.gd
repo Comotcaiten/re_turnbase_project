@@ -13,6 +13,5 @@ enum TargetMode {ALL, SINGLE, THREE}
 
 @export_group("Components")
 @export var components: Array[SkillComponent]
-
-func run(_target: Array[UnitModel], _source: UnitModel, _battle_system: BattleSystemController) -> bool:
-  return true
+enum BreakPointMode {None, True, False}
+@export var break_point: BreakPointMode

@@ -41,7 +41,6 @@ lable_state = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer2/LableStat
 lable_action = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer3/LableActionInput")
 label_turn = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer4/LableTurnInput")
 panel_skill = NodePath("Control/PanelSkill")
-max_cycle = null
 
 [node name="PlayerGroup" type="Node3D" parent="."]
 script = ExtResource("2_j7rkn")
@@ -78,6 +77,7 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="PanelSkill" type="Panel" parent="Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

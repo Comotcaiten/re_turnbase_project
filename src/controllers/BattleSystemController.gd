@@ -45,16 +45,32 @@ var current_unit: UnitModel:
 # -------------------------------------------------------------------------------------
 
 func _ready():
-  # print(turn_queue)
-  # for unit in turn_queue:
-  #   print(unit.character_base.name, ": ", unit.speed)
-
+  start_lable()
   set_panel_skill_visible(false)
   pass
 
 func _process(_delta):
   if (player_unit_group == null) or (enemy_unit_group == null):
     return
+  match state:
+    State.StartState:
+      perform_start_state()
+      return
+    # State.StartCycleState:
+    #   perform_start_cycle_state()
+    #   return
+    # State.ActionState:
+    #   perform_action_state()
+    #   return
+    # State.SkillState:
+    #   perform_skill_state()
+    #   return
+    # State.EndCycleState:
+    #   perform_end_cycle_state()
+    #   return
+    # State.EndState:
+    #   perform_end_state()
+    #   return
   return
 
 # Cycle
@@ -65,7 +81,7 @@ func reset_cycle():
   
 # State
 func perform_start_state():
-  state = State.StartCycleState
+  # state = State.StartCycleState
   pass
 
 func perform_start_cycle_state():
@@ -164,3 +180,14 @@ func set_panel_skill_visible(_visible: bool):
     panel_skill.visible = _visible
   
 # Skill
+
+# Label
+func start_lable():
+  label_count_cycle.text = str(count_cycle)
+  lable_state.text = State.find_key(state)
+  lable_action.text = "????"
+  label_turn.text = "Who?"
+
+func update_label(_content: String):
+  label_count_cycle.text = str(count_cycle)
+  lable_state.text = State.find_key(state)
