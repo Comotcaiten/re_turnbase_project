@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="CharacterBase" load_steps=3 format=3 uid="uid://cr1p67phm535x"]
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=4 format=3 uid="uid://cr1p67phm535x"]
 
 [ext_resource type="Script" path="res://src/base/CharacterBase.gd" id="1_gg6v4"]
 [ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_ytp6d"]
+[ext_resource type="Resource" uid="uid://ch1ps3ty6fyhv" path="res://asset/skill_base/test_A.tres" id="3_kop4n"]
 
 [resource]
 script = ExtResource("1_gg6v4")
@@ -12,5 +13,5 @@ attack_physical = 10
 attack_magic = 10
 defense_physical = 10
 defense_magic = 10
-speed = 10
-skills = Array[ExtResource("2_ytp6d")]([])
+speed = 100
+skills = Array[ExtResource("2_ytp6d")]([ExtResource("3_kop4n")])

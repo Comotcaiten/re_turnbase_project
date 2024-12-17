@@ -4,6 +4,8 @@ class_name BattleSystemController
 enum State {StartState, StartCycleState, UnitTurnState, ActionState, SkillState, EndCycleState, EndState}
 
 # -------------------------------------------------------------------------------------
+var skill_sytem_controller: SkillSystemController
+
 @export var player_unit_group_model: UnitGroupModel
 @export var enemy_unit_group_model: UnitGroupModel
 
@@ -45,34 +47,46 @@ var current_unit: UnitModel:
 # -------------------------------------------------------------------------------------
 
 func _ready():
+  skill_sytem_controller = SkillSystemController.new(self)
   start_lable()
   set_panel_skill_visible(false)
-  print("ID: ", player_unit_group_model.id)
+  
+  print(skill_sytem_controller.to_string())
+
+  print("[Skills]: ", player_group[0].skills)
   pass
 
-# func _process(_delta):
-#   if (player_unit_group_model == null) or (enemy_unit_group_model == null):
-#     return
-#   match state:
-#     State.StartState:
-#       perform_start_state()
-#       return
-#     # State.StartCycleState:
-#     #   perform_start_cycle_state()
-#     #   return
-#     # State.ActionState:
-#     #   perform_action_state()
-#     #   return
-#     # State.SkillState:
-#     #   perform_skill_state()
-#     #   return
-#     # State.EndCycleState:
-#     #   perform_end_cycle_state()
-#     #   return
-#     # State.EndState:
-#     #   perform_end_state()
-#     #   return
-#   return
+func _process(_delta):
+  # if (player_unit_group_model == null) or (enemy_unit_group_model == null):
+  #   return
+  match state:
+    State.StartState:
+      perform_start_state()
+      return
+    State.StartCycleState:
+      update_label()
+      perform_start_cycle_state()
+      return
+    State.UnitTurnState:
+      update_label()
+      perform_unit_turn_state()
+    State.ActionState:
+      update_label()
+      perform_action_state()
+      return
+    State.SkillState:
+      update_label()
+      perform_skill_state()
+      return
+    State.EndCycleState:
+      update_label()
+      perform_end_cycle_state()
+      return
+    State.EndState:
+      update_label()
+      perform_end_state()
+      return
+  return
 
 # Cycle
 func reset_cycle():
@@ -82,7 +96,7 @@ func reset_cycle():
   
 # State
 func perform_start_state():
-  # state = State.StartCycleState
+  state = State.StartCycleState
   pass
 
 func perform_start_cycle_state():
@@ -90,6 +104,7 @@ func perform_start_cycle_state():
   pass
 
 func perform_unit_turn_state():
+  print("!!!")
   if turn_queue[current_queue].is_player:
     print("[Player]")
     state = State.ActionState
@@ -104,7 +119,9 @@ func perform_action_state():
   pass
 
 func perform_skill_state():
-  state = State.EndCycleState
+  # state = State.EndCycleState
+
+  skill_sytem_controller.perform_skill(current_unit)
   pass
 
 func perform_end_cycle_state():
@@ -189,6 +206,6 @@ func start_lable():
   lable_action.text = "????"
   label_turn.text = "Who?"
 
-func update_label(_content: String):
+func update_label():
   label_count_cycle.text = str(count_cycle)
   lable_state.text = State.find_key(state)

@@ -21,6 +21,7 @@ var stats_base: Dictionary:
 
 var stats_modified: Dictionary = CharacterBase.get_stats_default()
 
+var skills: Array[SkillModel]
 #--------------------------------------------------------------------------------
 # Chỉ số
 var health: int
@@ -50,9 +51,11 @@ var speed: int:
 func initialize(_character_base: CharacterBase, _level: int):
   character_base = _character_base
   level = _level
+  set_skills()
 
 func _ready():
   health = character_base.max_health
+  set_skills()
   pass
 
 func get_stat(_stat: CharacterBase.StatType):
@@ -84,6 +87,11 @@ func get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
   signal_get_damage(_damage_detail, _source)
   pass
 
+func get_skill(_index: int) -> SkillModel:
+  if _index >= skills.size():
+    return null
+  return skills[_index]
+
 func set_stat_modified(_stat: CharacterBase.StatType, _amount: int):
   # Step 1
   stats_modified[_stat] = _amount
@@ -97,6 +105,13 @@ func set_health(_amount_add: int, _source: UnitModel):
   # Step 2
   signal_set_health(_amount_add, _source)
   pass
+
+func set_skills():
+  for skill in character_base.skills:
+    if skill == null:
+      continue
+    skills.append(SkillModel.new(skill))
+  return
 
 func signal_get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
   print("> signal_get_damage: ", _damage_detail)

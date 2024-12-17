@@ -16,17 +16,17 @@ func _init(_skill_base: SkillBase):
   element = _skill_base.element
   pass
 
-func run(_target: Array[UnitModel], _source: UnitModel, _battle_system: BattleSystemController) -> bool:
+func run(_targets: Array[UnitModel], _source: UnitModel, _battle_system: BattleSystemController) -> bool:
   match skill_base.break_point:
     SkillBase.BreakPointMode.None:
         for component in skill_base.components:
-          component.run(_target, _source, self, _battle_system)
+          component.run(_targets, _source, self, _battle_system)
     SkillBase.BreakPointMode.True:
         for component in skill_base.components:
-          if component.run(_target, _source, self, _battle_system) == true:
+          if component.run(_targets, _source, self, _battle_system) == true:
             break
     SkillBase.BreakPointMode.False:
         for component in skill_base.components:
-          if component.run(_target, _source, self, _battle_system) == false:
+          if component.run(_targets, _source, self, _battle_system) == false:
             break
   return true

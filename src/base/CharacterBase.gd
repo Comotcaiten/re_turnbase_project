@@ -22,6 +22,7 @@ enum Element {Physical, Fire, Water}
 @export var speed: int
 
 @export_group("Skill")
+var max_skills: int = 4
 @export var skills: Array[SkillBase]
 
 func get_stats():

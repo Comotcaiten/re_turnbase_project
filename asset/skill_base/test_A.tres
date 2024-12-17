@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=3 format=3 uid="uid://ch1ps3ty6fyhv"]
+
+[ext_resource type="Script" path="res://src/components/SkillComponent.gd" id="1_3wey6"]
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_cjgdh"]
+
+[resource]
+script = ExtResource("2_cjgdh")
+name = "Skill_A"
+element = 0
+target_type = 1
+target_mode = 1
+components = Array[ExtResource("1_3wey6")]([])
+break_point = 0
