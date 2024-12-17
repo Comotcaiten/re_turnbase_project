@@ -120,12 +120,12 @@ func perform_skill_state():
 func perform_end_cycle_state():
 	if !(max_cycle <= 0) and (count_cycle >= max_cycle):
 		state = State.EndState
-	return
+		return
 	
 	# Check xem các tất cả unit của các group có bị fainted hết không
 	if get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group):
 		state = State.EndState
-	return
+		return
 
 	count_cycle += 1
 	reset_cycle()

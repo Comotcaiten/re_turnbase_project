@@ -59,7 +59,8 @@ func get_group_target_select(_skill: SkillModel, _source: UnitModel):
 		SkillBase.TargetMode.THREE:
 			var start: int = max(0, current_target - 1)
 			var end: int = min(group_target.size(), current_target + 2)
-			group_current_target = group_target.slice(start, end - start)
+			print(start, " - ", end)
+			group_current_target = group_target.slice(start, end)
 	print("[group_current_target]: ", group_current_target)
 	return
 
