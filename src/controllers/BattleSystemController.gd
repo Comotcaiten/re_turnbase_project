@@ -4,15 +4,15 @@ class_name BattleSystemController
 enum State {StartState, StartCycleState, UnitTurnState, ActionState, SkillState, EndCycleState, EndState}
 
 # -------------------------------------------------------------------------------------
-@export var player_unit_group: UnitGroupModel
-@export var enemy_unit_group: UnitGroupModel
+@export var player_unit_group_model: UnitGroupModel
+@export var enemy_unit_group_model: UnitGroupModel
 
 var player_group: Array[UnitModel]:
   get:
-    return player_unit_group.get_units()
+    return player_unit_group_model.get_units()
 var enemy_group: Array[UnitModel]:
   get:
-    return enemy_unit_group.get_units()
+    return enemy_unit_group_model.get_units()
 
 @export var label_count_cycle: Label
 @export var lable_state: Label
@@ -47,31 +47,32 @@ var current_unit: UnitModel:
 func _ready():
   start_lable()
   set_panel_skill_visible(false)
+  print("ID: ", player_unit_group_model.id)
   pass
 
-func _process(_delta):
-  if (player_unit_group == null) or (enemy_unit_group == null):
-    return
-  match state:
-    State.StartState:
-      perform_start_state()
-      return
-    # State.StartCycleState:
-    #   perform_start_cycle_state()
-    #   return
-    # State.ActionState:
-    #   perform_action_state()
-    #   return
-    # State.SkillState:
-    #   perform_skill_state()
-    #   return
-    # State.EndCycleState:
-    #   perform_end_cycle_state()
-    #   return
-    # State.EndState:
-    #   perform_end_state()
-    #   return
-  return
+# func _process(_delta):
+#   if (player_unit_group_model == null) or (enemy_unit_group_model == null):
+#     return
+#   match state:
+#     State.StartState:
+#       perform_start_state()
+#       return
+#     # State.StartCycleState:
+#     #   perform_start_cycle_state()
+#     #   return
+#     # State.ActionState:
+#     #   perform_action_state()
+#     #   return
+#     # State.SkillState:
+#     #   perform_skill_state()
+#     #   return
+#     # State.EndCycleState:
+#     #   perform_end_cycle_state()
+#     #   return
+#     # State.EndState:
+#     #   perform_end_state()
+#     #   return
+#   return
 
 # Cycle
 func reset_cycle():

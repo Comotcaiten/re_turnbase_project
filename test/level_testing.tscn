@@ -32,15 +32,16 @@ Button/styles/hover = null
 Button/styles/normal = SubResource("StyleBoxFlat_jpxvx")
 Button/styles/pressed = null
 
-[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("player_unit_group", "enemy_unit_group", "label_count_cycle", "lable_state", "lable_action", "label_turn", "panel_skill")]
+[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("player_unit_group_model", "enemy_unit_group_model", "label_count_cycle", "lable_state", "lable_action", "label_turn", "panel_skill")]
 script = ExtResource("1_ttxq4")
-player_unit_group = NodePath("PlayerGroup")
-enemy_unit_group = NodePath("EnemyGroup")
+player_unit_group_model = NodePath("PlayerGroup")
+enemy_unit_group_model = NodePath("EnemyGroup")
 label_count_cycle = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer/LableCycleInput")
 lable_state = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer2/LableStateInput")
 lable_action = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer3/LableActionInput")
 label_turn = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer4/LableTurnInput")
 panel_skill = NodePath("Control/PanelSkill")
+max_cycle = null
 
 [node name="PlayerGroup" type="Node3D" parent="."]
 script = ExtResource("2_j7rkn")

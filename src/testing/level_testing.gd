@@ -8,5 +8,5 @@ func _ready():
   unit_model_test.get_damage(damage, unit_model_test)
   pass
 
-func _process(_delta):
-  pass
+# func _process(_delta):
+#   pass

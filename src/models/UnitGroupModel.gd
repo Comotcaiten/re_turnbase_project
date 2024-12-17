@@ -3,6 +3,10 @@ class_name UnitGroupModel
 
 @export var is_group_player: bool
 
+var id: String:
+  get:
+    return "UGD#" + str(self.get_instance_id())
+
 var group: Array[UnitModel]:
   get:
     return get_units()
