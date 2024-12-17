@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=3 format=3 uid="uid://b6vbpllu1apd"]
+
+[ext_resource type="Script" path="res://src/base/CharacterBase.gd" id="1_isd8i"]
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_wiuvn"]
+
+[resource]
+script = ExtResource("1_isd8i")
+name = "Lionfield"
+element = 0
+max_health = 10
+attack_physical = 1
+attack_magic = 1
+defense_physical = 10
+defense_magic = 10
+speed = 10
+skills = Array[ExtResource("2_wiuvn")]([])

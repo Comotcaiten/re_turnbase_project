@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bkuj22drsxyp"]
+[gd_scene load_steps=16 format=3 uid="uid://bkuj22drsxyp"]
 
 [ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_ttxq4"]
 [ext_resource type="PackedScene" uid="uid://bt07g12qxu7mf" path="res://asset/tres/unit_model.tscn" id="2_8fed3"]
@@ -6,7 +6,11 @@
 [ext_resource type="Resource" uid="uid://cr1p67phm535x" path="res://asset/character_base/Lien.tres" id="3_3xxbe"]
 [ext_resource type="Resource" uid="uid://dbf3msp251kf7" path="res://asset/character_base/Mushou.tres" id="4_4w7vw"]
 [ext_resource type="Resource" uid="uid://doboyyijgqmvw" path="res://asset/character_base/IronLion.tres" id="5_0jh0x"]
+[ext_resource type="Resource" uid="uid://cr7wuy47xmgl5" path="res://asset/character_base/Character A.tres" id="6_dfyv5"]
 [ext_resource type="Resource" uid="uid://b8sa6kjre0wc3" path="res://asset/character_base/Itxal.tres" id="6_ffjil"]
+[ext_resource type="Resource" uid="uid://cexamc3ewjs3j" path="res://asset/character_base/Character B.tres" id="7_eljcv"]
+[ext_resource type="Resource" uid="uid://b6vbpllu1apd" path="res://asset/character_base/Lionfield.tres" id="10_hfu6a"]
+[ext_resource type="Resource" uid="uid://u8sw8in4w2rd" path="res://asset/character_base/Apt.tres" id="11_4154i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7kpxl"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -41,7 +45,6 @@ lable_state = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer2/LableStat
 lable_action = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer3/LableActionInput")
 label_turn = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer4/LableTurnInput")
 panel_skill = NodePath("Control/PanelSkill")
-max_cycle = null
 
 [node name="PlayerGroup" type="Node3D" parent="."]
 script = ExtResource("2_j7rkn")
@@ -57,6 +60,16 @@ character_base = ExtResource("4_4w7vw")
 level = 2
 is_player = true
 
+[node name="UnitModel_5" parent="PlayerGroup" instance=ExtResource("2_8fed3")]
+character_base = ExtResource("6_dfyv5")
+level = 12
+is_player = true
+
+[node name="UnitModel_6" parent="PlayerGroup" instance=ExtResource("2_8fed3")]
+character_base = ExtResource("7_eljcv")
+level = 3
+is_player = true
+
 [node name="EnemyGroup" type="Node3D" parent="."]
 script = ExtResource("2_j7rkn")
 
@@ -66,6 +79,14 @@ level = 2
 
 [node name="UnitModel_4" parent="EnemyGroup" instance=ExtResource("2_8fed3")]
 character_base = ExtResource("6_ffjil")
+level = 2
+
+[node name="UnitModel_7" parent="EnemyGroup" instance=ExtResource("2_8fed3")]
+character_base = ExtResource("10_hfu6a")
+level = 11
+
+[node name="UnitModel_8" parent="EnemyGroup" instance=ExtResource("2_8fed3")]
+character_base = ExtResource("11_4154i")
 level = 2
 
 [node name="Control" type="Control" parent="."]

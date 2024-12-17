@@ -26,27 +26,27 @@ var max_skills: int = 4
 @export var skills: Array[SkillBase]
 
 func get_stats():
-    return {
-        StatType.MaxHealth: max(0, max_health),
+	return {
+		StatType.MaxHealth: max(0, max_health),
 
-        StatType.AttackPhysical: max(0, attack_physical),
-        StatType.AttackMagic: max(0, attack_magic),
+		StatType.AttackPhysical: max(0, attack_physical),
+		StatType.AttackMagic: max(0, attack_magic),
 
-        StatType.DefensePhysical: max(0, defense_physical),
-        StatType.DefenseMagic: max(0, defense_magic),
+		StatType.DefensePhysical: max(0, defense_physical),
+		StatType.DefenseMagic: max(0, defense_magic),
 
-        StatType.Speed: max(0, speed),
-    }
+		StatType.Speed: max(0, speed),
+	}
 
 static func get_stats_default():
-    return {
-        StatType.MaxHealth: 0,
+	return {
+		StatType.MaxHealth: 0,
 
-        StatType.AttackPhysical: 0,
-        StatType.AttackMagic: 0,
+		StatType.AttackPhysical: 0,
+		StatType.AttackMagic: 0,
 
-        StatType.DefensePhysical: 0,
-        StatType.DefenseMagic: 0,
-        
-        StatType.Speed: 0,
-    }
+		StatType.DefensePhysical: 0,
+		StatType.DefenseMagic: 0,
+		
+		StatType.Speed: 0,
+	}

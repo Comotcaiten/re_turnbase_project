@@ -11,9 +11,9 @@ var group: Array[UnitModel]:
   get:
     return get_units()
 
-func _ready():
-  print(get_units())
-  pass
+# func _ready():
+#   print(get_units())
+#   pass
 
 func get_units() -> Array[UnitModel]:
   var new_group: Array[UnitModel]
