@@ -57,8 +57,8 @@ func _ready():
 	pass
 
 func _process(_delta):
-	# if (player_unit_group_model == null) or (enemy_unit_group_model == null):
-	#   return
+	if (player_unit_group_model == null) or (enemy_unit_group_model == null):
+		return
 	match state:
 		State.StartState:
 			perform_start_state()
@@ -94,6 +94,10 @@ func perform_start_state():
 	pass
 
 func perform_start_cycle_state():
+	if get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group):
+		state = State.EndState
+		return
+
 	state = State.UnitTurnState
 	pass
 
@@ -196,9 +200,9 @@ func set_panel_skill_visible(_visible: bool):
 func start_lable():
 	label_count_cycle.text = str(count_cycle)
 	lable_state.text = State.find_key(state)
-	lable_action.text = "????"
 	label_turn.text = "Who?"
 
 func update_label():
 	label_count_cycle.text = str(count_cycle)
 	lable_state.text = State.find_key(state)
+	label_turn.text = current_unit.name

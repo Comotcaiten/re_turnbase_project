@@ -27,8 +27,8 @@ func _init(_system: BattleSystemController):
 	return
 
 func get_group_target(_skill: SkillModel, _source: UnitModel):
-
 	if _skill == null or _source == null:
+		group_target = []
 		return
 
 	# Lọc kiểu target và group các unit sẽ bị target: 
@@ -36,8 +36,6 @@ func get_group_target(_skill: SkillModel, _source: UnitModel):
 	match _skill.target_type:
 		SkillBase.TargetType.SELF:
 			group_target = [_source]
-			# Thuc hien khac va tra ve
-			return
 		SkillBase.TargetType.ENEMY:
 			group_target = enemy_group
 		SkillBase.TargetType.ALLY:
@@ -48,6 +46,9 @@ func get_group_target(_skill: SkillModel, _source: UnitModel):
 	return
 
 func get_group_target_select(_skill: SkillModel, _source: UnitModel):
+	if _skill == null or _source == null:
+		group_current_target = []
+		return
 	match _skill.target_mode:
 		# tất cả đối tượng
 		SkillBase.TargetMode.ALL:
