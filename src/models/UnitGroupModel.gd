@@ -20,5 +20,6 @@ func get_units() -> Array[UnitModel]:
   for child in get_children():
     if (child is UnitModel):
       child.is_player = is_group_player
+      child.id_groups_in_battle = id
       new_group.append(child)
   return new_group

@@ -6,14 +6,12 @@ class_name UnitModel
 
 @export var is_player: bool
 
+var id_groups_in_battle: String
 var is_fainted: bool = false
 
 var element: CharacterBase.Element:
   get:
     return character_base.element
-
-var in_battle: bool = false
-var first_call: bool = false
 
 var stats_base: Dictionary:
   get:
@@ -115,11 +113,6 @@ func set_skills():
 
 func signal_get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
   print("> signal_get_damage: ", _damage_detail)
-  pass
-
-func signal_get_in_battle():
-  # Signal này được gọi khi unit này xuất hiện lần đầu trong trận đấu
-  print("> signal_get_in_battle: ", in_battle, " | ", first_call)
   pass
 
 func signal_set_stat_modified(_stat: CharacterBase.StatType, _amount: int):

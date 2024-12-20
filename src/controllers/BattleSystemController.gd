@@ -4,10 +4,19 @@ class_name BattleSystemController
 enum State {StartState, StartCycleState, UnitTurnState, ActionState, SkillState, EndCycleState, EndState}
 
 # -------------------------------------------------------------------------------------
-var skill_sytem_controller: SkillSystemController
+var skill_sytem_controller: SkillSystemController = SkillSystemController.new(self)
 
 @export var player_unit_group_model: UnitGroupModel
 @export var enemy_unit_group_model: UnitGroupModel
+
+# var database_groups: Dictionary:
+# 	get:
+# 		return {
+# 			player_unit_group_model: player_unit_group_model.id,
+# 			enemy_unit_group_model: enemy_unit_group_model.id,
+# 		}
+
+var db_groups_unit: Maps = Maps.new()
 
 var player_group: Array[UnitModel]:
 	get:
@@ -54,6 +63,9 @@ func _ready():
 	# print(skill_sytem_controller.to_string())
 	print("[player_group]: ", player_group)
 	print("[enemy_group]: ", enemy_group)
+
+	db_groups_unit.add_val(player_unit_group_model.id, player_unit_group_model)
+	db_groups_unit.add_val(enemy_unit_group_model.id, enemy_unit_group_model)
 	pass
 
 func _process(_delta):
@@ -118,7 +130,7 @@ func perform_action_state():
 func perform_skill_state():
 	# state = State.EndCycleState
 
-	skill_sytem_controller.perform_skill(current_unit)
+	skill_sytem_controller.perform_skill(null)
 	pass
 
 func perform_end_cycle_state():
