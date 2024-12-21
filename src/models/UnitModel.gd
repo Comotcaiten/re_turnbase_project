@@ -64,26 +64,32 @@ func get_stat(_stat: CharacterBase.StatType):
 
   return int(amount_stat)
 
-func get_defense(_type_attack: DamageDetailModel.TypeAttack):
-  match _type_attack:
-    DamageDetailModel.TypeAttack.Physical:
-      return defense_physical
-    DamageDetailModel.TypeAttack.Magic:
-      return defense_physical
+# func get_defense(_type_attack: DamageDetailModel.TypeAttack):
+#   match _type_attack:
+#     DamageDetailModel.TypeAttack.Physical:
+#       return defense_physical
+#     DamageDetailModel.TypeAttack.Magic:
+#       return defense_physical
 
-func get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
-  # Step 1
-  var defense: int = get_defense(_damage_detail.type_attack)
-  var damage_amount = _damage_detail.damage_amount
+# func get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
+#   # Step 1
+#   var defense: int = get_defense(_damage_detail.type_attack)
+#   var damage_amount = _damage_detail.damage_amount
 
-  if _damage_detail.true_damage:
-    defense = 0
-  damage_amount = int((damage_amount * 1.0) / max(1.0, defense * 1.0))
-  # Step 2
-  set_health(damage_amount, _source)
-  # Step 3
-  signal_get_damage(_damage_detail, _source)
-  pass
+#   if _damage_detail.true_damage:
+#     defense = 0
+#   damage_amount = int((damage_amount * 1.0) / max(1.0, defense * 1.0))
+#   # Step 2
+#   set_health(damage_amount, _source)
+#   # Step 3
+#   signal_get_damage(_damage_detail, _source)
+#   pass
+
+func get_damage(_damage_model: DamageModel = null):
+  if _damage_model == null:
+    return false
+  # var damage_amount: int = _damage_model.compute_damage(self
+  return
 
 func get_skill(_index: int) -> SkillModel:
   if _index >= skills.size():
@@ -111,9 +117,9 @@ func set_skills():
     skills.append(SkillModel.new(skill))
   return
 
-func signal_get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
-  print("> signal_get_damage: ", _damage_detail)
-  pass
+# func signal_get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
+#   print("> signal_get_damage: ", _damage_detail)
+#   pass
 
 func signal_set_stat_modified(_stat: CharacterBase.StatType, _amount: int):
   print("> signal_set_stat_modified: ", CharacterBase.StatType.find_key(_stat), ": ", _amount, " | ", stats_modified[_stat])

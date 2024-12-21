@@ -3,7 +3,9 @@ class_name SkillSystemController
 var battle_system_controller: BattleSystemController
 
 var current_target: int = 0
-var current_source: UnitModel
+var current_target_unit: UnitModel:
+	get:
+		return group_target[current_target]
 var current_skill_select: SkillModel
 
 # Danh sách các target có thể được chọn
