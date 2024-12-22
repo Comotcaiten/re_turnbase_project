@@ -64,14 +64,14 @@ func get_stat(_stat: CharacterBase.StatType):
 
   return int(amount_stat)
 
-# func get_defense(_type_attack: DamageDetailModel.TypeAttack):
-#   match _type_attack:
-#     DamageDetailModel.TypeAttack.Physical:
-#       return defense_physical
-#     DamageDetailModel.TypeAttack.Magic:
-#       return defense_physical
+func get_defense(_type_attack: DamageModel.TypeAttack):
+  match _type_attack:
+    DamageModel.TypeAttack.Physical:
+      return defense_physical
+    DamageModel.TypeAttack.Magic:
+      return defense_physical
 
-# func get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
+# func get_damage(_damage_detail: DamageModel, _source: UnitModel):
 #   # Step 1
 #   var defense: int = get_defense(_damage_detail.type_attack)
 #   var damage_amount = _damage_detail.damage_amount
@@ -88,7 +88,22 @@ func get_stat(_stat: CharacterBase.StatType):
 func get_damage(_damage_model: DamageModel = null):
   if _damage_model == null:
     return false
-  # var damage_amount: int = _damage_model.compute_damage(self
+
+  var defense: int = get_defense(_damage_model.type_attack)
+  var damage: int = 1
+
+  if _damage_model.true_damage:
+    defense = 1
+
+  damage = int((_damage_model.damage * 1.0) / max(1, defense * 1.0))
+
+  print("[Get Damage]: ", name, " get ", _damage_model.damage, "DMG Model")
+  print("[Get Damage]: ", name, " get ", damage, "DMG")
+
+  print("[Before] HP: ", health)
+  set_health(health - damage)
+  print("[After] HP: ", health)
+  # set_health(dama
   return
 
 func get_skill(_index: int) -> SkillModel:
@@ -103,12 +118,9 @@ func set_stat_modified(_stat: CharacterBase.StatType, _amount: int):
   signal_set_stat_modified(_stat, _amount)
   pass
 
-func set_health(_amount_add: int, _source: UnitModel):
-  # Step 1
-  health += _amount_add
-  # Step 2
-  signal_set_health(_amount_add, _source)
-  pass
+func set_health(_value: int):
+  health = _value
+  return
 
 func set_skills():
   for skill in character_base.skills:
@@ -117,7 +129,7 @@ func set_skills():
     skills.append(SkillModel.new(skill))
   return
 
-# func signal_get_damage(_damage_detail: DamageDetailModel, _source: UnitModel):
+# func signal_get_damage(_damage_detail: DamageModel, _source: UnitModel):
 #   print("> signal_get_damage: ", _damage_detail)
 #   pass
 
@@ -125,6 +137,6 @@ func signal_set_stat_modified(_stat: CharacterBase.StatType, _amount: int):
   print("> signal_set_stat_modified: ", CharacterBase.StatType.find_key(_stat), ": ", _amount, " | ", stats_modified[_stat])
   pass
 
-func signal_set_health(_amount: int, _source: UnitModel):
+func signal_set_health(_amount: int, _source: UnitModel = null):
   print("> signal_set_health: ", _amount)
   pass

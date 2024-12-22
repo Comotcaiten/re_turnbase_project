@@ -130,7 +130,7 @@ func perform_action_state():
 func perform_skill_state():
 	# state = State.EndCycleState
 
-	skill_sytem_controller.perform_skill(null)
+	skill_sytem_controller.perform_skill(current_unit)
 	pass
 
 func perform_end_cycle_state():

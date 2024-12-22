@@ -101,6 +101,7 @@ func perform_skill(_source: UnitModel):
 	if Input.is_action_just_pressed("ui_accept"):
 		if current_skill_select != null:
 			print(current_skill_select.skill_base.name, "Accept")
+			current_skill_select.run(group_current_target, _source, battle_system_controller)
 		else:
 			print("Please select Skill")
 

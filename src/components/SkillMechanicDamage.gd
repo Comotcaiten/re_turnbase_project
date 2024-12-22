@@ -11,7 +11,7 @@ func apply_mechanic(_targets: Array[UnitModel], _source: UnitModel, _skill: Skil
 		return false
 	# Set the source for damage calculations
 	damage_model.source = _source
-	source = source
+	source = _source
 
 	match _skill.target_mode:
 		SkillBase.TargetMode.THREE:
@@ -32,6 +32,7 @@ func apply_mechanic(_targets: Array[UnitModel], _source: UnitModel, _skill: Skil
 # Calculate damage for a specific target
 func calculate_damage(_target: UnitModel, _modifi: float = 1) -> int:
 	if _target == null or damage_model == null or source == null:
+		print("[calculate_damage] !!!!")
 		return 1
 	
 	var critical: int = damage_model.true_damage and 2 or 1
@@ -44,7 +45,7 @@ func calculate_damage(_target: UnitModel, _modifi: float = 1) -> int:
 			attack = max(1, source.attack_physical)
 		DamageModel.TypeAttack.Magic:
 			attack = max(1, source.attack_magic)
-
+			
 	match damage_model.type_damage:
 		DamageModel.TypeDamage.Damage:
 			# Sát thương cơ bản
