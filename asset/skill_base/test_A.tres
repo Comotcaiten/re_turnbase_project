@@ -35,6 +35,6 @@ script = ExtResource("2_cjgdh")
 name = "Skill_A"
 element = 0
 target_type = 1
-target_mode = 0
+target_mode = 1
 components = Array[ExtResource("1_3wey6")]([SubResource("Resource_dltp5")])
 break_point = 1

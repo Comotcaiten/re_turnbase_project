@@ -37,5 +37,6 @@ func is_fainted():
   return true
 
 func health_info():
+  print("<<<<[", id, "]>>>>")
   for unit in group:
     print(unit.name, ": HP[", unit.health, "/", unit.max_health)

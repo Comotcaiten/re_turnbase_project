@@ -88,22 +88,15 @@ func reset_cycle():
 	
 # State
 func perform_start_state():
+	print("<<<<<<<<<<<< Start GAME >>>>>>>>>>>>>>")
 	state = State.StartCycleState
 	pass
 
 func perform_start_cycle_state():
-	if is_units_group_fainted():
-		state = State.EndState
-		return
-
 	state = State.UnitTurnState
 	pass
 
 func perform_unit_turn_state():
-	if is_units_group_fainted():
-		state = State.EndState
-		return
-
 	if turn_queue[current_queue].is_player:
 		print("[Player]")
 		state = State.ActionState
@@ -111,7 +104,8 @@ func perform_unit_turn_state():
 		# Nếu không phải player thì thực hiện các hành động
 		print("[Enemy]")
 		# state = State.EndState
-		get_next_turn()
+		# get_next_turn()
+		skill_sytem_controller.perfrom_random_skill(current_unit)
 	return
 
 func perform_action_state():
@@ -123,9 +117,7 @@ func perform_skill_state():
 	pass
 
 func perform_after_every_thing():
-	if is_units_group_fainted():
-		state = State.EndState
-		return
+	is_units_group_fainted()
 	get_next_turn()
 	return
 
@@ -135,9 +127,7 @@ func perform_end_cycle_state():
 		return
 	
 	# Check xem các tất cả unit của các group có bị fainted hết không
-	if is_units_group_fainted():
-		state = State.EndState
-		return
+	is_units_group_fainted()
 
 	count_cycle += 1
 	reset_cycle()
@@ -153,6 +143,7 @@ func perform_end_state():
 func is_units_group_fainted() -> bool:
 	for values in db_groups_unit.db.values():
 		if values.is_fainted():
+			state = State.EndState
 			return true
 	return false
 

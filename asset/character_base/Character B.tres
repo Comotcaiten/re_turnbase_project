@@ -7,7 +7,7 @@
 script = ExtResource("1_w0ldu")
 name = "Character B"
 element = 0
-max_health = 0
+max_health = 100
 attack_physical = 4
 attack_magic = 4
 defense_physical = 8

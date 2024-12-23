@@ -107,23 +107,25 @@ func perform_skill(_source: UnitModel):
 	perform_select_target(current_skill_select, _source)
 	
 	if Input.is_action_just_pressed("ui_accept"):
-		if current_skill_select != null:
-			print(current_skill_select.skill_base.name, " Accept")
-			print(current_skill_select.run(group_current_target, _source, battle_system_controller))
-			print("Run Done")
-		else:
-			print("Skill Null")
-		perform_after()
+		perform_run_skill(_source)
 
-func perform_after():
+func perform_run_skill(_source: UnitModel):
+	if current_skill_select != null:
+		current_skill_select.run(group_current_target, _source, battle_system_controller)
+	else:
+		print("Skill null")
+
+	reset_perform()
 	battle_system_controller.perform_after_every_thing()
-	battle_system_controller.enemy_unit_group_model.health_info()
 
 func perform_select_target(_skill: SkillModel, _source: UnitModel):
 	if _skill == null or _source == null:
 		return
 
 	get_group_target(_skill, _source)
+
+	if group_current_target == []:
+		get_group_target_select(_skill, _source)
 
 	if Input.is_action_just_pressed("ui_left"):
 		set_current_target(current_target - 1)
@@ -144,3 +146,30 @@ func get_groups_from_maps(_id: Variant = null) -> Array[UnitModel]:
 	if battle_system_controller.db_groups_unit.get_val(_id) == null:
 		return []
 	return battle_system_controller.db_groups_unit.get_val(_id).group
+
+func get_random_skill(_source: UnitModel) -> SkillModel:
+	if _source.skills.is_empty():
+		return null
+	return _source.skills[randi() % _source.skills.size()]
+
+func get_random_current_target() -> int:
+	if group_target.size() <= 0:
+		return 0
+	return randi() % group_target.size()
+
+func perfrom_random_skill(_source: UnitModel):
+	current_skill_select = get_random_skill(_source)
+	if current_skill_select == null or _source == null:
+		return
+	
+	# if Input.is_action_just_pressed("ui_up"):
+	print(_source.name, " use skill ", current_skill_select.skill_base.name)
+	perform_random_target(current_skill_select, _source)
+	perform_run_skill(_source)
+	return
+
+func perform_random_target(_skill: SkillModel, _source: UnitModel):
+	get_group_target(_skill, _source)
+	set_current_target(get_random_current_target())
+	get_group_target_select(_skill, _source)
+	return
