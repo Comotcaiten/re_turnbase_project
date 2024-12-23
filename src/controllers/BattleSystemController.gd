@@ -9,6 +9,14 @@ var skill_sytem_controller: SkillSystemController = SkillSystemController.new(se
 @export var player_unit_group_model: UnitGroupModel
 @export var enemy_unit_group_model: UnitGroupModel
 
+
+@export var label_count_cycle: Label
+@export var lable_state: Label
+@export var lable_action: Label
+@export var label_turn: Label
+
+@export var panel_skill: Panel
+
 # var database_groups: Dictionary:
 # 	get:
 # 		return {
@@ -24,13 +32,6 @@ var player_group: Array[UnitModel]:
 var enemy_group: Array[UnitModel]:
 	get:
 		return enemy_unit_group_model.get_units()
-
-@export var label_count_cycle: Label
-@export var lable_state: Label
-@export var lable_action: Label
-@export var label_turn: Label
-
-@export var panel_skill: Panel
 
 # all_unit: Chứa tất cả unit bao gồm cả những unit bị fainted
 var all_unit: Array[UnitModel]:

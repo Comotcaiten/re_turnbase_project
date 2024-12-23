@@ -13,13 +13,6 @@ var group_target: Array[UnitModel]
 # Danh sách các target mục tiêu chính của skill
 var group_current_target: Array[UnitModel]
 
-var player_group: Array[UnitModel]:
-	get:
-		return battle_system_controller.player_group
-var enemy_group: Array[UnitModel]:
-	get:
-		return battle_system_controller.enemy_group
-
 func initialize(_system: BattleSystemController):
 	battle_system_controller = _system
 	return
@@ -33,17 +26,33 @@ func get_group_target(_skill: SkillModel, _source: UnitModel):
 		group_target = []
 		return
 
+	if battle_system_controller == null:
+		return
+	
+	if battle_system_controller.db_groups_unit == null or battle_system_controller.db_groups_unit.db.is_empty():
+		return
+
+	if !battle_system_controller.db_groups_unit.size == 2:
+		return
+
 	# Lọc kiểu target và group các unit sẽ bị target: 
 	# ==> Self -> 1 unit, Enemy / Ally -> group unit, Any -> all unit
 	match _skill.target_type:
 		SkillBase.TargetType.SELF:
 			group_target = [_source]
 		SkillBase.TargetType.ENEMY:
+			# battle_system_controller.db_groups_unit.get
+			var enemy_group: Array[UnitModel]
+			for id in battle_system_controller.db_groups_unit.db.keys:
+				if id != _source.id_groups:
+					enemy_group = get_groups_from_maps(id)
 			group_target = enemy_group
 		SkillBase.TargetType.ALLY:
-			group_target = player_group
+			group_target = get_groups_from_maps(_source.id_groups)
 		SkillBase.TargetType.ANY:
-			group_target = player_group + enemy_group
+			for id in battle_system_controller.db_groups_unit.db:
+				group_target.append_array(get_groups_from_maps(id))
+			return
 	# perform_target_mode(_skill, _source)
 	return
 
@@ -62,7 +71,6 @@ func get_group_target_select(_skill: SkillModel, _source: UnitModel):
 		SkillBase.TargetMode.THREE:
 			var start: int = max(0, current_target - 1)
 			var end: int = min(group_target.size(), current_target + 2)
-			print(start, " - ", end)
 			group_current_target = group_target.slice(start, end)
 	print("[group_current_target]: ", group_current_target)
 	return
@@ -128,3 +136,8 @@ func reset_perform():
 	current_target = 0
 	current_skill_select = null
 	pass
+
+func get_groups_from_maps(_id: Variant = null) -> Array[UnitModel]:
+	if battle_system_controller.db_groups_unit.get_val(_id) == null:
+		return []
+	return battle_system_controller.db_groups_unit.get_val(_id).group

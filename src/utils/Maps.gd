@@ -7,6 +7,7 @@ var size: int:
 
 func _init(_db: Dictionary = {}):
 	db = _db
+	# db.keys
 	pass
 
 func get_val(id):

@@ -6,7 +6,7 @@ class_name UnitModel
 
 @export var is_player: bool
 
-var id_groups_in_battle: String
+var id_groups: String
 var is_fainted: bool = false
 
 var element: CharacterBase.Element:
