@@ -43,7 +43,7 @@ func get_group_target(_skill: SkillModel, _source: UnitModel):
 		SkillBase.TargetType.ENEMY:
 			# battle_system_controller.db_groups_unit.get
 			var enemy_group: Array[UnitModel]
-			for id in battle_system_controller.db_groups_unit.db.keys:
+			for id in battle_system_controller.db_groups_unit.db:
 				if id != _source.id_groups:
 					enemy_group = get_groups_from_maps(id)
 			group_target = enemy_group
