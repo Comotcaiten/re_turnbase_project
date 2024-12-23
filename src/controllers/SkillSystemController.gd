@@ -114,7 +114,6 @@ func perform_run_skill(_source: UnitModel):
 		current_skill_select.run(group_current_target, _source, battle_system_controller)
 	else:
 		print("Skill null")
-
 	reset_perform()
 	battle_system_controller.perform_after_every_thing()
 
@@ -159,11 +158,11 @@ func get_random_current_target() -> int:
 
 func perfrom_random_skill(_source: UnitModel):
 	current_skill_select = get_random_skill(_source)
-	if current_skill_select == null or _source == null:
+	if _source == null:
 		return
-	
+
 	# if Input.is_action_just_pressed("ui_up"):
-	print(_source.name, " use skill ", current_skill_select.skill_base.name)
+	print(_source.name, " use skill ", current_skill_select)
 	perform_random_target(current_skill_select, _source)
 	perform_run_skill(_source)
 	return
