@@ -17,6 +17,7 @@ enum ConditionCheckMode {One, Amount, All} # Lấy bao nhiêu điều kiện (On
 
 func run(_targets: Array[UnitModel], _source: UnitModel, _skill: SkillModel, _battle_system: BattleSystemController) -> bool:
   var is_condition_met: bool = run_component(_targets, _source, _skill, _battle_system)
+  print("[Condition]: ", is_condition_met)
   if is_condition_met:
     for mechanic in mechanics:
       mechanic.apply_mechanic(_targets, _source, _skill, _battle_system)
@@ -24,10 +25,16 @@ func run(_targets: Array[UnitModel], _source: UnitModel, _skill: SkillModel, _ba
 
 func run_component(_targets: Array[UnitModel], _source: UnitModel, _skill: SkillModel, _battle_system: BattleSystemController) -> bool:
   if _targets.is_empty() or _source == null or _skill == null or _battle_system == null:
+    print("[run_component]")
+    print("[Target]: ", _targets)
+    print("[Source]: ", _source)
+    print("[Skill]: ", _skill)
+    print("[Battle_system]: ", _battle_system)
     return false
 
 	# Kiểm tra danh sách các điều kiện và các mechanics
   if conditions.is_empty() or mechanics.is_empty():
+    print("that")
     return false
   
   var is_condition_met: bool = false

@@ -21,12 +21,15 @@ func run(_targets: Array[UnitModel], _source: UnitModel, _battle_system: BattleS
     SkillBase.BreakPointMode.None:
         for component in skill_base.components:
           component.run(_targets, _source, self, _battle_system)
+        return true
     SkillBase.BreakPointMode.True:
         for component in skill_base.components:
           if component.run(_targets, _source, self, _battle_system) == true:
-            break
+            return true
+        return false
     SkillBase.BreakPointMode.False:
         for component in skill_base.components:
           if component.run(_targets, _source, self, _battle_system) == false:
-            break
+            return true
+        return false
   return true

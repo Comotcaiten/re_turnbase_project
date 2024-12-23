@@ -17,30 +17,17 @@ var skill_sytem_controller: SkillSystemController = SkillSystemController.new(se
 
 @export var panel_skill: Panel
 
-# var database_groups: Dictionary:
-# 	get:
-# 		return {
-# 			player_unit_group_model: player_unit_group_model.id,
-# 			enemy_unit_group_model: enemy_unit_group_model.id,
-# 		}
 
 var db_groups_unit: Maps = Maps.new()
 
-var player_group: Array[UnitModel]:
-	get:
-		return player_unit_group_model.get_units()
-var enemy_group: Array[UnitModel]:
-	get:
-		return enemy_unit_group_model.get_units()
-
 # all_unit: Chứa tất cả unit bao gồm cả những unit bị fainted
-var all_unit: Array[UnitModel]:
-	get:
-		return player_group + enemy_group
+# var all_unit: Array[UnitModel]:
+# 	get:
+# 		return player_unit_group_model.group + enemy_unit_group_model.group
 # turn_queue: Chứa các unit chưa bị fainted và sắp xếp chúng để thực hiện hành động theo lượt ở từng cycle
 var turn_queue: Array[UnitModel]:
 	get:
-		return get_turn_queue(player_group, enemy_group)
+		return get_turn_queue(player_unit_group_model.group, enemy_unit_group_model.group)
 
 var state: State
 
@@ -48,6 +35,7 @@ var current_queue: int
 var current_action: int
 var current_skill: int
 var count_cycle: int
+var is_end: bool = false
 
 @export var max_cycle: int = 10
 
@@ -60,13 +48,10 @@ func _ready():
 	skill_sytem_controller = SkillSystemController.new(self)
 	start_lable()
 	set_panel_skill_visible(false)
-	
-	# print(skill_sytem_controller.to_string())
-	print("[player_group]: ", player_group)
-	print("[enemy_group]: ", enemy_group)
 
 	db_groups_unit.add_val(player_unit_group_model.id, player_unit_group_model)
 	db_groups_unit.add_val(enemy_unit_group_model.id, enemy_unit_group_model)
+
 	pass
 
 func _process(_delta):
@@ -107,7 +92,7 @@ func perform_start_state():
 	pass
 
 func perform_start_cycle_state():
-	if get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group):
+	if is_units_group_fainted():
 		state = State.EndState
 		return
 
@@ -115,13 +100,18 @@ func perform_start_cycle_state():
 	pass
 
 func perform_unit_turn_state():
+	if is_units_group_fainted():
+		state = State.EndState
+		return
+
 	if turn_queue[current_queue].is_player:
 		print("[Player]")
 		state = State.ActionState
 	else:
 		# Nếu không phải player thì thực hiện các hành động
 		print("[Enemy]")
-		state = State.EndState
+		# state = State.EndState
+		get_next_turn()
 	return
 
 func perform_action_state():
@@ -129,10 +119,15 @@ func perform_action_state():
 	pass
 
 func perform_skill_state():
-	# state = State.EndCycleState
-
 	skill_sytem_controller.perform_skill(current_unit)
 	pass
+
+func perform_after_every_thing():
+	if is_units_group_fainted():
+		state = State.EndState
+		return
+	get_next_turn()
+	return
 
 func perform_end_cycle_state():
 	if !(max_cycle <= 0) and (count_cycle >= max_cycle):
@@ -140,7 +135,7 @@ func perform_end_cycle_state():
 		return
 	
 	# Check xem các tất cả unit của các group có bị fainted hết không
-	if get_units_group_fainted(player_group) or get_units_group_fainted(enemy_group):
+	if is_units_group_fainted():
 		state = State.EndState
 		return
 
@@ -149,23 +144,28 @@ func perform_end_cycle_state():
 	return
 
 func perform_end_state():
+	if !is_end:
+		print("<<<<<<<<<<<< END GAME >>>>>>>>>>>>>>")
+		is_end = true
 	return
 
 # TurnQueue
-func get_units_group_fainted(_group: Array[UnitModel]) -> bool:
-	if _group == []:
-		return true
-	for unit in _group:
-		if unit == null:
+func is_units_group_fainted() -> bool:
+	for values in db_groups_unit.db.values():
+		if values.is_fainted():
 			return true
-		if unit.is_fainted == false:
-			return false
-	return true
+	return false
 
 func get_next_turn():
 	# index
 	current_queue += 1
 
+	if current_queue < 0:
+		current_queue = turn_queue.size() - 1
+	elif current_queue >= turn_queue.size():
+		current_queue = 0
+
+	state = State.UnitTurnState
 	print("Next turn")
 	pass
 

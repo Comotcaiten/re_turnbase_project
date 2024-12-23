@@ -23,6 +23,13 @@ var skills: Array[SkillModel]
 #--------------------------------------------------------------------------------
 # Chỉ số
 var health: int
+  # set(value):
+  #   if value <= 0:
+  #     is_fainted = true
+  # get:
+  #   if health <= 0:
+  #     is_fainted = true
+  #   return health
 var max_health: int:
   get:
     return get_stat(CharacterBase.StatType.MaxHealth)
@@ -71,20 +78,6 @@ func get_defense(_type_attack: DamageModel.TypeAttack):
     DamageModel.TypeAttack.Magic:
       return defense_physical
 
-# func get_damage(_damage_detail: DamageModel, _source: UnitModel):
-#   # Step 1
-#   var defense: int = get_defense(_damage_detail.type_attack)
-#   var damage_amount = _damage_detail.damage_amount
-
-#   if _damage_detail.true_damage:
-#     defense = 0
-#   damage_amount = int((damage_amount * 1.0) / max(1.0, defense * 1.0))
-#   # Step 2
-#   set_health(damage_amount, _source)
-#   # Step 3
-#   signal_get_damage(_damage_detail, _source)
-#   pass
-
 func get_damage(_damage_model: DamageModel = null):
   if _damage_model == null:
     return false
@@ -98,12 +91,8 @@ func get_damage(_damage_model: DamageModel = null):
   damage = int((_damage_model.damage * 1.0) / max(1, defense * 1.0))
 
   print("[Get Damage]: ", name, " get ", _damage_model.damage, "DMG Model")
-  print("[Get Damage]: ", name, " get ", damage, "DMG")
-
-  print("[Before] HP: ", health)
+  # print("[Get Damage]: ", name, " get ", damage, "DMG")
   set_health(health - damage)
-  print("[After] HP: ", health)
-  # set_health(dama
   return
 
 func get_skill(_index: int) -> SkillModel:
@@ -119,7 +108,10 @@ func set_stat_modified(_stat: CharacterBase.StatType, _amount: int):
   pass
 
 func set_health(_value: int):
-  health = _value
+  health = max(0, _value)
+
+  if health <= 0:
+    is_fainted = true
   return
 
 func set_skills():

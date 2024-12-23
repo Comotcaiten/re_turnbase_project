@@ -108,10 +108,16 @@ func perform_skill(_source: UnitModel):
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		if current_skill_select != null:
-			print(current_skill_select.skill_base.name, "Accept")
-			current_skill_select.run(group_current_target, _source, battle_system_controller)
+			print(current_skill_select.skill_base.name, " Accept")
+			print(current_skill_select.run(group_current_target, _source, battle_system_controller))
+			print("Run Done")
 		else:
-			print("Please select Skill")
+			print("Skill Null")
+		perform_after()
+
+func perform_after():
+	battle_system_controller.perform_after_every_thing()
+	battle_system_controller.enemy_unit_group_model.health_info()
 
 func perform_select_target(_skill: SkillModel, _source: UnitModel):
 	if _skill == null or _source == null:
@@ -126,9 +132,6 @@ func perform_select_target(_skill: SkillModel, _source: UnitModel):
 		set_current_target(current_target + 1)
 		get_group_target_select(_skill, _source)
 	return
-
-func run_skill(_targets: Array[UnitModel], _source: UnitModel, _skill: SkillModel) -> bool:
-	return _skill.run(_targets, _source, battle_system_controller)
 
 func reset_perform():
 	group_target.clear()
