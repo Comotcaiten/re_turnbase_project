@@ -22,14 +22,17 @@ is_group_player = true
 [node name="UnitModelA" parent="PlayerUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("4_gu14f")
 level = 5
+is_player = null
 
 [node name="UnitModelB" parent="PlayerUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("5_nxars")
 level = 5
+is_player = null
 
 [node name="UnitModelC" parent="PlayerUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("6_hsnhf")
 level = 5
+is_player = null
 
 [node name="EnemyUnitGroupModel" type="Node3D" parent="."]
 script = ExtResource("2_mul5o")
@@ -37,11 +40,14 @@ script = ExtResource("2_mul5o")
 [node name="UnitModel" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("7_4fdcs")
 level = 5
+is_player = null
 
 [node name="UnitModel2" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("8_clhyr")
 level = 5
+is_player = null
 
 [node name="UnitModel3" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("9_iqeqw")
 level = 5
+is_player = null

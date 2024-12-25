@@ -25,11 +25,9 @@ var current_unit: UnitModel:
 func _ready():
 	maps_unit_groups_controller.add(player_unit_group_model.id, player_unit_group_model)
 	maps_unit_groups_controller.add(enemy_unit_group_model.id, enemy_unit_group_model)
-
-	print(turn_queue)
 	pass
 
-# TurnQueue - Quản lý các unit trong các Array[UnitModel]
+# TurnQueue và Quản lý các unit trong các Array[UnitModel]
 func get_turn_queue_merge_and_cut(_group: Array[UnitModel] = []) -> Array[UnitModel]:
 	var n = _group.size()
 	# Gộp mảng với chính nó
@@ -55,3 +53,10 @@ func update_turn_queue():
 	turn_queue = UnitGroupController.get_units_by_state(false, turn_queue)
 	turn_queue = UnitGroupController.get_groups_sort(turn_queue)
 	return
+
+func get_info_units():
+	for value in maps_unit_groups_controller.get_all_values():
+		if value is UnitGroupController:
+			for unit in value.get_units():
+				print(unit)
+				unit.print_stat()

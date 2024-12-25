@@ -49,15 +49,35 @@ func initialize(_character_base: CharacterBase, _level: int):
   level = _level
 
 func _ready():
-  health = character_base.max_health
-
   element = character_base.element
+
+  health = max_health
   pass
 
 func get_stat(_stat: CharacterBase.StatType):
   var amount_base = stats_base[_stat] * 1.0
   var amount_modified = stats_modified[_stat] * 1.0
 
-  var amount_stat = amount_base + ((amount_base * amount_modified) / 100.0)
+  var amount_stat: float = (amount_base + ((amount_base * amount_modified) / 100.0)) * (level * 1.0)
 
   return int(amount_stat)
+
+
+func print_stat():
+  print("Unit ID: ", character_base)
+  print("Name: ", character_base.name)
+  print("Level: ", level)
+  print("Is Player: ", is_player)
+  print("Element: ", element)
+
+  print("Health: ", health, "/", max_health)
+  print("Attack (Physical): ", attack_physical)
+  print("Attack (Magic): ", attack_magic)
+  print("Defense (Physical): ", defense_physical)
+  print("Defense (Magic): ", defense_magic)
+  print("Speed: ", speed)
+
+  # In ra các kỹ năng của Unit
+  print("Skills:")
+  for skill in skills:
+    print("  - ", skill)
