@@ -1,0 +1,47 @@
+[gd_scene load_steps=10 format=3 uid="uid://dt0mn6pxbhka2"]
+
+[ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_qxfdb"]
+[ext_resource type="Script" path="res://src/controllers/UnitGroupController.gd" id="2_mul5o"]
+[ext_resource type="PackedScene" uid="uid://bt07g12qxu7mf" path="res://asset/tres/unit_model.tscn" id="3_piiq0"]
+[ext_resource type="Resource" uid="uid://cvkhaqleugj31" path="res://asset/character_base/CharacterA.tres" id="4_gu14f"]
+[ext_resource type="Resource" uid="uid://mk6licfft1rm" path="res://asset/character_base/CharacterB.tres" id="5_nxars"]
+[ext_resource type="Resource" uid="uid://dhfw3x4kaqvh1" path="res://asset/character_base/CharacterC.tres" id="6_hsnhf"]
+[ext_resource type="Resource" uid="uid://p3do5hn5c632" path="res://asset/character_base/CharacterD.tres" id="7_4fdcs"]
+[ext_resource type="Resource" uid="uid://bmds5dbrqe3fq" path="res://asset/character_base/CharacterE.tres" id="8_clhyr"]
+[ext_resource type="Resource" uid="uid://cck0dhyktwndx" path="res://asset/character_base/CharacterF.tres" id="9_iqeqw"]
+
+[node name="TestingLogicCode" type="Node3D" node_paths=PackedStringArray("player_unit_group_model", "enemy_unit_group_model")]
+script = ExtResource("1_qxfdb")
+player_unit_group_model = NodePath("PlayerUnitGroupModel")
+enemy_unit_group_model = NodePath("EnemyUnitGroupModel")
+
+[node name="PlayerUnitGroupModel" type="Node3D" parent="."]
+script = ExtResource("2_mul5o")
+is_group_player = true
+
+[node name="UnitModelA" parent="PlayerUnitGroupModel" instance=ExtResource("3_piiq0")]
+character_base = ExtResource("4_gu14f")
+level = 5
+
+[node name="UnitModelB" parent="PlayerUnitGroupModel" instance=ExtResource("3_piiq0")]
+character_base = ExtResource("5_nxars")
+level = 5
+
+[node name="UnitModelC" parent="PlayerUnitGroupModel" instance=ExtResource("3_piiq0")]
+character_base = ExtResource("6_hsnhf")
+level = 5
+
+[node name="EnemyUnitGroupModel" type="Node3D" parent="."]
+script = ExtResource("2_mul5o")
+
+[node name="UnitModel" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
+character_base = ExtResource("7_4fdcs")
+level = 5
+
+[node name="UnitModel2" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
+character_base = ExtResource("8_clhyr")
+level = 5
+
+[node name="UnitModel3" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
+character_base = ExtResource("9_iqeqw")
+level = 5

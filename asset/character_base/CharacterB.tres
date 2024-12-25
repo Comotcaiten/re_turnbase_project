@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=3 format=3 uid="uid://mk6licfft1rm"]
+
+[ext_resource type="Script" path="res://src/base/CharacterBase.gd" id="1_tod61"]
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_7nuc0"]
+
+[resource]
+script = ExtResource("1_tod61")
+name = "CharacterB"
+element = 0
+max_health = 5
+attack_physical = 8
+attack_magic = 5
+defense_physical = 2
+defense_magic = 6
+speed = 4
+skills = Array[ExtResource("2_7nuc0")]([])
