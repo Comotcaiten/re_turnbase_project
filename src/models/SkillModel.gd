@@ -11,6 +11,10 @@ var target_mode: SkillBase.TargetMode:
   get:
     return skill_base.target_mode
 
+var target_fainted: SkillBase.TargetFainted:
+  get:
+    return skill_base.target_fainted
+
 func _init(_skill_base: SkillBase):
   skill_base = _skill_base
   element = _skill_base.element

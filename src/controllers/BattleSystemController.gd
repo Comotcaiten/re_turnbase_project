@@ -15,10 +15,11 @@ var skill_sytem_controller: SkillSystemController = SkillSystemController.new(se
 @export var lable_action: Label
 @export var label_turn: Label
 
-@export var panel_skill: Panel
-
+@export var vbox_container_db: VBoxContainer
 
 var db_groups_unit: Maps = Maps.new()
+
+var db_label: Maps = Maps.new()
 
 # all_unit: Chứa tất cả unit bao gồm cả những unit bị fainted
 # var all_unit: Array[UnitModel]:
@@ -46,12 +47,12 @@ var current_unit: UnitModel:
 
 func _ready():
 	skill_sytem_controller = SkillSystemController.new(self)
-	start_lable()
-	set_panel_skill_visible(false)
 
 	db_groups_unit.add_val(player_unit_group_model.id, player_unit_group_model)
 	db_groups_unit.add_val(enemy_unit_group_model.id, enemy_unit_group_model)
 
+
+	start_lable()
 	pass
 
 func _process(_delta):
@@ -97,6 +98,10 @@ func perform_start_cycle_state():
 	pass
 
 func perform_unit_turn_state():
+	if turn_queue[current_queue].is_fainted == true:
+		get_next_turn()
+		return
+
 	if turn_queue[current_queue].is_player:
 		print("[Player]")
 		state = State.ActionState
@@ -117,7 +122,6 @@ func perform_skill_state():
 	pass
 
 func perform_after_every_thing():
-	is_units_group_fainted()
 	get_next_turn()
 	return
 
@@ -148,6 +152,8 @@ func is_units_group_fainted() -> bool:
 	return false
 
 func get_next_turn():
+	if is_units_group_fainted():
+		return
 	# index
 	current_queue += 1
 
@@ -194,9 +200,6 @@ func filter_is_not_fainted(a: UnitModel):
 
 
 # Panel
-func set_panel_skill_visible(_visible: bool):
-	if panel_skill != null:
-		panel_skill.visible = _visible
 	
 # Skill
 
@@ -206,7 +209,19 @@ func start_lable():
 	lable_state.text = State.find_key(state)
 	label_turn.text = "Who?"
 
+	for db in db_groups_unit.db:
+		for unit in db_groups_unit.get_val(db).get_units():
+			print(unit)
+			var lb: Label = Label.new()
+			lb.text = unit.name + ": " + str(unit.health) + "/" + str(unit.max_health)
+			db_label.add_val(unit, lb)
+			vbox_container_db.add_child(lb)
+
 func update_label():
 	label_count_cycle.text = str(count_cycle)
 	lable_state.text = State.find_key(state)
 	label_turn.text = current_unit.name
+
+	for id in db_label.db.keys():
+		if db_label.get_val(id) is Label:
+			db_label.get_val(id).text = id.name + ": " + str(id.health) + "/" + str(id.max_health)

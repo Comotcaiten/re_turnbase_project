@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bkuj22drsxyp"]
+[gd_scene load_steps=12 format=3 uid="uid://bkuj22drsxyp"]
 
 [ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_ttxq4"]
 [ext_resource type="PackedScene" uid="uid://bt07g12qxu7mf" path="res://asset/tres/unit_model.tscn" id="2_8fed3"]
@@ -12,31 +12,7 @@
 [ext_resource type="Resource" uid="uid://b6vbpllu1apd" path="res://asset/character_base/Lionfield.tres" id="10_hfu6a"]
 [ext_resource type="Resource" uid="uid://u8sw8in4w2rd" path="res://asset/character_base/Apt.tres" id="11_4154i"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7kpxl"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x8sgm"]
-bg_color = Color(0.282353, 0.196078, 0.909804, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpxvx"]
-bg_color = Color(0, 0.647059, 0.258824, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="Theme" id="Theme_ptblk"]
-Button/styles/disabled = null
-Button/styles/focus = null
-Button/styles/hover = null
-Button/styles/normal = SubResource("StyleBoxFlat_jpxvx")
-Button/styles/pressed = null
-
-[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("player_unit_group_model", "enemy_unit_group_model", "label_count_cycle", "lable_state", "lable_action", "label_turn", "panel_skill")]
+[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("player_unit_group_model", "enemy_unit_group_model", "label_count_cycle", "lable_state", "lable_action", "label_turn", "vbox_container_db")]
 script = ExtResource("1_ttxq4")
 player_unit_group_model = NodePath("PlayerGroup")
 enemy_unit_group_model = NodePath("EnemyGroup")
@@ -44,7 +20,7 @@ label_count_cycle = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer/Labl
 lable_state = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer2/LableStateInput")
 lable_action = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer3/LableActionInput")
 label_turn = NodePath("Control/PanelInfo/VBoxContainer/HBoxContainer4/LableTurnInput")
-panel_skill = NodePath("Control/PanelSkill")
+vbox_container_db = NodePath("Control/Panel/VBoxContainer_DB")
 
 [node name="PlayerGroup" type="Node3D" parent="."]
 script = ExtResource("2_j7rkn")
@@ -56,16 +32,19 @@ level = 2
 is_player = true
 
 [node name="UnitModel_2" parent="PlayerGroup" instance=ExtResource("2_8fed3")]
+visible = false
 character_base = ExtResource("4_4w7vw")
 level = 2
 is_player = true
 
 [node name="UnitModel_5" parent="PlayerGroup" instance=ExtResource("2_8fed3")]
+visible = false
 character_base = ExtResource("6_dfyv5")
 level = 12
 is_player = true
 
 [node name="UnitModel_6" parent="PlayerGroup" instance=ExtResource("2_8fed3")]
+visible = false
 character_base = ExtResource("7_eljcv")
 level = 3
 is_player = true
@@ -96,97 +75,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="PanelSkill" type="Panel" parent="Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_7kpxl")
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="Control/PanelSkill"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.799816
-anchor_top = 0.522222
-anchor_right = 0.949566
-anchor_bottom = 0.789333
-offset_right = 0.320007
-offset_bottom = -0.319977
-rotation = 0.785398
-theme_override_styles/panel = SubResource("StyleBoxFlat_x8sgm")
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Control/PanelSkill"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.731066
-anchor_top = 0.622556
-anchor_right = 0.861193
-anchor_bottom = 0.800269
-offset_top = -0.240005
-offset_right = 9.43805
-offset_bottom = -0.193359
-theme_override_font_sizes/font_size = 40
-text = "SKILL"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonSkill1" type="Button" parent="Control/PanelSkill"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.533333
-anchor_right = 0.6995
-anchor_bottom = 0.621778
-offset_right = 0.639992
-offset_bottom = 0.319992
-theme = SubResource("Theme_ptblk")
-text = "Skill Name Here"
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonSkill2" type="Button" parent="Control/PanelSkill"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.45
-anchor_top = 0.666667
-anchor_right = 0.6495
-anchor_bottom = 0.755111
-offset_right = 0.639992
-offset_bottom = 0.319992
-theme = SubResource("Theme_ptblk")
-text = "Skill Name Here"
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonSkill3" type="Button" parent="Control/PanelSkill"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.8
-anchor_right = 0.6995
-anchor_bottom = 0.888444
-offset_right = 0.639992
-offset_bottom = 0.319992
-theme = SubResource("Theme_ptblk")
-text = "Skill Name Here"
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonCancel" type="Button" parent="Control/PanelSkill"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.91875
-anchor_top = 0.744444
-anchor_right = 1.01875
-anchor_bottom = 0.922333
-offset_right = -28.0
-offset_bottom = -28.08
-rotation = 0.785398
 metadata/_edit_use_anchors_ = true
 
 [node name="PanelInfo" type="Panel" parent="Control"]
@@ -257,3 +145,24 @@ text = "Turn:"
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Who Turn"
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.99375
+anchor_bottom = 1.00044
+offset_right = 8.0
+offset_bottom = -0.32
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer_DB" type="VBoxContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09375
+anchor_top = 0.0888889
+anchor_right = 0.916583
+anchor_bottom = 0.877333
+offset_right = 0.0639992
+offset_bottom = 8.32
+metadata/_edit_use_anchors_ = true

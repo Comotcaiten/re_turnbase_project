@@ -25,10 +25,17 @@ func get_groups_filter(fainted: bool = false) -> Array[UnitModel]:
     return group.filter(filter_is_fainted)
   return group.filter(filter_is_not_fainted)
 
-func filter_is_not_fainted(a: UnitModel):
+static func get_filter(fainted: bool = false, array: Array[UnitModel] = []) -> Array[UnitModel]:
+  if array.is_empty():
+    return []
+  if fainted:
+    return array.filter(filter_is_fainted)
+  return array.filter(filter_is_not_fainted)
+
+static func filter_is_not_fainted(a: UnitModel):
   return !a.is_fainted
 
-func filter_is_fainted(a: UnitModel):
+static func filter_is_fainted(a: UnitModel):
   return a.is_fainted
 
 func is_fainted():

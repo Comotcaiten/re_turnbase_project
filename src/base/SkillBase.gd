@@ -17,6 +17,9 @@ enum TargetType {SELF, ENEMY, ALLY, ANY}
 enum TargetMode {ALL, SINGLE, THREE}
 @export var target_mode: TargetMode = TargetMode.ALL
 
+enum TargetFainted {NONE, TRUE, FALSE}
+@export var target_fainted: TargetFainted = TargetFainted.FALSE
+
 @export_group("Components")
 @export var components: Array[SkillComponent]
 enum BreakPointMode {None, True, False}

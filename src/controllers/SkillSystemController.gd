@@ -52,8 +52,13 @@ func get_group_target(_skill: SkillModel, _source: UnitModel):
 		SkillBase.TargetType.ANY:
 			for id in battle_system_controller.db_groups_unit.db:
 				group_target.append_array(get_groups_from_maps(id))
-			return
-	# perform_target_mode(_skill, _source)
+			
+	match _skill.target_fainted:
+		SkillBase.TargetFainted.TRUE:
+			group_target = UnitGroupModel.get_filter(true, group_target)
+		SkillBase.TargetFainted.FALSE:
+			group_target = UnitGroupModel.get_filter(false, group_target)
+		
 	return
 
 func get_group_target_select(_skill: SkillModel, _source: UnitModel):
