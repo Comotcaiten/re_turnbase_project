@@ -6,7 +6,7 @@ class_name UnitModel
 
 @export var is_player: bool
 
-var id_groups: String
+var team: String = "None"
 var is_fainted: bool = false
 
 var element: CharacterBase.Element
@@ -62,6 +62,46 @@ func get_stat(_stat: CharacterBase.StatType):
 
   return int(amount_stat)
 
+func get_defense(_type_attack: DamageModel.TypeAttack) -> int:
+    match _type_attack:
+        DamageModel.TypeAttack.Physical:
+            return defense_physical
+        DamageModel.TypeAttack.Magic:
+            return defense_magic
+        _:
+            return 1
+
+func set_health(_value: int):
+    health = clamp(_value, 0, max_health)
+    if health <= 0:
+        is_fainted = true
+
+func take_damage(_damage_model: DamageModel = null, _source: UnitModel = null):
+    if _damage_model == null or _source == null:
+        return false
+        
+    _damage_model.set_target(self)
+    _damage_model.set_source(_source)
+
+    # Lấy giá trị phòng thủ
+    var defense: int = get_defense(_damage_model.type_attack)
+    if _damage_model.true_damage:
+        defense = 1 # Bỏ qua phòng thủ nếu là sát thương thật
+
+    # Tính toán sát thương
+    var damage: int = int((_damage_model.calculate_damage() * 1.0) / max(1, defense * 1.0))
+    print("[Get Damage]: ", name, " receives ", damage, " damage from ", _source.name)
+
+    # Giảm máu
+    set_health(health - damage)
+
+    # Kích hoạt tín hiệu
+    signal_get_damage(_damage_model, _source)
+    return true
+
+func signal_get_damage(_damage_detail: DamageModel, _source: UnitModel):
+  print("> signal_get_damage: ", _damage_detail)
+  pass
 
 func print_stat():
   print("Unit ID: ", character_base)

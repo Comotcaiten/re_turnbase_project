@@ -65,6 +65,8 @@ func get_all_values() -> Array:
 func check_key(key: Variant = null):
 	if key == null:
 		return false
+	if keys_allowed == 0:
+		return true
 	if typeof(key) != keys_allowed:
 		return false
 	return true
@@ -72,6 +74,8 @@ func check_key(key: Variant = null):
 func check_value(value: Variant = null):
 	if value == null:
 		return false
+	if values_allowed == 0:
+		return true
 	if typeof(value) != values_allowed:
 		return false
 	return true

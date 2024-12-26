@@ -20,10 +20,10 @@ enum TargetMode {ALL, SINGLE, THREE}
 enum TargetFainted {NONE, TRUE, FALSE}
 @export var target_fainted: TargetFainted = TargetFainted.FALSE
 
-# @export_group("Components")
-# @export var components: Array[SkillComponent]
-# enum BreakPointMode {None, True, False}
-# @export var break_point: BreakPointMode
+@export_group("Components")
+@export var components: Array[SkillComponent]
+enum BreakPointMode {None, True, False}
+@export var break_point: BreakPointMode
 
 func _init():
   name = "None"

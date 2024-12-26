@@ -16,7 +16,7 @@ func get_units() -> Array[UnitModel]:
 	for child in get_children():
 		if child is UnitModel:
 			child.is_player = is_group_player
-			child.id_groups = id
+			child.team = id
 			unit_group.append(child)
 	return unit_group
 
