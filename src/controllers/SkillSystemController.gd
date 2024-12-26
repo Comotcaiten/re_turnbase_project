@@ -26,6 +26,9 @@ func perform_skil(source: UnitModel, battle_system: BattleSystemController):
 			# First: Set default
 			current_skill_select = source.get_skill(0)
 			state = State.Pervious
+
+			print("First: Set default")
+			print("Current skill: ", current_skill_select)
 			pass
 		State.Pervious:
 			# Set up group target
@@ -36,50 +39,66 @@ func perform_skil(source: UnitModel, battle_system: BattleSystemController):
 			perform_select_skill(source, battle_system)
 			pass
 		State.ExecuteSkill:
+			print("Execute skill")
 			pass
 		State.End:
+			print("End")
 			pass
 	return
 
 func perform_get_target(source: UnitModel, battle_system: BattleSystemController):
 	group_target = get_group_target_can_get_from_skill(source, battle_system)
+
 	if group_target.is_empty():
-		state = State.End
+		print("Group target is empty")
 		return
 
+	print("Group target: ", group_target)
 	state = State.Select
 	return
 
 func perform_select_target(source: UnitModel, battle_system: BattleSystemController):
 	if source == null or battle_system == null:
+		print("Source or battle system is null")
 		state = State.End
 		return
 
 	if Input.is_action_just_pressed("ui_left"):
 		set_current_id_target(current_id_target - 1)
 		group_target_select = get_group_target_select()
+		print("Current target: ", group_target_select)
+
 	if Input.is_action_just_pressed("ui_right"):
 		set_current_id_target(current_id_target + 1)
 		group_target_select = get_group_target_select()
+		print("Current target: ", group_target_select)
 
 	if group_target_select.is_empty():
-		state = State.End
+		print("Group target select is empty")
 		return
 	return
 
 func perform_select_skill(source: UnitModel, battle_system: BattleSystemController):
+	if source == null or battle_system == null:
+		print("Source or battle system is null")
+		state = State.End
+		return
 
 	if Input.is_action_just_pressed("ui_action_1"):
 		current_skill_select = source.get_skill(0)
+		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	if Input.is_action_just_pressed("ui_action_2"):
 		current_skill_select = source.get_skill(1)
+		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	if Input.is_action_just_pressed("ui_action_3"):
 		current_skill_select = source.get_skill(2)
+		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	if Input.is_action_just_pressed("ui_action_4"):
 		current_skill_select = source.get_skill(3)
+		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	
 	perform_select_target(source, battle_system)
@@ -87,6 +106,7 @@ func perform_select_skill(source: UnitModel, battle_system: BattleSystemControll
 	if Input.is_action_just_pressed("ui_accept"):
 		# perform_run_skill(source)
 		print("Run skill ", current_skill_select.name)
+	return
 
 func get_group_target_can_get_from_skill(source: UnitModel, battle_system: BattleSystemController) -> Array[UnitModel]:
 	if current_skill_select == null or source == null or battle_system == null:

@@ -1,13 +1,10 @@
-[gd_resource type="Resource" script_class="SkillBase" load_steps=9 format=3 uid="uid://bnlf8va12qokd"]
+[gd_resource type="Resource" script_class="SkillBase" load_steps=8 format=3 uid="uid://bnlf8va12qokd"]
 
 [ext_resource type="Script" path="res://src/components/SkillComponent.gd" id="1_k7jkk"]
 [ext_resource type="Script" path="res://src/components/SkillCondition.gd" id="2_53q82"]
 [ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_wfadj"]
 [ext_resource type="Script" path="res://src/components/SkillMechanic.gd" id="3_dyc3o"]
 [ext_resource type="Script" path="res://src/components/SkillMechanicDamage.gd" id="4_p47q2"]
-
-[sub_resource type="Resource" id="Resource_2ey4h"]
-script = ExtResource("2_53q82")
 
 [sub_resource type="Resource" id="Resource_hdemh"]
 script = ExtResource("4_p47q2")
@@ -18,15 +15,15 @@ true_damage = false
 
 [sub_resource type="Resource" id="Resource_q0xrw"]
 script = ExtResource("1_k7jkk")
-conditions = Array[ExtResource("2_53q82")]([SubResource("Resource_2ey4h")])
+conditions = Array[ExtResource("2_53q82")]([])
 mechanics = Array[ExtResource("3_dyc3o")]([SubResource("Resource_hdemh")])
 
 [resource]
 script = ExtResource("2_wfadj")
 name = "SkillA"
 element = 0
-target_type = 3
-target_mode = 0
+target_type = 1
+target_mode = 1
 target_fainted = 2
 components = Array[ExtResource("1_k7jkk")]([SubResource("Resource_q0xrw")])
 break_point = 0

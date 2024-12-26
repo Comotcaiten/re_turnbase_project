@@ -52,6 +52,11 @@ func _ready():
   element = character_base.element
 
   health = max_health
+
+  for skill in character_base.skills:
+    if skill == null:
+      continue
+    skills.append(SkillModel.new(skill))
   pass
 
 func get_stat(_stat: CharacterBase.StatType):
@@ -70,6 +75,11 @@ func get_defense(_type_attack: DamageModel.TypeAttack) -> int:
             return defense_magic
         _:
             return 1
+
+func get_skill(_index: int) -> SkillModel:
+  if _index >= skills.size():
+    return null
+  return skills[_index]
 
 func set_health(_value: int):
     health = clamp(_value, 0, max_health)

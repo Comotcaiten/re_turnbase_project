@@ -9,6 +9,8 @@ enum State {StartState, UnitTurnState, ActionState, SkillState, EndState}
 var maps_unit_groups_controller: Maps = Maps.new(typeof("String"), typeof(UnitGroupController))
 var maps_unit_label: Maps = Maps.new(typeof(UnitModel), typeof(Label))
 
+var skill_sytem: SkillSystemController = SkillSystemController.new()
+
 var state: State
 
 var turn_queue: Array[UnitModel]:
@@ -26,6 +28,10 @@ func _ready():
 	maps_unit_groups_controller.add(player_unit_group_model.id, player_unit_group_model)
 	maps_unit_groups_controller.add(enemy_unit_group_model.id, enemy_unit_group_model)
 	pass
+
+func _process(_delta):
+	skill_sytem.perform_skil(current_unit, self)
+	return
 
 # TurnQueue và Quản lý các unit trong các Array[UnitModel]
 func get_turn_queue_merge_and_cut(_group: Array[UnitModel] = []) -> Array[UnitModel]:

@@ -12,10 +12,10 @@ var active: bool = true
 
 @export_group("Targeting")
 enum TargetType {SELF, ENEMY, ALLY, ANY}
-@export var target_type: TargetType = TargetType.ANY
+@export var target_type: TargetType = TargetType.ENEMY
 
 enum TargetMode {ALL, SINGLE, THREE}
-@export var target_mode: TargetMode = TargetMode.ALL
+@export var target_mode: TargetMode = TargetMode.SINGLE
 
 enum TargetFainted {NONE, TRUE, FALSE}
 @export var target_fainted: TargetFainted = TargetFainted.FALSE
