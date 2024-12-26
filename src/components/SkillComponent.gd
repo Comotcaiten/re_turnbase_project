@@ -10,6 +10,9 @@ func excute(targets: Array[UnitModel] = [], source: UnitModel = null, skill: Ski
   # Check if the targets are legal
   if not check_targets(targets, source, skill, battle_system):
     return false
+  # Check if the targets are fainted or not
+  if not check_targets_fainted(targets, skill):
+    return false
   # Check if the conditions are met
   if not check_conditions(targets, source, skill, battle_system):
     return false
@@ -35,8 +38,22 @@ func check_targets(targets: Array[UnitModel] = [], source: UnitModel = null, ski
     SkillBase.TargetType.ANY:
       pass
   return true
+# Second: Check skill will get target is fainted or not
+func check_targets_fainted(targets: Array[UnitModel] = [], skill: SkillModel = null) -> bool:
+  match skill.target_fainted:
+    SkillBase.TargetFainted.NONE:
+      return true
+    SkillBase.TargetFainted.TRUE:
+      for target in targets:
+        if not target.is_fainted:
+          return false
+    SkillBase.TargetFainted.FALSE:
+      for target in targets:
+        if target.is_fainted:
+          return false
+  return true
 
-# Second: Check conditions
+# Third: Check conditions
 func check_conditions(targets: Array[UnitModel] = [], source: UnitModel = null, skill: SkillModel = null, battle_system: BattleSystemController = null) -> bool:
   if conditions.size() == 0:
     return true
@@ -45,7 +62,7 @@ func check_conditions(targets: Array[UnitModel] = [], source: UnitModel = null, 
       return false
   return true
 
-# Third: Apply mechanics
+# Fourth: Apply mechanics
 func apply_mechanics(targets: Array[UnitModel] = [], source: UnitModel = null, skill: SkillModel = null, battle_system: BattleSystemController = null) -> bool:
   if mechanics.size() == 0:
     return true
