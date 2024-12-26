@@ -2,7 +2,7 @@ extends Node
 
 class_name SkillSystemController
 
-enum State {Start, Pervious, Select, ExecuteSkill, End}
+enum State {Start, Select, ExecuteSkill, End}
 
 var state: State = State.Start
 
@@ -24,15 +24,13 @@ func perform_skil(source: UnitModel, battle_system: BattleSystemController):
 	match state:
 		State.Start:
 			# First: Set default
-			current_skill_select = source.get_skill(0)
-			state = State.Pervious
-
 			print("First: Set default")
-			print("Current skill: ", current_skill_select)
-			pass
-		State.Pervious:
-			# Set up group target
+			current_skill_select = source.get_skill(0)
 			perform_get_target(source, battle_system)
+			group_target_select = get_group_target_select()
+			print("Current skill: ", current_skill_select)
+
+			state = State.Select
 			pass
 		State.Select:
 			# Select skill and target
@@ -74,7 +72,7 @@ func perform_select_target(source: UnitModel, battle_system: BattleSystemControl
 		print("Current target: ", group_target_select)
 
 	if group_target_select.is_empty():
-		print("Group target select is empty")
+		# print("Group target select is empty")
 		return
 	return
 
