@@ -49,11 +49,6 @@ func get_turn_queue() -> Array[UnitModel]:
 	_group = UnitGroupController.get_groups_sort(_group)
 	return _group
 
-func update_turn_queue():
-	turn_queue = UnitGroupController.get_units_by_state(false, turn_queue)
-	turn_queue = UnitGroupController.get_groups_sort(turn_queue)
-	return
-
 func get_info_units():
 	for value in maps_unit_groups_controller.get_all_values():
 		if value is UnitGroupController:
@@ -61,20 +56,20 @@ func get_info_units():
 				print(unit)
 				unit.print_stat()
 
-# func get_array_unit_group() -> Array[UnitGroupController]:
-# 	var _group: Array[UnitGroupController] = []
-# 	for value in maps_unit_groups_controller.get_all_values():
-# 		if value is UnitGroupController:
-# 			_group.append(value)
-# 	return _group
+func get_array_unit_group() -> Array[UnitGroupController]:
+	var _group: Array[UnitGroupController] = []
+	for value in maps_unit_groups_controller.get_all_values():
+		if value is UnitGroupController:
+			_group.append(value)
+	return _group
 
-# func get_array_unit_group_by_team(_team: int) -> Array[UnitGroupController]:
-# 	var _group: Array[UnitGroupController] = []
-# 	for value in maps_unit_groups_controller.get_all_values():
-# 		if value is UnitGroupController:
-# 			if value.team == _team:
-# 				_group.append(value)
-# 	return _group
+func get_array_unit_group_by_team(_team: int) -> Array[UnitGroupController]:
+	var _group: Array[UnitGroupController] = []
+	for value in maps_unit_groups_controller.get_all_values():
+		if value is UnitGroupController:
+			if value.team == _team:
+				_group.append(value)
+	return _group
 
 func get_all_units() -> Array[UnitModel]:
 	var _group: Array[UnitModel] = []
@@ -82,3 +77,8 @@ func get_all_units() -> Array[UnitModel]:
 		if value is UnitGroupController:
 			_group.append_array(value.get_units())
 	return _group
+
+func update_turn_queue():
+	turn_queue = UnitGroupController.get_units_by_state(false, turn_queue)
+	turn_queue = UnitGroupController.get_groups_sort(turn_queue)
+	return
