@@ -9,6 +9,8 @@ var state: State = State.Start
 var current_id_target: int = 0
 var target: UnitModel:
 	get:
+		if group_target.is_empty():
+			return null
 		return group_target[current_id_target]
 
 # var current_id_skill: int = 0
@@ -21,7 +23,11 @@ var group_target_select: Array[UnitModel]
 
 #--------------------------------------------------------------------------------
 # Hàm chính
-func perform_skil(source: UnitModel, battle_system: BattleSystemController):
+func perform_skill(source: UnitModel, battle_system: BattleSystemController):
+
+	if check_data(source, battle_system):
+		return
+
 	match state:
 		State.Start:
 			# Set default
@@ -32,6 +38,7 @@ func perform_skil(source: UnitModel, battle_system: BattleSystemController):
 			perform_get_target(source, battle_system)
 			# Get group target select by skill
 			group_target_select = get_group_target_select()
+			print("Current target select: ", group_target_select)
 			print("Current skill: ", current_skill_select)
 
 			state = State.Select
@@ -47,22 +54,36 @@ func perform_skil(source: UnitModel, battle_system: BattleSystemController):
 		State.End:
 			print("End")
 			# battle_system.state = BattleSystemController.State.End
+			battle_system.get_next_turn()
+
+			# refresh
+			current_id_target = 0
+			current_skill_select = null
+			group_target.clear()
+
+			state = State.Start
 			pass
 	return
 
 func perform_skill_random(source: UnitModel, battle_system: BattleSystemController):
 
+	if check_data(source, battle_system):
+		return
+
 	# First: Get random skill
-	current_skill_select = source.get_random_skill()
+	set_skill(source.get_random_skill())
 	# Second: Get target can be select from battle system by skill
 	perform_get_target(source, battle_system)
 	# Third: Get main target select
 	current_id_target = randi() % group_target.size()
+	print("current_id_target: ", current_id_target)
 	# Fourth: Get group target select by skill
 	group_target_select = get_group_target_select()
 	print("Current skill: ", current_skill_select)
 
 	perform_run_skill(source, battle_system)
+
+	battle_system.get_next_turn()
 	return
 
 func perform_get_target(source: UnitModel, battle_system: BattleSystemController):
@@ -85,12 +106,12 @@ func perform_select_target(source: UnitModel, battle_system: BattleSystemControl
 	if Input.is_action_just_pressed("ui_left"):
 		set_current_id_target(current_id_target - 1)
 		group_target_select = get_group_target_select()
-		print("Current target: ", group_target_select)
+		print("Current target select: ", group_target_select)
 
 	if Input.is_action_just_pressed("ui_right"):
 		set_current_id_target(current_id_target + 1)
 		group_target_select = get_group_target_select()
-		print("Current target: ", group_target_select)
+		print("Current target select: ", group_target_select)
 
 	# if group_target_select.is_empty():
 	# 	print("Group target select is empty")
@@ -98,25 +119,21 @@ func perform_select_target(source: UnitModel, battle_system: BattleSystemControl
 	return
 
 func perform_select_skill(source: UnitModel, battle_system: BattleSystemController):
-	if source == null or battle_system == null:
-		print("Source or battle system is null")
-		state = State.End
-		return
 
 	if Input.is_action_just_pressed("ui_action_1"):
-		current_skill_select = source.get_skill(0)
+		set_skill(source.get_skill(0))
 		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	if Input.is_action_just_pressed("ui_action_2"):
-		current_skill_select = source.get_skill(1)
+		set_skill(source.get_skill(1))
 		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	if Input.is_action_just_pressed("ui_action_3"):
-		current_skill_select = source.get_skill(2)
+		set_skill(source.get_skill(2))
 		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	if Input.is_action_just_pressed("ui_action_4"):
-		current_skill_select = source.get_skill(3)
+		set_skill(source.get_skill(3))
 		print("Current skill: ", current_skill_select)
 		perform_get_target(source, battle_system)
 	
@@ -190,6 +207,13 @@ func set_current_id_target(_value: int):
 
 	current_id_target = _value
 	return
+
+func set_skill(skill: SkillModel) -> bool:
+	if skill == null:
+		return false
+	
+	current_skill_select = skill
+	return true
 #--------------------------------------------------------------------------------
 # Hàm lọc
 func filter_target_type(groups: Array[UnitModel] = [], source: UnitModel = null) -> Array[UnitModel]:
@@ -224,3 +248,16 @@ func filter_target_fainted(groups: Array[UnitModel] = []) -> Array[UnitModel]:
 				return !x.is_fainted
 			)
 	return []
+
+# --------------------------------------------------------------------------------
+
+func check_data(source: UnitModel, battle_system: BattleSystemController) -> bool:
+	if source == null or battle_system == null:
+		print("Source or battle system is null")
+		return true
+	
+	if source.skills.is_empty():
+		print("Source skills is empty")
+		battle_system.get_next_turn()
+		return true
+	return false

@@ -5,8 +5,8 @@ class_name SkillBase
 @export var element: CharacterBase.Element
 
 var id: String:
-  get:
-    return str(self.get_instance_id())
+	get:
+		return str(self.get_instance_id())
 
 var active: bool = true
 
@@ -26,6 +26,6 @@ enum BreakPointMode {None, True, False}
 @export var break_point: BreakPointMode
 
 func _init():
-  name = "None"
-  active = false
-  pass
+	name = "None"
+	active = false
+	pass

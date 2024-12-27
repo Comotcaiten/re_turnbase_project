@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="CharacterBase" load_steps=3 format=3 uid="uid://p3do5hn5c632"]
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=4 format=3 uid="uid://p3do5hn5c632"]
 
 [ext_resource type="Script" path="res://src/base/CharacterBase.gd" id="1_lnxs3"]
 [ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_hfyta"]
+[ext_resource type="Resource" uid="uid://bnlf8va12qokd" path="res://asset/skill_base/SkillA.tres" id="3_2lvnb"]
 
 [resource]
 script = ExtResource("1_lnxs3")
@@ -13,4 +14,4 @@ attack_magic = 1
 defense_physical = 9
 defense_magic = 7
 speed = 3
-skills = Array[ExtResource("2_hfyta")]([])
+skills = Array[ExtResource("2_hfyta")]([ExtResource("3_2lvnb")])

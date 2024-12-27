@@ -21,9 +21,16 @@ func get_units() -> Array[UnitModel]:
 	return unit_group
 
 # Filter units by fainted status
-static func get_units_by_state(fainted: bool = false, array: Array[UnitModel] = []) -> Array[UnitModel]:
+static func get_static_units_by_state(fainted: bool = false, array: Array[UnitModel] = []) -> Array[UnitModel]:
 	var filtered_units: Array[UnitModel] = []
 	for unit in array:
+		if unit.is_fainted == fainted:
+			filtered_units.append(unit)
+	return filtered_units
+
+func get_units_by_state(fainted: bool = false) -> Array[UnitModel]:
+	var filtered_units: Array[UnitModel] = []
+	for unit in get_units():
 		if unit.is_fainted == fainted:
 			filtered_units.append(unit)
 	return filtered_units
@@ -44,7 +51,17 @@ func are_all_units_fainted() -> bool:
   # Cụ thể, hàm này lọc mảng unit_group và chỉ giữ lại những unit mà có is_fainted == true.
   # are_all_units_fainted() sẽ trả về true nếu tất cả các units trong nhóm đều bị fainted (vì get_units_by_state(true) sẽ trả về một mảng không rỗng).
   # Nếu không phải tất cả units đều fainted (mảng chứa ít nhất một unit không fainted), hàm sẽ trả về false.
-	return not get_units_by_state(true).is_empty()
+
+	# # Cách viết này không tối ưu vì nó sẽ gọi hàm get_units() mỗi lần kiểm tra, dẫn đến việc tạo ra một mảng mới mỗi lần gọi.
+	# for unit in get_units():
+	# 	if unit.is_fainted == false:
+	# 		return false
+	# return true
+	
+	# # Cách viết tối ưu hơn
+	if get_units_by_state(false).is_empty():
+		return true
+	return false
 
 # Health info method
 func health_info() -> String:
