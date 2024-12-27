@@ -30,7 +30,7 @@ func _ready():
 	pass
 
 func _process(_delta):
-	skill_sytem.perform_skil(current_unit, self)
+	skill_sytem.perform_skill_random(current_unit, self)
 	return
 
 # TurnQueue và Quản lý các unit trong các Array[UnitModel]

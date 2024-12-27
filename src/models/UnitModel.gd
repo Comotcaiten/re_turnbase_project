@@ -1,11 +1,14 @@
 extends Node
 class_name UnitModel
 
+#--------------------------------------------------------------------------------
+# Import
 @export var character_base: CharacterBase
 @export var level: int
 
 @export var is_player: bool
 
+#--------------------------------------------------------------------------------
 var team: String = "None"
 var is_fainted: bool = false
 
@@ -43,22 +46,31 @@ var speed: int:
   get:
     return get_stat(CharacterBase.StatType.Speed)
 #--------------------------------------------------------------------------------
-
-func initialize(_character_base: CharacterBase, _level: int):
+# Hàm khởi tạo
+func initialize(_character_base: CharacterBase = null, _level: int = 0) -> bool:
+  if _character_base == null or _level <= 0:
+    return false
   character_base = _character_base
   level = _level
+  start()
+  return true
 
-func _ready():
+func start():
   element = character_base.element
-
   health = max_health
-
+  
   for skill in character_base.skills:
     if skill == null:
       continue
     skills.append(SkillModel.new(skill))
   pass
 
+func _ready():
+  start()
+  pass
+
+#--------------------------------------------------------------------------------
+# Các hàm lấy thông tin
 func get_stat(_stat: CharacterBase.StatType):
   var amount_base = stats_base[_stat] * 1.0
   var amount_modified = stats_modified[_stat] * 1.0
@@ -81,11 +93,20 @@ func get_skill(_index: int) -> SkillModel:
     return null
   return skills[_index]
 
+func get_random_skill() -> SkillModel:
+  if skills.size() <= 0:
+    return null
+  return skills[randi() % skills.size()]
+
+#--------------------------------------------------------------------------------
+# Các hàm cập nhật thông tin
 func set_health(_value: int):
     health = clamp(_value, 0, max_health)
     if health <= 0:
         is_fainted = true
 
+#--------------------------------------------------------------------------------
+# Các hàm xử lý sự kiện
 func take_damage(_damage_model: DamageModel = null, _source: UnitModel = null):
     if _damage_model == null or _source == null:
         return false
@@ -109,10 +130,20 @@ func take_damage(_damage_model: DamageModel = null, _source: UnitModel = null):
     signal_get_damage(_damage_model, _source)
     return true
 
+# func run_skill():
+#   return
+#--------------------------------------------------------------------------------
+# Signal
 func signal_get_damage(_damage_detail: DamageModel, _source: UnitModel):
   print("> signal_get_damage: ", _damage_detail)
+  print("> source: ", _source)
+  print("> target: ", self)
+  print(self, " HP: ", health, "/", max_health)
   pass
 
+#--------------------------------------------------------------------------------
+# Debug - Utils
+# In ra thông tin của Unit
 func print_stat():
   print("Unit ID: ", character_base)
   print("Name: ", character_base.name)
