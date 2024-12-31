@@ -8,8 +8,17 @@ enum State {StartState, UnitTurnState, ActionState, SkillState, EndState}
 
 @export var vbox: VBoxContainer
 
+@export var max_object: int = 20:
+	get:
+		return max(1, max_object)
+
 var maps_unit_groups_controller: Maps = Maps.new(typeof("String"), typeof(UnitGroupController))
 var maps_unit_label: Maps = Maps.new(typeof(UnitModel), typeof(Label))
+
+var unit_group_size: int:
+	get:
+		# Đang tính cả các unit bị fainted
+		return maps_unit_groups_controller.get_value(enemy_unit_group_model.id).unit_group.size() + maps_unit_groups_controller.get_value(player_unit_group_model.id).unit_group.size()
 
 var skill_sytem: SkillSystemController = SkillSystemController.new()
 
@@ -25,6 +34,8 @@ var current_unit: UnitModel:
 	get:
 		return turn_queue[current_queue]
 
+var scen = preload("res://asset/tres/unit_model.tscn")
+
 #---------------------------------------------------------------------------------------------------
 
 func _ready():
@@ -34,7 +45,7 @@ func _ready():
 	
 	for value in maps_unit_groups_controller.get_all_values():
 		if value is UnitGroupController:
-			for unit in value.get_units():
+			for unit in value.unit_group:
 				if unit is UnitModel:
 					maps_unit_label.add(unit, Label.new())
 	
@@ -47,6 +58,10 @@ func _ready():
 		print("VBoxContainer is null")
 	
 	update_unit_label()
+	
+	for group in maps_unit_groups_controller.get_all_values():
+		if group is UnitGroupController:
+			group.update_position()
 	pass
 
 func _process(_delta):
@@ -63,6 +78,21 @@ func _process(_delta):
 			perform_skill_state()
 		State.EndState:
 			perform_end_state()
+	
+	# if Input.is_action_just_pressed("ui_accept"):
+	# 	if (unit_group_size) >= max_object:
+	# 		print("Max object")
+	# 		return
+	# 	var base_unit: CharacterBase = CharacterBase.new()
+	# 	var instance = scen.instantiate()
+	# 	if !instance.initialize(base_unit, 10):
+	# 		return
+	# 	maps_unit_groups_controller.get_value(enemy_unit_group_model.id).add_unit(instance)
+	# 	var value = Label.new()
+	# 	maps_unit_label.add(instance, value)
+	# 	vbox.add_child(value)
+
+	# 	update_unit_label()
 	return
 
 func perform_start_state():
@@ -131,7 +161,7 @@ func get_turn_queue() -> Array[UnitModel]:
 	var _group: Array[UnitModel] = []
 	for value in maps_unit_groups_controller.get_all_values():
 		if value is UnitGroupController:
-			_group.append_array(value.get_units())
+			_group.append_array(value.unit_group)
 	_group = get_turn_queue_merge_and_cut(_group)
 	_group = UnitGroupController.get_static_units_by_state(false, _group)
 	_group = UnitGroupController.get_groups_sort(_group)
@@ -140,7 +170,7 @@ func get_turn_queue() -> Array[UnitModel]:
 func get_info_units():
 	for value in maps_unit_groups_controller.get_all_values():
 		if value is UnitGroupController:
-			for unit in value.get_units():
+			for unit in value.unit_group:
 				print(unit)
 				unit.print_stat()
 
@@ -163,7 +193,7 @@ func get_all_units() -> Array[UnitModel]:
 	var _group: Array[UnitModel] = []
 	for value in maps_unit_groups_controller.get_all_values():
 		if value is UnitGroupController:
-			_group.append_array(value.get_units())
+			_group.append_array(value.unit_group)
 	return _group
 
 func update_turn_queue():

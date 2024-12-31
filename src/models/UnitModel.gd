@@ -67,6 +67,7 @@ func start():
 
 func _ready():
 	start()
+	show()
 	pass
 
 #--------------------------------------------------------------------------------
@@ -130,8 +131,11 @@ func take_damage(_damage_model: DamageModel = null, _source: UnitModel = null):
 	signal_get_damage(_damage_model, _source)
 	return true
 
-# func run_skill():
-#   return
+func hide():
+	self.visible = false
+
+func show():
+	self.visible = true
 #--------------------------------------------------------------------------------
 # Signal
 func signal_get_damage(_damage_detail: DamageModel, _source: UnitModel):

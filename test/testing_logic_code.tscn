@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dt0mn6pxbhka2"]
+[gd_scene load_steps=10 format=3 uid="uid://dt0mn6pxbhka2"]
 
 [ext_resource type="Script" path="res://src/controllers/BattleSystemController.gd" id="1_qxfdb"]
 [ext_resource type="Script" path="res://src/controllers/UnitGroupController.gd" id="2_mul5o"]
@@ -7,33 +7,52 @@
 [ext_resource type="Resource" uid="uid://p3do5hn5c632" path="res://asset/character_base/CharacterD.tres" id="7_4fdcs"]
 [ext_resource type="Resource" uid="uid://cck0dhyktwndx" path="res://asset/character_base/CharacterF.tres" id="9_iqeqw"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2fln7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_r0uxm"]
+sky_material = SubResource("ProceduralSkyMaterial_2fln7")
+
+[sub_resource type="Environment" id="Environment_p6d0p"]
+background_mode = 2
+sky = SubResource("Sky_r0uxm")
+tonemap_mode = 2
+
 [node name="TestingLogicCode" type="Node3D" node_paths=PackedStringArray("player_unit_group_model", "enemy_unit_group_model", "vbox")]
 script = ExtResource("1_qxfdb")
 player_unit_group_model = NodePath("PlayerUnitGroupModel")
 enemy_unit_group_model = NodePath("EnemyUnitGroupModel")
 vbox = NodePath("Control/Panel/VBoxContainer")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p6d0p")
+
 [node name="PlayerUnitGroupModel" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
 script = ExtResource("2_mul5o")
 is_group_player = true
 
 [node name="UnitModelA" parent="PlayerUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("4_gu14f")
 level = 5
-is_player = null
 
 [node name="EnemyUnitGroupModel" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
 script = ExtResource("2_mul5o")
 
 [node name="UnitModel" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
 character_base = ExtResource("7_4fdcs")
 level = 5
-is_player = null
 
 [node name="UnitModel3" parent="EnemyUnitGroupModel" instance=ExtResource("3_piiq0")]
+visible = false
 character_base = ExtResource("9_iqeqw")
 level = 5
-is_player = null
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -65,3 +84,6 @@ metadata/_edit_use_anchors_ = true
 [node name="Label" type="Label" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2
 text = "Text"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 10, 0)

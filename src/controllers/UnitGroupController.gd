@@ -10,14 +10,21 @@ var id: String:
 # Quản lý các UnitModel (Only UnitModel)
 var unit_group: Array[UnitModel] = []
 
+var size: int = 0:
+	get:
+		return unit_group.size()
+
+func _ready():
+	get_start()
+	update_position()
+	pass
+
 # Get the units in the group
-func get_units() -> Array[UnitModel]:
+func get_start() -> Array[UnitModel]:
 	unit_group.clear() # Xóa mảng cũ mỗi lần gọi lại
 	for child in get_children():
 		if child is UnitModel:
-			child.is_player = is_group_player
-			child.team = id
-			unit_group.append(child)
+			add_unit(child)
 	return unit_group
 
 # Filter units by fainted status
@@ -30,7 +37,7 @@ static func get_static_units_by_state(fainted: bool = false, array: Array[UnitMo
 
 func get_units_by_state(fainted: bool = false) -> Array[UnitModel]:
 	var filtered_units: Array[UnitModel] = []
-	for unit in get_units():
+	for unit in unit_group:
 		if unit.is_fainted == fainted:
 			filtered_units.append(unit)
 	return filtered_units
@@ -59,9 +66,9 @@ func are_all_units_fainted() -> bool:
 	# return true
 	
 	# # Cách viết tối ưu hơn
-	if get_units_by_state(false).is_empty():
-		return true
-	return false
+	return get_units_by_state(false).is_empty()
+	# 	return true
+	# return false
 
 # Health info method
 func health_info() -> String:
@@ -74,3 +81,50 @@ func health_info() -> String:
 func print_health_info():
 	if is_group_player: # print only for player group, or customize as needed
 		print(health_info())
+
+# Update unit state
+
+# func update_unit_state():
+# 	for unit in unit_group:
+# 		if unit.is_fainted:
+# 			unit.hide()
+# 		else:
+# 			unit.show()
+
+func update_position(gap: int = 1):
+	# 	TH1:
+	# y = 4
+	# gap = 1
+	# x = 3
+	# D = 4 + 3 = 7
+	# 	TH2:
+	# y = 4
+	# gap = 3
+	# x = 3
+	# D = 4 + 3.3 = 4 +  9 = 13
+	# => D = y + x.gap
+	if gap <= 0:
+		return
+	
+	var y: float = unit_group.size() * 1.0
+	var d: int = int((y + (y - 1.0) * gap) / 2.0)
+	var count: int = 0
+
+	for i in range(-d, d + 1, gap + 1):
+		unit_group[count].position.z = i
+		count += 1
+	return
+
+func add_unit(_unit: UnitModel):
+	if _unit == null:
+		return false
+	if _unit is UnitModel:
+		_unit.is_player = is_group_player
+		_unit.team = id
+		unit_group.append(_unit)
+		if _unit.get_parent() != null:
+			_unit.get_parent().remove_child(_unit)
+		self.add_child(_unit)
+		update_position()
+		return true
+	return false
