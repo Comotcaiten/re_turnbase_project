@@ -4,8 +4,11 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_y4n3f"]
 
-[node name="UnitModel" type="Node3D"]
+[node name="UnitModel" type="Node3D" node_paths=PackedStringArray("mesh")]
 script = ExtResource("1_ikeyo")
+mesh = NodePath("Body/MeshInstance3D")
+color_target = Color(1, 0.280118, 0.367919, 1)
+color_normal = Color(0.524254, 0.000361943, 0.569182, 1)
 
 [node name="Body" type="Node3D" parent="."]
 

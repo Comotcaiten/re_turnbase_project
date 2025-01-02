@@ -3,6 +3,8 @@ class_name BattleSystemController
 
 enum State {StartState, UnitTurnState, ActionState, SkillState, EndState}
 
+@export var color: Color
+
 @export var player_unit_group_model: UnitGroupController
 @export var enemy_unit_group_model: UnitGroupController
 

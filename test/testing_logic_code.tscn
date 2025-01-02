@@ -21,6 +21,7 @@ tonemap_mode = 2
 
 [node name="TestingLogicCode" type="Node3D" node_paths=PackedStringArray("player_unit_group_model", "enemy_unit_group_model", "vbox")]
 script = ExtResource("1_qxfdb")
+color = Color(0.765338, 0.195921, 0.253073, 1)
 player_unit_group_model = NodePath("PlayerUnitGroupModel")
 enemy_unit_group_model = NodePath("EnemyUnitGroupModel")
 vbox = NodePath("Control/Panel/VBoxContainer")

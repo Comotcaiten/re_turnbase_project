@@ -106,11 +106,21 @@ func perform_select_target(source: UnitModel, battle_system: BattleSystemControl
 	if Input.is_action_just_pressed("ui_left"):
 		set_current_id_target(current_id_target - 1)
 		group_target_select = get_group_target_select()
+		for unit in group_target:
+			if unit in group_target_select:
+				unit.change_mesh_target()
+			elif unit not in group_target_select:
+				unit.change_mesh_normal()
 		print("Current target select: ", group_target_select)
 
 	if Input.is_action_just_pressed("ui_right"):
 		set_current_id_target(current_id_target + 1)
 		group_target_select = get_group_target_select()
+		for unit in group_target:
+			if unit in group_target_select:
+				unit.change_mesh_target()
+			elif unit not in group_target_select:
+				unit.change_mesh_normal()
 		print("Current target select: ", group_target_select)
 
 	# if group_target_select.is_empty():

@@ -1,0 +1,99 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnixxy2llhr6f"]
+
+[ext_resource type="Theme" uid="uid://bhnycr6kemd41" path="res://asset/style/new_theme.tres" id="1_k6sx5"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="left" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 384.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Panel/left"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.882353, 0.415686, 0.329412, 1)
+
+[node name="right" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -896.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Panel/right"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.623529, 0.321569, 0.333333, 1)
+
+[node name="Button_START" type="Button" parent="Panel/right"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.183333
+anchor_right = 0.833333
+anchor_bottom = 0.261111
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_k6sx5")
+text = "START"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_CONTINUE" type="Button" parent="Panel/right"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.361111
+anchor_right = 0.833333
+anchor_bottom = 0.438889
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_k6sx5")
+text = "CONTINUE"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_OPTIONS" type="Button" parent="Panel/right"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.538889
+anchor_right = 0.833333
+anchor_bottom = 0.616667
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "OPTIONS"
+metadata/_edit_use_anchors_ = true

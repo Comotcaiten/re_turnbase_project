@@ -8,6 +8,10 @@ class_name UnitModel
 
 @export var is_player: bool
 
+@export var mesh: MeshInstance3D
+
+@export var color_target: Color
+@export var color_normal: Color
 #--------------------------------------------------------------------------------
 var team: String = "None"
 var is_fainted: bool = false
@@ -66,6 +70,8 @@ func start():
 	pass
 
 func _ready():
+	mesh.material_override = StandardMaterial3D.new()
+	mesh.material_override.albedo_color = color_normal
 	start()
 	show()
 	pass
@@ -136,6 +142,18 @@ func hide():
 
 func show():
 	self.visible = true
+
+func change_mesh_target() -> bool:
+	if mesh == null:
+		return false
+	mesh.material_override.albedo_color = color_target
+	return true
+
+func change_mesh_normal() -> bool:
+	if mesh == null:
+		return false
+	mesh.material_override.albedo_color = color_normal
+	return true
 #--------------------------------------------------------------------------------
 # Signal
 func signal_get_damage(_damage_detail: DamageModel, _source: UnitModel):
