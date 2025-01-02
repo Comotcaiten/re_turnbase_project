@@ -12,6 +12,10 @@ class_name UnitModel
 
 @export var color_target: Color
 @export var color_normal: Color
+
+@export var icon_target: Sprite3D
+
+@export var hp_bar: HPBar
 #--------------------------------------------------------------------------------
 var team: String = "None"
 var is_fainted: bool = false
@@ -74,6 +78,9 @@ func _ready():
 	mesh.material_override.albedo_color = color_normal
 	start()
 	show()
+	icon_target.visible = false
+
+	hp_bar.update_hp()
 	pass
 
 #--------------------------------------------------------------------------------
@@ -135,6 +142,9 @@ func take_damage(_damage_model: DamageModel = null, _source: UnitModel = null):
 
 	# Kích hoạt tín hiệu
 	signal_get_damage(_damage_model, _source)
+
+	# Cập nhật thanh máu
+	hp_bar.update_hp()
 	return true
 
 func hide():
@@ -147,12 +157,16 @@ func change_mesh_target() -> bool:
 	if mesh == null:
 		return false
 	mesh.material_override.albedo_color = color_target
+
+	icon_target.visible = true
 	return true
 
 func change_mesh_normal() -> bool:
 	if mesh == null:
 		return false
 	mesh.material_override.albedo_color = color_normal
+
+	icon_target.visible = false
 	return true
 #--------------------------------------------------------------------------------
 # Signal
