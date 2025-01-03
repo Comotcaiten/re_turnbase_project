@@ -16,7 +16,7 @@ var size: int = 0:
 
 func _ready():
 	get_start()
-	update_position()
+	update_position(3)
 	pass
 
 # Get the units in the group
@@ -104,7 +104,7 @@ func update_position(gap: int = 1):
 	# D = 4 + 3.3 = 4 +  9 = 13
 	# => D = y + x.gap
 	if gap <= 0:
-		return
+		gap = 1
 	
 	var y: float = unit_group.size() * 1.0
 	var d: int = int((y + (y - 1.0) * gap) / 2.0)
@@ -112,6 +112,7 @@ func update_position(gap: int = 1):
 
 	for i in range(-d, d + 1, gap + 1):
 		unit_group[count].position.z = i
+		print("Unit: ", name, " position: ", unit_group[count].position, " = ", i)
 		count += 1
 	return
 
@@ -121,6 +122,8 @@ func add_unit(_unit: UnitModel):
 	if _unit is UnitModel:
 		_unit.is_player = is_group_player
 		_unit.team = id
+		if !is_group_player:
+			_unit.rotation.y = deg_to_rad(180)
 		unit_group.append(_unit)
 		if _unit.get_parent() != null:
 			_unit.get_parent().remove_child(_unit)

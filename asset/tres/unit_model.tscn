@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bt07g12qxu7mf"]
+[gd_scene load_steps=9 format=3 uid="uid://bt07g12qxu7mf"]
 
 [ext_resource type="Script" path="res://src/models/UnitModel.gd" id="1_ikeyo"]
 [ext_resource type="Texture2D" uid="uid://c1s7om7xmg74" path="res://asset/icon_target.png" id="2_dllge"]
 [ext_resource type="Script" path="res://src/utils/HPBar.gd" id="3_eq7hq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_y4n3f"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_o1me2"]
+viewport_path = NodePath("Body/Lable_name/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_tvgs6"]
 viewport_path = NodePath("HP_Bar/SubViewport")
@@ -30,22 +33,43 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 expand_margin_bottom = 3.0
 
-[node name="UnitModel" type="Node3D" node_paths=PackedStringArray("mesh", "icon_target", "hp_bar")]
+[node name="UnitModel" type="Node3D" node_paths=PackedStringArray("mesh", "icon_target", "hp_bar", "label")]
 script = ExtResource("1_ikeyo")
 mesh = NodePath("Body/MeshInstance3D")
 color_target = Color(1, 0.280118, 0.367919, 1)
 color_normal = Color(0.524254, 0.000361943, 0.569182, 1)
-icon_target = NodePath("Body/Sprite3D")
+icon_target = NodePath("Body/Icon_Target")
 hp_bar = NodePath("HP_Bar")
+label = NodePath("Body/Lable_name/SubViewport/Label")
 
 [node name="Body" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
 mesh = SubResource("BoxMesh_y4n3f")
 
-[node name="Sprite3D" type="Sprite3D" parent="Body"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1, 0)
+[node name="Icon_Target" type="Sprite3D" parent="Body"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.523326, 0, 0)
 texture = ExtResource("2_dllge")
+
+[node name="Lable_name" type="Sprite3D" parent="Body"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1, 0)
+texture = SubResource("ViewportTexture_o1me2")
+
+[node name="SubViewport" type="SubViewport" parent="Body/Lable_name"]
+handle_input_locally = false
+size = Vector2i(320, 64)
+render_target_update_mode = 4
+
+[node name="Label" type="Label" parent="Body/Lable_name/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "ID: TESTER"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HP_Bar" type="Node3D" parent="." node_paths=PackedStringArray("progress_bar", "unit")]
 script = ExtResource("3_eq7hq")

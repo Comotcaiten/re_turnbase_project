@@ -16,6 +16,7 @@ class_name UnitModel
 @export var icon_target: Sprite3D
 
 @export var hp_bar: HPBar
+@export var label: Label
 #--------------------------------------------------------------------------------
 var team: String = "None"
 var is_fainted: bool = false
@@ -81,6 +82,8 @@ func _ready():
 	icon_target.visible = false
 
 	hp_bar.update_hp()
+
+	label.text = str(name)
 	pass
 
 #--------------------------------------------------------------------------------
@@ -118,6 +121,9 @@ func set_health(_value: int):
 	health = clamp(_value, 0, max_health)
 	if health <= 0:
 		is_fainted = true
+		mesh.material_override.albedo_color = color_target
+		print(name ," is Fainted")
+		
 
 #--------------------------------------------------------------------------------
 # Các hàm xử lý sự kiện
@@ -156,7 +162,7 @@ func show():
 func change_mesh_target() -> bool:
 	if mesh == null:
 		return false
-	mesh.material_override.albedo_color = color_target
+	# mesh.material_override.albedo_color = color_target
 
 	icon_target.visible = true
 	return true
@@ -164,7 +170,7 @@ func change_mesh_target() -> bool:
 func change_mesh_normal() -> bool:
 	if mesh == null:
 		return false
-	mesh.material_override.albedo_color = color_normal
+	# mesh.material_override.albedo_color = color_normal
 
 	icon_target.visible = false
 	return true

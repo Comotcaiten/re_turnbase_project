@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://d3un76krorl0h"]
+
+[node name="SubViewportContainer" type="SubViewportContainer"]
+anchors_preset = -1
+anchor_right = 0.24975
+anchor_bottom = 0.0893333
+offset_right = 0.32
+offset_bottom = -0.32
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(320, 64)
+render_target_update_mode = 4
+
+[node name="Label" type="Label" parent="SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "ID: TESTER"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -8,6 +8,8 @@ enum State {StartState, UnitTurnState, ActionState, SkillState, EndState}
 @export var player_unit_group_model: UnitGroupController
 @export var enemy_unit_group_model: UnitGroupController
 
+@export var skill_sytem: SkillSystemController
+
 @export var vbox: VBoxContainer
 
 @export var max_object: int = 20:
@@ -21,8 +23,6 @@ var unit_group_size: int:
 	get:
 		# Đang tính cả các unit bị fainted
 		return maps_unit_groups_controller.get_value(enemy_unit_group_model.id).unit_group.size() + maps_unit_groups_controller.get_value(player_unit_group_model.id).unit_group.size()
-
-var skill_sytem: SkillSystemController = SkillSystemController.new()
 
 var state: State
 
@@ -61,9 +61,9 @@ func _ready():
 	
 	update_unit_label()
 	
-	for group in maps_unit_groups_controller.get_all_values():
-		if group is UnitGroupController:
-			group.update_position()
+	# for group in maps_unit_groups_controller.get_all_values():
+	# 	if group is UnitGroupController:
+	# 		group.update_position(20)
 	pass
 
 func _process(_delta):
@@ -117,7 +117,7 @@ func perform_unit_turn_state():
 		state = State.ActionState
 	else:
 		print("Enemy turn: ", current_unit.name)
-		skill_sytem.perform_skill_random(current_unit, self)
+		skill_sytem.perform_random_skill()
 	return
 
 func perform_action_state():
@@ -125,7 +125,7 @@ func perform_action_state():
 	return
 
 func perform_skill_state():
-	skill_sytem.perform_skill(current_unit, self)
+	skill_sytem.perform_skill()
 	return
 
 func perform_end_state():
@@ -196,6 +196,8 @@ func get_all_units() -> Array[UnitModel]:
 	for value in maps_unit_groups_controller.get_all_values():
 		if value is UnitGroupController:
 			_group.append_array(value.unit_group)
+	
+	print("Groups get all: ", _group)
 	return _group
 
 func update_turn_queue():

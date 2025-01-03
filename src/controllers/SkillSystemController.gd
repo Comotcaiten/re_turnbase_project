@@ -2,7 +2,7 @@ extends Node
 
 class_name SkillSystemController
 
-enum State {Start, Select, ExecuteSkill, End}
+enum State {Start, Select, Execute, End}
 
 var state: State = State.Start
 
@@ -21,230 +21,224 @@ var group_target: Array[UnitModel]
 # Danh sách các target/mục tiêu chính của skill
 var group_target_select: Array[UnitModel]
 
+@export var battle_system: BattleSystemController
+
 #--------------------------------------------------------------------------------
 # Hàm chính
-func perform_skill(source: UnitModel, battle_system: BattleSystemController):
 
-	if check_data(source, battle_system):
-		return
-
+func perform_random_skill():
 	match state:
 		State.Start:
-			# Set default
-			print("First: Set default")
-			# Set default skill select
-			current_skill_select = source.get_skill(0)
-			# Get target can be select from battle system by skill
-			perform_get_target(source, battle_system)
-			# Get group target select by skill
-			group_target_select = get_group_target_select()
-			print("Current target select: ", group_target_select)
-			print("Current skill: ", current_skill_select)
+			if battle_system == null or battle_system.current_unit == null:
+				print("battle_system == null or battle_system.current_unit == null")
+				print("battle_system.current_unit == null: ", battle_system.current_unit)
+				state = State.End
+			if battle_system.current_unit.skills.is_empty():
+				print("battle_system.current_unit.skills.is_empty")
+				state = State.End
+				return
+			# First: Choice skill
+			set_skill(battle_system.current_unit.get_random_skill())
 
+			if current_skill_select == null:
+				print()
+				state = State.End
+			# Second: Skill based targets can slecet => groups can be select
+			perform_get_group_targets()
+			# Third: Select some units will be take effect of skills
+
+			# set_current_id_target(randi() % max(1, group_target.size()))
+			perform_get_select_targets()
+			# Four:
 			state = State.Select
-			pass
 		State.Select:
-			# Select skill and target
-			perform_select_skill(source, battle_system)
-			pass
-		State.ExecuteSkill:
-			print("Execute skill")
-			perform_run_skill(source, battle_system)
+			state = State.Execute			
+		State.Execute:
+			perform_run_skill()
 			pass
 		State.End:
-			print("End")
-			# battle_system.state = BattleSystemController.State.End
 			battle_system.get_next_turn()
-
-			# refresh
-			current_id_target = 0
-			current_skill_select = null
-			group_target.clear()
-
 			state = State.Start
+			refresh()
 			pass
+			
+
+func perform_skill():
+	match state:
+		State.Start:
+			if battle_system == null or battle_system.current_unit == null:
+				print("battle_system == null or battle_system.current_unit == null")
+				print("battle_system.current_unit == null: ", battle_system.current_unit)
+				state = State.End
+			# First: Choice skill
+			set_skill(battle_system.current_unit.get_skill(0))
+			# Second: Skill based targets can slecet => groups can be select
+			perform_get_group_targets()
+			# Third: Select some units will be take effect of skills
+			perform_get_select_targets()
+			# Four:
+			state = State.Select
+		State.Select:
+			perform_select_skill()
+			
+		State.Execute:
+			perform_run_skill()
+			pass
+		State.End:
+			battle_system.get_next_turn()
+			state = State.Start
+			refresh()
+			pass
+
+func perform_select_skill():
+	if battle_system == null:
+		return
+	
+	if Input.is_action_just_pressed("ui_action_1"):
+		set_skill(battle_system.current_unit.get_skill(0))
+		perform_get_group_targets()
+	if Input.is_action_just_pressed("ui_action_2"):
+		set_skill(battle_system.current_unit.get_skill(1))
+		perform_get_group_targets()
+	if Input.is_action_just_pressed("ui_action_3"):
+		set_skill(battle_system.current_unit.get_skill(2))
+		perform_get_group_targets()
+	if Input.is_action_just_pressed("ui_action_4"):
+		set_skill(battle_system.current_unit.get_skill(3))
+		perform_get_group_targets()
+	perform_select_targets()
+	if Input.is_action_just_pressed("ui_accept"):
+		state = State.Execute
+		return
 	return
 
-func perform_skill_random(source: UnitModel, battle_system: BattleSystemController):
-
-	if check_data(source, battle_system):
-		return
-
-	# First: Get random skill
-	set_skill(source.get_random_skill())
-	# Second: Get target can be select from battle system by skill
-	perform_get_target(source, battle_system)
-	# Third: Get main target select
-	current_id_target = randi() % group_target.size()
-	print("current_id_target: ", current_id_target)
-	# Fourth: Get group target select by skill
-	group_target_select = get_group_target_select()
-	print("Current skill: ", current_skill_select)
-
-	perform_run_skill(source, battle_system)
-
-	battle_system.get_next_turn()
-	return
-
-func perform_get_target(source: UnitModel, battle_system: BattleSystemController):
-	group_target = get_group_target_can_get_from_skill(source, battle_system)
-
-	if group_target.is_empty():
-		print("Group target is empty")
-		return
-
-	print("Group target: ", group_target)
-	state = State.Select
-	return
-
-func perform_select_target(source: UnitModel, battle_system: BattleSystemController):
-	if source == null or battle_system == null:
-		print("Source or battle system is null")
-		state = State.End
-		return
+func perform_select_targets():
 
 	if Input.is_action_just_pressed("ui_left"):
 		set_current_id_target(current_id_target - 1)
-		group_target_select = get_group_target_select()
-		for unit in group_target:
-			if unit in group_target_select:
-				unit.change_mesh_target()
-			elif unit not in group_target_select:
-				unit.change_mesh_normal()
-		print("Current target select: ", group_target_select)
-
+		perform_get_select_targets()
 	if Input.is_action_just_pressed("ui_right"):
 		set_current_id_target(current_id_target + 1)
-		group_target_select = get_group_target_select()
-		for unit in group_target:
-			if unit in group_target_select:
-				unit.change_mesh_target()
-			elif unit not in group_target_select:
-				unit.change_mesh_normal()
-		print("Current target select: ", group_target_select)
+		perform_get_select_targets()
 
-	# if group_target_select.is_empty():
-	# 	print("Group target select is empty")
-	# 	return
-	return
-
-func perform_select_skill(source: UnitModel, battle_system: BattleSystemController):
-
-	if Input.is_action_just_pressed("ui_action_1"):
-		set_skill(source.get_skill(0))
-		print("Current skill: ", current_skill_select)
-		perform_get_target(source, battle_system)
-	if Input.is_action_just_pressed("ui_action_2"):
-		set_skill(source.get_skill(1))
-		print("Current skill: ", current_skill_select)
-		perform_get_target(source, battle_system)
-	if Input.is_action_just_pressed("ui_action_3"):
-		set_skill(source.get_skill(2))
-		print("Current skill: ", current_skill_select)
-		perform_get_target(source, battle_system)
-	if Input.is_action_just_pressed("ui_action_4"):
-		set_skill(source.get_skill(3))
-		print("Current skill: ", current_skill_select)
-		perform_get_target(source, battle_system)
-	
-	perform_select_target(source, battle_system)
-
-	if Input.is_action_just_pressed("ui_accept"):
-		# perform_run_skill(source)
-		print("Run skill ", current_skill_select)
-		state = State.ExecuteSkill
-	return
-
-func perform_run_skill(source: UnitModel, battle_system: BattleSystemController):
-	if source == null or battle_system == null:
-		print("Source or battle system is null")
-		state = State.End
-		return
-
-	if current_skill_select == null:
-		print("Current skill is null")
-		state = State.End
-		return
-
-	# Run skill
-	# source.run_skill(current_skill_select, group_target_select)
-	current_skill_select.run(group_target_select, source, battle_system)
+func perform_run_skill():
+	print("Run Skill")
+	current_skill_select.run(group_target_select, battle_system.current_unit, battle_system)
 	state = State.End
 	return
-#--------------------------------------------------------------------------------
-# Hàm xử lý
-func get_group_target_can_get_from_skill(source: UnitModel, battle_system: BattleSystemController) -> Array[UnitModel]:
-	if current_skill_select == null or source == null or battle_system == null:
-		return []
+
+func perform_get_group_targets() -> bool:
+	if current_skill_select == null or battle_system == null or battle_system.current_unit == null:
+		return false
 	
 	if battle_system.maps_unit_groups_controller.is_empty():
-		return []
+		return false
 	
 	if battle_system.maps_unit_groups_controller.size < 2:
-		return []
+		return false
 	
-	var group: Array[UnitModel] = battle_system.get_all_units()
-	group = filter_target_type(group, source)
-	group = filter_target_fainted(group)
-	
-	return group
+	var groups: Array[UnitModel] = battle_system.get_all_units()
 
-func get_group_target_select() -> Array[UnitModel]:
-	if current_skill_select == null:
-		return []
+	match current_skill_select.target_type:
+		SkillBase.TargetType.SELF:
+			groups = [battle_system.current_unit]
+		SkillBase.TargetType.ENEMY:
+			groups = groups.filter(func(x):
+				return x.team !=  battle_system.current_unit.team
+			)
+		SkillBase.TargetType.ALLY:
+			groups = groups.filter(func(x):
+				return x.team == battle_system.current_unit.team
+			)
+		SkillBase.TargetType.ANY:
+			groups = groups
+
+	match current_skill_select.target_fainted:
+		SkillBase.TargetFainted.TRUE:
+			groups = groups.filter(func(x):
+				return x.is_fainted
+			)
+		SkillBase.TargetFainted.FALSE:
+			groups = groups.filter(func(x):
+				return !x.is_fainted
+			)
 	
+	group_target = (groups as Array[UnitModel])
+	print("Group_target: ", group_target)
+	perform_get_select_targets()
+	return true
+
+func perform_get_select_targets():
+	if current_id_target == null:
+		group_target_select = []
+		return false
+
 	match current_skill_select.target_mode:
 		SkillBase.TargetMode.ALL:
-			return group_target
+			group_target_select = group_target
 		SkillBase.TargetMode.SINGLE:
-			return [target]
+			group_target_select = [target]
 		SkillBase.TargetMode.THREE:
 			var start: int = max(0, current_id_target - 1)
 			var end: int = min(group_target.size(), current_id_target + 2)
-			return group_target.slice(start, end)
-		_:
-			return []
+			group_target_select = group_target.slice(start, end)
+	show_icon_target()
+	print("Group select: ", group_target_select)
+	return true
+#--------------------------------------------------------------------------------
+# Hàm event
+
+func show_icon_target():
+	for unit in group_target:
+		if unit in group_target_select:
+			unit.change_mesh_target()
+		else:
+			unit.change_mesh_normal()
+
+func refresh():
+	for unit in group_target:
+		unit.change_mesh_normal()
+	
+	current_id_target = 0
+	current_skill_select = null
+	group_target = []
+	group_target_select = []
+
 #--------------------------------------------------------------------------------
 # Hàm set
-func set_current_id_target(_value: int):
+func set_current_id_target(_value: int) -> bool:
+	if group_target.size() <= 0:
+		return false
+
 	if _value >= group_target.size():
 		current_id_target = 0
-		return
+		return true
 	
 	if _value < 0:
 		current_id_target = group_target.size() - 1
-		return
+		return true
 
 	current_id_target = _value
-	return
+	print("Current id target: ", current_id_target)
+	return true
 
 func set_skill(skill: SkillModel) -> bool:
 	if skill == null:
+		print("Current skill: ", current_skill_select)
 		return false
 	
 	current_skill_select = skill
+
+	print("Current skill: ", current_skill_select)
 	return true
+
+# func set_group_target(groups: Array[UnitModel]):
+# 	if groups.is_empty():
+# 		return false
+# 	group_target = groups
+# 	return true
 #--------------------------------------------------------------------------------
 # Hàm lọc
-func filter_target_type(groups: Array[UnitModel] = [], source: UnitModel = null) -> Array[UnitModel]:
-	if groups.is_empty() or groups.size() <= 0:
-		return []
-	
-	match current_skill_select.target_type:
-		SkillBase.TargetType.SELF:
-			return [source]
-		SkillBase.TargetType.ENEMY:
-			return groups.filter(func(x):
-				return x.team != source.team
-			)
-		SkillBase.TargetType.ALLY:
-			return groups.filter(func(x):
-				return x.team == source.team
-			)
-		SkillBase.TargetType.ANY:
-			return groups
-	return []
-
 func filter_target_fainted(groups: Array[UnitModel] = []) -> Array[UnitModel]:
 	match current_skill_select.target_fainted:
 		SkillBase.TargetFainted.NONE:
@@ -260,14 +254,3 @@ func filter_target_fainted(groups: Array[UnitModel] = []) -> Array[UnitModel]:
 	return []
 
 # --------------------------------------------------------------------------------
-
-func check_data(source: UnitModel, battle_system: BattleSystemController) -> bool:
-	if source == null or battle_system == null:
-		print("Source or battle system is null")
-		return true
-	
-	if source.skills.is_empty():
-		print("Source skills is empty")
-		battle_system.get_next_turn()
-		return true
-	return false
