@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=8 format=3 uid="uid://du4gepyyu4kdy"]
+
+[ext_resource type="Script" path="res://src/components/SkillComponent.gd" id="1_0teed"]
+[ext_resource type="Script" path="res://src/components/SkillCondition.gd" id="2_4qujc"]
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_hx676"]
+[ext_resource type="Script" path="res://src/components/SkillMechanic.gd" id="3_o0a2p"]
+[ext_resource type="Script" path="res://src/components/SkillMechanicDamage.gd" id="4_8qwmc"]
+
+[sub_resource type="Resource" id="Resource_j8w0e"]
+script = ExtResource("4_8qwmc")
+power = 90
+type_attack = 1
+type_damage = 1
+true_damage = true
+
+[sub_resource type="Resource" id="Resource_jei1b"]
+script = ExtResource("1_0teed")
+conditions = Array[ExtResource("2_4qujc")]([])
+mechanics = Array[ExtResource("3_o0a2p")]([SubResource("Resource_j8w0e")])
+
+[resource]
+script = ExtResource("2_hx676")
+name = "SkillB"
+element = 1
+status = 1
+target_type = 1
+target_mode = 1
+target_fainted = 2
+components = Array[ExtResource("1_0teed")]([SubResource("Resource_jei1b")])
+break_point = 0

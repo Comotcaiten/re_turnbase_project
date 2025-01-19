@@ -1,8 +1,9 @@
 class_name SkillModel
 
 var skill_base: SkillBase
-
+var name: String
 var element: CharacterBase.Element
+var status: StatusDB.StatusID
 var target_type: SkillBase.TargetType:
   get:
     return skill_base.target_type
@@ -22,9 +23,16 @@ var components: Array[SkillComponent]:
 func _init(_skill_base: SkillBase):
   skill_base = _skill_base
   element = _skill_base.element
+  name = skill_base.name
+  status = _skill_base.status
   pass
 
 func run(targets: Array[UnitModel] = [], source: UnitModel = null, battle_system: BattleSystemController = null) -> bool:
+  print("Status: ", status)
+  if status != StatusDB.StatusID.NONE:
+    for target in targets:
+      target.set_status(status)
+
   if targets.size() == 0 or source == null or battle_system == null:
     return false
   for component in components:

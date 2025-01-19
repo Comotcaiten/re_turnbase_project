@@ -1,0 +1,153 @@
+[gd_scene load_steps=2 format=3 uid="uid://ov214v1d5beo"]
+
+[ext_resource type="Texture2D" uid="uid://c1s7om7xmg74" path="res://asset/icon_target.png" id="1_cs87g"]
+
+[node name="ControlButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtonSkill" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.65
+anchor_top = 0.533333
+anchor_right = 0.89375
+anchor_bottom = 0.611111
+offset_right = 8.0
+offset_bottom = 8.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ButtonSkill"]
+position = Vector2(32, 32)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_cs87g")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="ButtonSkill"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.304688
+anchor_right = 0.979167
+anchor_bottom = 0.710938
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NAME SKILL"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="ButtonSkill2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.64975
+anchor_top = 0.633444
+anchor_right = 0.89975
+anchor_bottom = 0.719133
+offset_left = 0.319946
+offset_top = -0.0800171
+offset_right = 0.319946
+offset_bottom = 2.224
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ButtonSkill2"]
+position = Vector2(32, 32)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_cs87g")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="ButtonSkill2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.304688
+anchor_right = 0.979167
+anchor_bottom = 0.710938
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NAME SKILL"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="ButtonSkill3" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.64975
+anchor_top = 0.733444
+anchor_right = 0.89975
+anchor_bottom = 0.822444
+offset_left = 0.319946
+offset_top = -0.0800171
+offset_right = 0.319946
+offset_bottom = -0.160034
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ButtonSkill3"]
+position = Vector2(32, 32)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_cs87g")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="ButtonSkill3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.304688
+anchor_right = 0.979167
+anchor_bottom = 0.710938
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NAME SKILL"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="ButtonSkill4" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.64975
+anchor_top = 0.833444
+anchor_right = 0.89975
+anchor_bottom = 0.922444
+offset_left = 0.319946
+offset_top = -0.0800171
+offset_right = 0.319946
+offset_bottom = -0.160034
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ButtonSkill4"]
+position = Vector2(32, 32)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_cs87g")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="ButtonSkill4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166667
+anchor_top = 0.304688
+anchor_right = 0.979167
+anchor_bottom = 0.710938
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NAME SKILL"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true

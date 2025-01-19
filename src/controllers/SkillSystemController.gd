@@ -7,6 +7,8 @@ enum State {Start, Select, Execute, End}
 var state: State = State.Start
 
 var current_id_target: int = 0
+
+# var index_current_skill_maps: Maps = Maps.new(typeof(UnitModel), typeof(1))
 var target: UnitModel:
 	get:
 		if group_target.is_empty():
@@ -66,6 +68,12 @@ func perform_random_skill():
 func perform_skill():
 	match state:
 		State.Start:
+			for i in range(0, battle_system.button_skills.size()):
+				if battle_system.current_unit.get_skill(i) == null:
+					battle_system.button_skills[i].text = "Null"
+					battle_system.button_skills[i].visible = false
+					continue
+				battle_system.button_skills[i].text = battle_system.current_unit.get_skill(i).name
 			if battle_system == null or battle_system.current_unit == null:
 				print("battle_system == null or battle_system.current_unit == null")
 				print("battle_system.current_unit == null: ", battle_system.current_unit)
@@ -204,6 +212,8 @@ func refresh():
 	group_target = []
 	group_target_select = []
 
+	for buton_skill in battle_system.button_skills:
+		buton_skill.text = ""
 #--------------------------------------------------------------------------------
 # Hàm set
 func set_current_id_target(_value: int) -> bool:

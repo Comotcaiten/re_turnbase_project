@@ -30,6 +30,8 @@ var stats_base: Dictionary:
 var stats_modified: Dictionary = CharacterBase.get_stats_default()
 
 var skills: Array[SkillModel]
+
+var status: StatusBase
 #--------------------------------------------------------------------------------
 # Chỉ số
 var health: int
@@ -124,7 +126,13 @@ func set_health(_value: int):
 		mesh.material_override.albedo_color = color_target
 		print(name ," is Fainted")
 		
+func set_status(_id: StatusDB.StatusID):
+	status = StatusDB.db.get_value(_id)
 
+	print("Set status ", status)
+	if status != null:
+		print(status.name, " ", status.start_message)
+		print("Status is type Poision: ", status is StatusPoision)
 #--------------------------------------------------------------------------------
 # Các hàm xử lý sự kiện
 func take_damage(_damage_model: DamageModel = null, _source: UnitModel = null):
@@ -183,6 +191,13 @@ func signal_get_damage(_damage_detail: DamageModel, _source: UnitModel):
 	print(self, " HP: ", health, "/", max_health)
 	pass
 
+# On After / Before
+
+func on_after_turn():
+	pass
+
+func on_before_turn():
+	pass
 #--------------------------------------------------------------------------------
 # Debug - Utils
 # In ra thông tin của Unit

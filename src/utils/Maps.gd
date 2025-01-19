@@ -9,9 +9,10 @@ var size: int:
 	get:
 		return db.size()
 
-func _init(_keys_allowed: int = 0, _values_allowed: int = 0):
+func _init(_keys_allowed: int = 0, _values_allowed: int = 0, _db: Dictionary = {}):
 	keys_allowed = _keys_allowed
 	values_allowed = _values_allowed
+	db = _db
 	pass
 
 func get_value(_id: Variant = null) -> Variant:

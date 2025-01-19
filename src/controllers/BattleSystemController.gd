@@ -16,6 +16,8 @@ enum State {StartState, UnitTurnState, ActionState, SkillState, EndState}
 	get:
 		return max(1, max_object)
 
+@export var button_skills: Array[Button]
+
 var maps_unit_groups_controller: Maps = Maps.new(typeof("String"), typeof(UnitGroupController))
 var maps_unit_label: Maps = Maps.new(typeof(UnitModel), typeof(Label))
 
@@ -226,3 +228,21 @@ func update_unit_label():
 			else:
 				maps_unit_label.get_value(value).text = value.name + " [HP: " + str(value.health) + "/" + str(value.max_health) + "]"
 	return
+
+#--------------------------------------------------------------------------------
+# Button Skill
+
+func _on_button1_skill_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_button_skill_2_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_button_skill_3_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_button_skill_4_pressed() -> void:
+	pass # Replace with function body.
