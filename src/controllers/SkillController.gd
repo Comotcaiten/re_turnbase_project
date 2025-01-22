@@ -1,3 +1,5 @@
+extends Node
+
 class_name SkillController
 
 # Điều phối các hành động của SkillService.

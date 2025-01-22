@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://ce0sw0pjv5p2b"]
+
+[ext_resource type="Script" path="res://src/node/UnitGroupNode.gd" id="1_0iolx"]
+[ext_resource type="Script" path="res://src/managers/GameManager.gd" id="1_fn7c6"]
+[ext_resource type="PackedScene" uid="uid://8u2efokhmota" path="res://test/unit_node.tscn" id="2_bx38a"]
+[ext_resource type="Resource" uid="uid://o1an0vkac8ts" path="res://asset/character_base/UnitA.tres" id="3_t0sq8"]
+[ext_resource type="Resource" uid="uid://dqyrr3gcn4eqt" path="res://asset/character_base/UnitB.tres" id="5_nwogl"]
+
+[node name="LevelTest" type="Node3D"]
+
+[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("array_gorup_unit_node")]
+script = ExtResource("1_fn7c6")
+array_gorup_unit_node = [NodePath("GroupNode"), NodePath("GroupNode2")]
+
+[node name="GroupNode" type="Node3D" parent="GameManager"]
+script = ExtResource("1_0iolx")
+is_player_group = true
+
+[node name="UnitNode A" parent="GameManager/GroupNode" instance=ExtResource("2_bx38a")]
+base = ExtResource("3_t0sq8")
+level = 12
+
+[node name="GroupNode2" type="Node3D" parent="GameManager"]
+script = ExtResource("1_0iolx")
+
+[node name="UnitNode B" parent="GameManager/GroupNode2" instance=ExtResource("2_bx38a")]
+base = ExtResource("5_nwogl")
+level = 8

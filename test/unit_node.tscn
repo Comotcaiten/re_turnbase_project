@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://8u2efokhmota"]
+
+[ext_resource type="Script" path="res://src/node/UnitNode.gd" id="1_bgtkg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_oxk5y"]
+
+[node name="UnitNode" type="Node3D"]
+script = ExtResource("1_bgtkg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_oxk5y")

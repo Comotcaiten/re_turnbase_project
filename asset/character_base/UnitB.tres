@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="UnitBase" load_steps=5 format=3 uid="uid://dqyrr3gcn4eqt"]
+
+[ext_resource type="Script" path="res://src/base/UnitBase.gd" id="1_afnyd"]
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_tmc3t"]
+[ext_resource type="Script" path="res://src/base/Stats.gd" id="3_hu8we"]
+
+[sub_resource type="Resource" id="Resource_gkax5"]
+script = ExtResource("3_hu8we")
+hp = 100
+mp = 50
+attack = 10
+defense = 5
+speed = 15
+
+[resource]
+script = ExtResource("1_afnyd")
+name = "Unnamed Unit B"
+id = ""
+element = 0
+stats = SubResource("Resource_gkax5")
+skills = Array[ExtResource("2_tmc3t")]([])

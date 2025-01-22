@@ -1,3 +1,5 @@
+extends Node
+
 class_name UnitController
 
 # Điều phối các hành động của UnitService.
