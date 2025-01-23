@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://ko657xbfar3x"]
+
+[ext_resource type="Script" path="res://src/system/BattleSystem.gd" id="1_ofsmf"]
+[ext_resource type="Script" path="res://src/models/UnitGroupModel.gd" id="2_vndew"]
+[ext_resource type="Script" path="res://src/controllers/TurnController.gd" id="3_g5guy"]
+[ext_resource type="Script" path="res://src/controllers/SkillController.gd" id="4_764ma"]
+[ext_resource type="Script" path="res://src/controllers/UnitGroupController.gd" id="4_yl1gg"]
+[ext_resource type="PackedScene" uid="uid://drjilsc6wwpqc" path="res://test/unit_node_3d.tscn" id="6_ye848"]
+[ext_resource type="Resource" uid="uid://o1an0vkac8ts" path="res://asset/character_base/UnitA.tres" id="7_t2gf5"]
+[ext_resource type="Resource" uid="uid://dqyrr3gcn4eqt" path="res://asset/character_base/UnitB.tres" id="8_j8ikc"]
+
+[node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("turn_controller", "skill_controller", "group_controller", "player_group", "enemy_group")]
+script = ExtResource("1_ofsmf")
+turn_controller = NodePath("TurnController")
+skill_controller = NodePath("SkillController")
+group_controller = NodePath("GameArea/UnitGroupController")
+player_group = NodePath("GameArea/UnitGroupController/UnitGroupPlayer")
+enemy_group = NodePath("GameArea/UnitGroupController/UnitGroupEnemy")
+
+[node name="TurnController" type="Node3D" parent="."]
+script = ExtResource("3_g5guy")
+
+[node name="SkillController" type="Node3D" parent="."]
+script = ExtResource("4_764ma")
+
+[node name="GameArea" type="Node3D" parent="."]
+
+[node name="UnitGroupController" type="Node3D" parent="GameArea"]
+script = ExtResource("4_yl1gg")
+
+[node name="UnitGroupPlayer" type="Node3D" parent="GameArea/UnitGroupController"]
+script = ExtResource("2_vndew")
+
+[node name="UnitNode3D A" parent="GameArea/UnitGroupController/UnitGroupPlayer" instance=ExtResource("6_ye848")]
+base = ExtResource("7_t2gf5")
+level = 10
+
+[node name="UnitGroupEnemy" type="Node3D" parent="GameArea/UnitGroupController"]
+script = ExtResource("2_vndew")
+is_player = false
+
+[node name="UnitNode3D B" parent="GameArea/UnitGroupController/UnitGroupEnemy" instance=ExtResource("6_ye848")]
+base = ExtResource("8_j8ikc")

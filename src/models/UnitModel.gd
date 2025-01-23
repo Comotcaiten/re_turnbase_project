@@ -16,6 +16,8 @@ var skills: Array[SkillModel]
 
 var is_fainted: bool = false
 
+# var is_player: bool = true
+
 # Stats
 var max_health: int:
     get:
@@ -50,3 +52,8 @@ func get_stats(_stat: Stats.Type) -> int:
     var amount_base = stats_base.get_stats(_stat) * 1.0
     var amount_modified = stats_modified.get_stats(_stat) * 1.0
     return int(((amount_base + (amount_modified + amount_base)) / 100.0) * level)
+
+func get_skill(index: int):
+    if index >= skills.size() or index < 0:
+        return
+    return skills[index]
