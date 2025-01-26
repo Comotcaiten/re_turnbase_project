@@ -10,6 +10,7 @@ func initialized():
   for child in get_children():
     if child is UnitNode:
       child.initialized()
+      child.unit_model.is_player = is_player
       print(name, " >> Add: ", add_unit(child.unit_model))
 
 func add_unit(unit: UnitModel):

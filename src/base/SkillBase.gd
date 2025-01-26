@@ -11,7 +11,11 @@ enum TargetType {SELF, ENEMY, ALLY, ANY}
 @export var target_type: TargetType
 
 enum TargetMode {ALL, SINGLE, THREE}
-@export var target_mode: TargetMode = TargetMode.SINGLE
+@export var target_mode: TargetMode = TargetMode.SINGLE:
+    get:
+        if target_type == TargetType.SELF:
+            return TargetMode.SINGLE
+        return target_mode
 
 enum TargetFainted {NONE, TRUE, FALSE}
 @export var target_fainted: TargetFainted = TargetFainted.FALSE

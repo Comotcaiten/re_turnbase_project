@@ -16,6 +16,7 @@ var state: State
 
 var is_game_over: bool = false
 
+var all_group: Array[UnitModel]
 func _ready():
 	initialized()
 	print("Game Management initialized.")

@@ -16,7 +16,7 @@ var skills: Array[SkillModel]
 
 var is_fainted: bool = false
 
-# var is_player: bool = true
+var is_player: bool = true
 
 # Stats
 var max_health: int:
