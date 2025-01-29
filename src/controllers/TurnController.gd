@@ -29,3 +29,4 @@ func get_next_turn():
 	if current_index >= turn_queue.size():
 		current_index = 0
 	print("Next turn: ", current_unit.name)
+	return

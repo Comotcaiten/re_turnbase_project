@@ -19,6 +19,8 @@ var is_fainted: bool = false
 var is_player: bool = true
 
 # Stats
+var health: int
+var mp: int
 var max_health: int:
     get:
         return get_stats(Stats.Type.HP)
@@ -42,6 +44,9 @@ func _init(_base: UnitBase, _level: int):
     element = _base.element
     stats_base = _base.stats
 
+    health = max_health
+    mp = max_mp
+
     for skill in _base.skills:
         if skill is SkillBase:
             skills.append(SkillModel.new(skill))
@@ -57,3 +62,26 @@ func get_skill(index: int):
     if index >= skills.size() or index < 0:
         return
     return skills[index]
+
+# Set
+
+# Modify
+
+# Check
+
+# Action / Event
+
+func take_damage(damage_model: DamageModel = null):
+    if damage_model == null:
+        return false
+    var damage: int = damage_model.get_damage()
+    set_hp_by_damage(damage)
+
+    print("UnitModel >> Take damage >> ", damage, " DMG", " >> ", name, " >> ", health, "/", max_health)
+    return
+
+func set_hp_by_damage(value: int):
+    health = max(0, min(max_health, health - value))
+    if health <= 0:
+        is_fainted = true
+    return

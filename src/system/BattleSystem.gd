@@ -62,6 +62,10 @@ func play():
 func change_state(new_state: State):
 	state = new_state
 
+func get_next_turn():
+	turn_controller.get_next_turn()
+	change_state(State.UNITTURN)
+
 func handle_unit_turn():
 	print("Player's turn.")
 	# Logic to manage player's turn
@@ -73,13 +77,14 @@ func handle_unit_turn():
 	change_state(State.AIACTION)
 
 func handle_ai_action():
-	print("AI is thinking...")
+	# print("AI is thinking...")
 	# Logic to manage AI's action
+	skill_controller.play(turn_controller.current_unit)
 
 func handle_select_skill():
-	print("Selecting skill...")
+	# print("Selecting skill...")
 	# Logic for selecting skill or executing attack
-	# change_state(State.END)
+	skill_controller.play(turn_controller.current_unit)
 
 func handle_end():
 	print("Battle ended.")

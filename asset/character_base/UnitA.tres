@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="UnitBase" load_steps=5 format=3 uid="uid://o1an0vkac8ts"]
+[gd_resource type="Resource" script_class="UnitBase" load_steps=6 format=3 uid="uid://o1an0vkac8ts"]
 
 [ext_resource type="Script" path="res://src/base/UnitBase.gd" id="1_fikkm"]
 [ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_v317q"]
 [ext_resource type="Script" path="res://src/base/Stats.gd" id="3_rudpt"]
+[ext_resource type="Resource" uid="uid://cptyrxefu6b72" path="res://asset/skill_base/SkillBaseA.tres" id="3_y4gqh"]
 
 [sub_resource type="Resource" id="Resource_vabut"]
 script = ExtResource("3_rudpt")
@@ -18,4 +19,4 @@ name = "Unnamed Unit A"
 id = ""
 element = 0
 stats = SubResource("Resource_vabut")
-skills = Array[ExtResource("2_v317q")]([])
+skills = Array[ExtResource("2_v317q")]([ExtResource("3_y4gqh")])

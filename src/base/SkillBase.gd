@@ -17,8 +17,8 @@ enum TargetMode {ALL, SINGLE, THREE}
             return TargetMode.SINGLE
         return target_mode
 
-enum TargetFainted {NONE, TRUE, FALSE}
-@export var target_fainted: TargetFainted = TargetFainted.FALSE
+# enum TargetFainted {NONE, TRUE, FALSE}
+# @export var target_fainted: TargetFainted = TargetFainted.FALSE
 
 @export_group("Components")
 @export var components: Array[SkillComponent]
