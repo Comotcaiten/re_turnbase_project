@@ -1,13 +1,37 @@
-[gd_scene load_steps=9 format=3 uid="uid://ko657xbfar3x"]
+[gd_scene load_steps=14 format=3 uid="uid://ko657xbfar3x"]
 
 [ext_resource type="Script" path="res://src/system/BattleSystem.gd" id="1_ofsmf"]
 [ext_resource type="Script" path="res://src/models/UnitGroupModel.gd" id="2_vndew"]
 [ext_resource type="Script" path="res://src/controllers/TurnController.gd" id="3_g5guy"]
 [ext_resource type="Script" path="res://src/controllers/SkillController.gd" id="4_764ma"]
 [ext_resource type="Script" path="res://src/controllers/UnitGroupController.gd" id="4_yl1gg"]
-[ext_resource type="PackedScene" uid="uid://drjilsc6wwpqc" path="res://test/unit_node_3d.tscn" id="6_ye848"]
+[ext_resource type="Script" path="res://src/nodes/UnitNode.gd" id="6_ug2mc"]
 [ext_resource type="Resource" uid="uid://o1an0vkac8ts" path="res://asset/character_base/UnitA.tres" id="7_t2gf5"]
 [ext_resource type="Resource" uid="uid://dqyrr3gcn4eqt" path="res://asset/character_base/UnitB.tres" id="8_j8ikc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dnusm"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_cafri"]
+sky_material = SubResource("ProceduralSkyMaterial_dnusm")
+
+[sub_resource type="Environment" id="Environment_dfoiw"]
+background_mode = 2
+sky = SubResource("Sky_cafri")
+tonemap_mode = 2
+
+[sub_resource type="Resource" id="Resource_i2i4n"]
+script = ExtResource("6_ug2mc")
+base = ExtResource("7_t2gf5")
+level = 10
+is_player = true
+
+[sub_resource type="Resource" id="Resource_jwb2r"]
+script = ExtResource("6_ug2mc")
+base = ExtResource("8_j8ikc")
+level = 10
+is_player = true
 
 [node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("turn_controller", "skill_controller", "group_controller", "player_group", "enemy_group")]
 script = ExtResource("1_ofsmf")
@@ -16,6 +40,13 @@ skill_controller = NodePath("SkillController")
 group_controller = NodePath("GameArea/UnitGroupController")
 player_group = NodePath("GameArea/UnitGroupController/UnitGroupPlayer")
 enemy_group = NodePath("GameArea/UnitGroupController/UnitGroupEnemy")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dfoiw")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
 
 [node name="TurnController" type="Node3D" parent="."]
 script = ExtResource("3_g5guy")
@@ -29,15 +60,15 @@ script = ExtResource("4_764ma")
 script = ExtResource("4_yl1gg")
 
 [node name="UnitGroupPlayer" type="Node3D" parent="GameArea/UnitGroupController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 script = ExtResource("2_vndew")
-
-[node name="UnitNode3D A" parent="GameArea/UnitGroupController/UnitGroupPlayer" instance=ExtResource("6_ye848")]
-base = ExtResource("7_t2gf5")
-level = 10
+data_unit_node = Array[ExtResource("6_ug2mc")]([SubResource("Resource_i2i4n")])
 
 [node name="UnitGroupEnemy" type="Node3D" parent="GameArea/UnitGroupController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 script = ExtResource("2_vndew")
 is_player = false
+data_unit_node = Array[ExtResource("6_ug2mc")]([SubResource("Resource_jwb2r")])
 
-[node name="UnitNode3D B" parent="GameArea/UnitGroupController/UnitGroupEnemy" instance=ExtResource("6_ye848")]
-base = ExtResource("8_j8ikc")
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
