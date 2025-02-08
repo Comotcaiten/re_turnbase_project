@@ -63,6 +63,11 @@ func change_state(new_state: State):
 	state = new_state
 
 func get_next_turn():
+	if group_controller == null:
+		return
+	if group_controller.is_one_group_fainted():
+		change_state(State.END)
+		return
 	turn_controller.get_next_turn()
 	change_state(State.UNITTURN)
 

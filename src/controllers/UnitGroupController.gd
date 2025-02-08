@@ -15,6 +15,10 @@ func initialized(_battle_system: BattleSystem):
 		if child is UnitGroupModel:
 			child.initialized()
 			print(name, " >> Add: ", add_unit_group(child), " >> ", child, " >> ", child.group)
+	
+	for child in get_children():
+		if child is UnitGroupModel:
+			child.update_position()
 	pass
 
 func add_unit_group(group: UnitGroupModel) -> bool:
@@ -86,3 +90,9 @@ func filter_is_fainted(group: Array[UnitModel] = [], is_fainted: bool = false) -
 	var group_filter: Array[UnitModel] = group.filter(func(x):
 		x.is_fainted = is_fainted)
 	return group_filter
+
+func is_one_group_fainted() -> bool:
+	for group in maps_groups.get_all_values():
+		if group.is_fainted():
+			return true
+	return false

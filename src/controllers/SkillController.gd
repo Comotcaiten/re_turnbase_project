@@ -132,11 +132,13 @@ func perform_handle_select_target():
 	if Input.is_action_just_pressed("ui_left"):
 		set_current_target(current_target + 1)
 		set_group_targets_select()
+		refactored_slelcted_by_skill()
 		print("Skill controller >> Select target >> Left >> ", current_target, " >> ", group_targets_select)
 		return
 	if Input.is_action_just_pressed("ui_right"):
 		set_current_target(current_target - 1)
 		set_group_targets_select()
+		refactored_slelcted_by_skill()
 		print("Skill controller >> Select target >> Right >> ", current_target, " >> ", group_targets_select)
 		return
 	
@@ -216,6 +218,8 @@ func get_random_current_target() -> int:
 	return randi() % group_targets_available.size()
 
 func refesh():
+	# refactored_unslelcted_by_skill()
+
 	current_index = 0
 	current_skill = null
 
@@ -223,3 +227,16 @@ func refesh():
 	group_targets_select = []
 
 	state = State.START
+
+func refactored_slelcted_by_skill():
+	for unit in group_targets_select:
+		unit.node.seleted_by_skill()
+	
+	for unit in group_targets_available:
+		if unit not in group_targets_select:
+			unit.node.unseleted_by_skill()
+
+func refactored_unslelcted_by_skill():
+	for unit in group_targets_available:
+		unit.node.unseleted_by_skill()
+	return

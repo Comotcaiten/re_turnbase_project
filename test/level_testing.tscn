@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ko657xbfar3x"]
+[gd_scene load_steps=15 format=3 uid="uid://ko657xbfar3x"]
 
 [ext_resource type="Script" path="res://src/system/BattleSystem.gd" id="1_ofsmf"]
 [ext_resource type="Script" path="res://src/models/UnitGroupModel.gd" id="2_vndew"]
@@ -31,6 +31,12 @@ is_player = true
 script = ExtResource("6_ug2mc")
 base = ExtResource("8_j8ikc")
 level = 10
+is_player = true
+
+[sub_resource type="Resource" id="Resource_obgt8"]
+script = ExtResource("6_ug2mc")
+base = ExtResource("8_j8ikc")
+level = 1
 is_player = true
 
 [node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("turn_controller", "skill_controller", "group_controller", "player_group", "enemy_group")]
@@ -68,7 +74,7 @@ data_unit_node = Array[ExtResource("6_ug2mc")]([SubResource("Resource_i2i4n")])
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 script = ExtResource("2_vndew")
 is_player = false
-data_unit_node = Array[ExtResource("6_ug2mc")]([SubResource("Resource_jwb2r")])
+data_unit_node = Array[ExtResource("6_ug2mc")]([SubResource("Resource_jwb2r"), SubResource("Resource_obgt8")])
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 3, 5)
