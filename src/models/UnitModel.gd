@@ -2,6 +2,8 @@ class_name UnitModel
 
 var base: UnitBase
 
+var node: UnitNode3D
+
 var name: String
 var id: String
 var level: int
@@ -64,6 +66,9 @@ func get_skill(index: int):
     return skills[index]
 
 # Set
+func set_node_3d(_node: UnitNode3D):
+    node = _node
+    pass
 
 # Modify
 
@@ -77,6 +82,8 @@ func take_damage(damage_model: DamageModel = null):
     var damage: int = damage_model.get_damage()
     set_hp_by_damage(damage)
 
+    update_node()
+
     print("UnitModel >> Take damage >> ", damage, " DMG", " >> ", name, " >> ", health, "/", max_health)
     return
 
@@ -85,3 +92,8 @@ func set_hp_by_damage(value: int):
     if health <= 0:
         is_fainted = true
     return
+
+func update_node():
+    if node == null:
+        return
+    node.update()

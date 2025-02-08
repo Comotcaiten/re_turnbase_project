@@ -4,6 +4,9 @@ class_name UnitNode3D
 
 var node_mesh_intstance_3d: MeshInstance3D
 
+var color_fainted: Color = Color.html("#e74c3c")
+var color_normal: Color = Color.html("#28b463")
+
 var base: UnitBase
 var level: int = 1:
   get():
@@ -16,6 +19,8 @@ var is_player: bool = false
 func _init(_base: UnitBase, _level: int = 1, _is_player: bool = false):
   node_mesh_intstance_3d = MeshInstance3D.new()
   node_mesh_intstance_3d.mesh = BoxMesh.new()
+  node_mesh_intstance_3d.material_override = StandardMaterial3D.new()
+  node_mesh_intstance_3d.material_override.albedo_color = color_normal
 
   add_child(node_mesh_intstance_3d)
 
@@ -39,6 +44,7 @@ func update():
     return
 
   if unit_model.is_fainted:
-    node_mesh_intstance_3d.visible = false
+    # node_mesh_intstance_3d.visible = false
+    node_mesh_intstance_3d.material_override.albedo_color = color_fainted
     return
   return

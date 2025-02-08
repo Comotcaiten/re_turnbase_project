@@ -16,15 +16,16 @@ func initialized():
 			var unit_node_3d: UnitNode3D = UnitNode3D.new(unit_node.base, unit_node.level, is_player)
 			add_child(unit_node_3d)
 			print("UnitGroupModel >> ", name, " >> Add: ", unit_node, " >> UnitModel: ", unit_node_3d.unit_model)
-			print("UnitGroupModel >> ", name, " >> Add: ", unit_node, " >> ", add_unit(unit_node_3d.unit_model))
+			print("UnitGroupModel >> ", name, " >> Add: ", unit_node, " >> ", add_unit(unit_node_3d))
 		else:
 			print("UnitGroupModel >> ", name, " >> Add: ", unit_node, " >> This is not Unit Node: ")
 	pass
 
-func add_unit(unit: UnitModel):
+func add_unit(unit: UnitNode3D):
 	if unit in group or unit == null:
 		return false
-	group.append(unit)
+	group.append(unit.unit_model)
+	unit.unit_model.set_node_3d(unit)
 	return true
 
 func remove_unit(unit: UnitModel):
