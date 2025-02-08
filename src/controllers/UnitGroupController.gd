@@ -61,18 +61,24 @@ func get_all_units_and_filter_fainted(is_fainted: bool = false) -> Array[UnitMod
 		x.is_fainted = is_fainted)
 	return all_units
 
-func get_group_is_player(is_player: bool = true) -> UnitGroupModel:
-	for group_model in maps_groups.get_all_values():
-		if group_model is UnitGroupModel and group_model != null and group_model.is_player == is_player:
-			return group_model
-	return
-
 func get_keys_group_is_player(is_player: bool = true) -> String:
 	for keys in maps_groups.get_all_keys():
 		var group_model: UnitGroupModel = maps_groups.get_value(keys) as UnitGroupModel
 		if group_model != null and group_model.is_player == is_player:
 			return keys
 	return ""
+
+func get_group_is_ally(unit: UnitModel) -> Array[UnitModel]:
+	for group_model in maps_groups.get_all_values():
+		if group_model is UnitGroupModel and group_model != null and unit in group_model.group:
+			return group_model.group
+	return []
+
+func get_group_is_enemy(unit: UnitModel) -> Array[UnitModel]:
+	for group_model in maps_groups.get_all_values():
+		if group_model is UnitGroupModel and group_model != null and unit not in group_model.group:
+			return group_model.group
+	return []
 
 func is_unit_in_any_group(unit: UnitModel):
 	for group in maps_groups.get_all_values():

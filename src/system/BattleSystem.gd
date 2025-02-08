@@ -60,6 +60,12 @@ func play():
 			handle_end()
 
 func change_state(new_state: State):
+	if group_controller == null:
+		state = State.END
+		return
+	if group_controller.is_one_group_fainted():
+		state = State.END
+		return
 	state = new_state
 
 func get_next_turn():

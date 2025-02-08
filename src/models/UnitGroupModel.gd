@@ -58,7 +58,7 @@ func is_fainted() -> bool:
 	)
 	return group_check.size() == group.size()
 
-func update_position(gap: int = 1):
+func update_position(gap: int = 3):
 	if group_unit_node_3d.size() == 0:
 		return
 	# 	TH1:

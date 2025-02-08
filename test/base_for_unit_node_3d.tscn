@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg80we27kkp5f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_707xy"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qld7o"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3qt0u"]
+viewport_path = NodePath("Sprite3D2/SubViewport")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1x6qw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kjy3h"]
+
+[node name="BaseForUnitNode3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_707xy")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.808429, 0)
+texture = SubResource("ViewportTexture_qld7o")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+size = Vector2i(250, 50)
+
+[node name="Label" type="Label" parent="Sprite3D/SubViewport"]
+offset_right = 250.0
+offset_bottom = 50.0
+text = "Lfffffffffffffffffff"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+texture = SubResource("ViewportTexture_3qt0u")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D2"]
+size = Vector2i(25, 25)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Sprite3D2/SubViewport"]
+material = SubResource("CanvasItemMaterial_1x6qw")
+scale = Vector2(50, 50)
+mesh = SubResource("BoxMesh_kjy3h")

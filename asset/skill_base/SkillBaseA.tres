@@ -23,5 +23,6 @@ name = "Skill Base A"
 id = "SB001"
 element = 0
 target_type = 1
-target_mode = 1
+target_mode = 2
+target_fainted = 2
 components = Array[ExtResource("1_5b0ix")]([SubResource("Resource_c2pod")])

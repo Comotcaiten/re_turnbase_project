@@ -11,6 +11,7 @@ var current_skill: SkillModel
 
 var current_target: int
 var group_targets_available: Array[UnitModel] = []
+var group_targets_available_filter: Array[UnitModel] = []
 var group_targets_select: Array[UnitModel] = []
 
 var battle_system: BattleSystem
@@ -43,6 +44,9 @@ func change_state(_state: State):
 	state = _state
 
 func handle_start(unit: UnitModel):
+	if unit.skills.is_empty():
+		change_state(State.END)
+		return
 	if unit.skills.is_empty():
 		change_state(State.END)
 		return
@@ -130,13 +134,13 @@ func perform_handle_select(unit: UnitModel):
 
 func perform_handle_select_target():
 	if Input.is_action_just_pressed("ui_left"):
-		set_current_target(current_target + 1)
+		set_current_target(current_target - 1)
 		set_group_targets_select()
 		refactored_slelcted_by_skill()
 		print("Skill controller >> Select target >> Left >> ", current_target, " >> ", group_targets_select)
 		return
 	if Input.is_action_just_pressed("ui_right"):
-		set_current_target(current_target - 1)
+		set_current_target(current_target + 1)
 		set_group_targets_select()
 		refactored_slelcted_by_skill()
 		print("Skill controller >> Select target >> Right >> ", current_target, " >> ", group_targets_select)
@@ -164,12 +168,11 @@ func set_index_skill(index: int, unit: UnitModel) -> bool:
 	return true
 
 func set_current_target(value: int):
-	current_target = value
-	if current_target < 0:
-		current_target = group_targets_available.size() - 1
-		return
-	if current_target >= group_targets_available.size():
-		current_target = 0
+	if value < 0:
+		value = group_targets_available_filter.size() - 1
+	if value >= group_targets_available_filter.size():
+		value = 0
+	current_target = group_targets_available.find(group_targets_available_filter[value])
 	return
 
 func set_group_targets_available(unit: UnitModel):
@@ -180,11 +183,19 @@ func set_group_targets_available(unit: UnitModel):
 		SkillBase.TargetType.SELF:
 			group_targets_available = [unit]
 		SkillBase.TargetType.ENEMY:
-			group_targets_available = battle_system.group_controller.get_group_is_player(false).group
+			group_targets_available = battle_system.group_controller.get_group_is_enemy(unit)
 		SkillBase.TargetType.ALLY:
-			group_targets_available = battle_system.group_controller.get_group_is_player(true).group
+			group_targets_available = battle_system.group_controller.get_group_is_ally(unit)
 		SkillBase.TargetType.ANY:
 			group_targets_available = battle_system.group_controller.get_all_units()
+	
+	match current_skill.target_fainted:
+		SkillBase.TargetFainted.TRUE:
+			group_targets_available_filter = group_targets_available.filter(func(x): return x.is_fainted) as Array[UnitModel]
+		SkillBase.TargetFainted.FALSE:
+			group_targets_available_filter = group_targets_available.filter(func(x): return not x.is_fainted) as Array[UnitModel]
+		SkillBase.TargetFainted.NONE:
+			group_targets_available_filter = group_targets_available
 	return
 		
 func set_group_targets_select():
@@ -194,16 +205,28 @@ func set_group_targets_select():
 	match current_skill.target_mode:
 		SkillBase.TargetMode.ALL:
 			group_targets_select = group_targets_available
-			return
+
 		SkillBase.TargetMode.THREE:
 			var start: int = max(0, current_target - 1)
 			var end: int = min(group_targets_available.size(), current_target + 2)
 			group_targets_select = group_targets_available.slice(start, end)
-			return
+
 		SkillBase.TargetMode.SINGLE:
 			group_targets_select = [group_targets_available[current_target]]
+		
+		_:
+			group_targets_select = []
+	
+	if group_targets_select.is_empty():
+		return
+	
+	match current_skill.target_fainted:
+		SkillBase.TargetFainted.TRUE:
+			group_targets_select = group_targets_select.filter(func(x): return x.is_fainted) as Array[UnitModel]
+		SkillBase.TargetFainted.FALSE:
+			group_targets_select = group_targets_select.filter(func(x): return not x.is_fainted) as Array[UnitModel]
+		SkillBase.TargetFainted.NONE:
 			return
-	group_targets_select = []
 	return
 
 func get_skill(unit: UnitModel) -> SkillModel:
@@ -218,12 +241,14 @@ func get_random_current_target() -> int:
 	return randi() % group_targets_available.size()
 
 func refesh():
-	# refactored_unslelcted_by_skill()
+	refactored_unslelcted_by_skill()
 
 	current_index = 0
 	current_skill = null
+	current_target = 0
 
 	group_targets_available = []
+	group_targets_available_filter = []
 	group_targets_select = []
 
 	state = State.START
@@ -231,7 +256,6 @@ func refesh():
 func refactored_slelcted_by_skill():
 	for unit in group_targets_select:
 		unit.node.seleted_by_skill()
-	
 	for unit in group_targets_available:
 		if unit not in group_targets_select:
 			unit.node.unseleted_by_skill()

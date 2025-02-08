@@ -76,6 +76,12 @@ func set_node_3d(_node: UnitNode3D):
 
 # Action / Event
 
+func before_turn():
+    pass
+
+func after_turn():
+    pass
+
 func take_damage(damage_model: DamageModel = null):
     if damage_model == null:
         return false

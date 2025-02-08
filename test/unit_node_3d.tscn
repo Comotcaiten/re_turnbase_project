@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://drjilsc6wwpqc"]
-
-[ext_resource type="Script" path="res://src/nodes/UnitNode.gd" id="1_ycovg"]
-
-[node name="UnitNode3D" type="Node3D"]
-script = ExtResource("1_ycovg")
