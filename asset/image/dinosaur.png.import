@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1s7om7xmg74"
-path="res://.godot/imported/icon_target.png-8526e698157ccbc91f4cd48c2f6b75b3.ctex"
+uid="uid://d2i1gfipacy4n"
+path="res://.godot/imported/dinosaur.png-1ef56d5867283847367c4c82d0e463b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/icon_target.png"
-dest_files=["res://.godot/imported/icon_target.png-8526e698157ccbc91f4cd48c2f6b75b3.ctex"]
+source_file="res://asset/image/dinosaur.png"
+dest_files=["res://.godot/imported/dinosaur.png-1ef56d5867283847367c4c82d0e463b3.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

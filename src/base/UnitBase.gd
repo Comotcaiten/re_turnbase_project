@@ -3,10 +3,16 @@ extends Resource
 class_name UnitBase
 
 @export var name: String = "Unnamed Unit"
+@export var icon: Texture2D = null
 @export var id: String
 @export var element: Element.Type
-@export var stats: Stats
+@export var stats: Stats = null:
+	get:
+		if stats == null:
+			return Stats.new()
+		return stats
 @export var skills: Array[SkillBase] = []
+
 
 # Hàm khởi tạo cho phép dễ dàng tạo mới một Unit
 # func _init(_name: String = "Unnamed Unit", _stats: Stats = null, _element: Element.Type = Element.Type, _skills: Array[SkillBase] = []):

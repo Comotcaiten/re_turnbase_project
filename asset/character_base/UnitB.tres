@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="UnitBase" load_steps=6 format=3 uid="uid://dqyrr3gcn4eqt"]
+[gd_resource type="Resource" script_class="UnitBase" load_steps=7 format=3 uid="uid://dqyrr3gcn4eqt"]
 
 [ext_resource type="Script" path="res://src/base/UnitBase.gd" id="1_afnyd"]
+[ext_resource type="Texture2D" uid="uid://bv5ad2fpq5ixv" path="res://asset/image/knight.png" id="1_s3pns"]
 [ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_tmc3t"]
 [ext_resource type="Resource" uid="uid://cptyrxefu6b72" path="res://asset/skill_base/SkillBaseA.tres" id="3_fbjng"]
 [ext_resource type="Script" path="res://src/base/Stats.gd" id="3_hu8we"]
@@ -16,6 +17,7 @@ speed = 15
 [resource]
 script = ExtResource("1_afnyd")
 name = "Unnamed Unit B"
+icon = ExtResource("1_s3pns")
 id = ""
 element = 0
 stats = SubResource("Resource_gkax5")

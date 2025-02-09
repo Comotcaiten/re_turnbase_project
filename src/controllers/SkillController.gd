@@ -7,6 +7,7 @@ enum State {START, SELECT, AISELECT, EXECUTE, END}
 var state: State = State.START
 
 var current_index: int
+var current_target_filter: int
 var current_skill: SkillModel
 
 var current_target: int
@@ -55,8 +56,10 @@ func handle_start(unit: UnitModel):
 
 	set_index_skill(0, unit)
 	set_group_targets_available(unit)
-	set_current_target(0)
+	var middle: int = int(group_targets_available.size() / 2.0)
+	set_current_target(middle)
 	set_group_targets_select()
+	refactored_slelcted_by_skill()
 	
 	if unit.is_player:
 		print("Selecting skill...")
@@ -134,13 +137,13 @@ func perform_handle_select(unit: UnitModel):
 
 func perform_handle_select_target():
 	if Input.is_action_just_pressed("ui_left"):
-		set_current_target(current_target - 1)
+		set_current_target(current_target_filter - 1)
 		set_group_targets_select()
 		refactored_slelcted_by_skill()
 		print("Skill controller >> Select target >> Left >> ", current_target, " >> ", group_targets_select)
 		return
 	if Input.is_action_just_pressed("ui_right"):
-		set_current_target(current_target + 1)
+		set_current_target(current_target_filter + 1)
 		set_group_targets_select()
 		refactored_slelcted_by_skill()
 		print("Skill controller >> Select target >> Right >> ", current_target, " >> ", group_targets_select)
@@ -172,7 +175,8 @@ func set_current_target(value: int):
 		value = group_targets_available_filter.size() - 1
 	if value >= group_targets_available_filter.size():
 		value = 0
-	current_target = group_targets_available.find(group_targets_available_filter[value])
+	current_target_filter = value
+	current_target = group_targets_available.find(group_targets_available_filter[current_target_filter])
 	return
 
 func set_group_targets_available(unit: UnitModel):
@@ -236,9 +240,10 @@ func get_skill(unit: UnitModel) -> SkillModel:
 	return current_skill
 
 func get_random_current_target() -> int:
-	if group_targets_available.is_empty():
+	if group_targets_available.is_empty() or group_targets_available.size() <= 0:
 		return 0
-	return randi() % group_targets_available.size()
+	var index: int = randi() % group_targets_available.size()
+	return group_targets_available.find(group_targets_available[index])
 
 func refesh():
 	refactored_unslelcted_by_skill()
@@ -246,6 +251,7 @@ func refesh():
 	current_index = 0
 	current_skill = null
 	current_target = 0
+	current_target_filter = 0
 
 	group_targets_available = []
 	group_targets_available_filter = []

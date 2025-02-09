@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://mhoa1fqdlaqa"]
+
+[ext_resource type="Texture2D" uid="uid://c1s7om7xmg74" path="res://asset/image/icon_target.png" id="1_2mfas"]
+[ext_resource type="Script" path="res://src/utils/IconUnitInBattle.gd" id="1_xcsbb"]
+[ext_resource type="Texture2D" uid="uid://d2i1gfipacy4n" path="res://asset/image/dinosaur.png" id="3_qqrmu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpm5o"]
+bg_color = Color(0.974944, 0.368288, 0.35166, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rfkto"]
+bg_color = Color(0.292751, 0.68701, 0.514987, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_blend = true
+
+[node name="IconUnitInBattle" type="Node2D" node_paths=PackedStringArray("icon", "sprite_container")]
+script = ExtResource("1_xcsbb")
+icon = NodePath("Icon")
+sprite_container = NodePath("Sprite2D_Container")
+
+[node name="Sprite2D_Container" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1.90735e-06, 1.90735e-06)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("1_2mfas")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_qqrmu")
+
+[node name="ProgressBarHP" type="ProgressBar" parent="."]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 24.0
+offset_right = 208.0
+offset_bottom = 40.0
+grow_vertical = 2
+size_flags_horizontal = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_hpm5o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_rfkto")
+value = 50.0
+show_percentage = false

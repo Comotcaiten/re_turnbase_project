@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UnitBase" load_steps=5 format=3 uid="uid://c6sv8yjf5c7yd"]
+
+[ext_resource type="Texture2D" uid="uid://dwoc1cs4ee1is" path="res://asset/image/buffalo.png" id="1_2wt2p"]
+[ext_resource type="Script" path="res://src/base/UnitBase.gd" id="1_b1l03"]
+[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_bhluc"]
+[ext_resource type="Resource" uid="uid://cptyrxefu6b72" path="res://asset/skill_base/SkillBaseA.tres" id="4_ng10p"]
+
+[resource]
+script = ExtResource("1_b1l03")
+name = "Unnamed Unit C"
+icon = ExtResource("1_2wt2p")
+id = ""
+element = 1
+skills = Array[ExtResource("2_bhluc")]([ExtResource("4_ng10p")])

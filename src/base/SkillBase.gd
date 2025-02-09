@@ -6,6 +6,8 @@ class_name SkillBase
 @export var id: String
 @export var element: Element.Type
 
+@export var icon: Texture2D = null
+
 @export_group("Target")
 enum TargetType {SELF, ENEMY, ALLY, ANY}
 @export var target_type: TargetType
