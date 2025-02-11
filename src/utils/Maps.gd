@@ -1,8 +1,12 @@
 class_name Maps
 
+# Dữ kiệu kiểu Dictionary được quản lý, Mục đích là dùng cho tham chiếu
 var db: Dictionary = {}
 
+# Kiểu giá trị key/id cho phép
 var keys_allowed: int
+
+# Kiểu giá trị dữ liệu cho phép
 var values_allowed: int
 
 # Trả về kích thước của Dictionary
@@ -10,37 +14,49 @@ var size: int:
 	get:
 		return db.size()
 
+var max_size: int = -1 # -1: Không giới hạn
+
 # Hàm khởi tạo
-func _init(_keys_allowed: int = 0, _values_allowed: int = 0, _db: Dictionary = {}):
+func _init(_keys_allowed: int = 0, _values_allowed: int = 0, _db: Dictionary = {}, _max_size: int = -1):
+	if _keys_allowed < 0 or _keys_allowed > 27: # Giới hạn theo typeof()
+		push_error("Invalid keys_allowed type")
+		return
+	if _values_allowed < 0 or _values_allowed > 27:
+		push_error("Invalid values_allowed type")
+		return
 	keys_allowed = _keys_allowed
 	values_allowed = _values_allowed
-	db = _db.duplicate() # Tránh tham chiếu ngoài ý muốn
+	max_size = max(-1, _max_size)
+	db = _db.duplicate()
+
 
 # Lấy giá trị dựa trên key
-func get_value(_id: Variant = null) -> Variant:
-	if !check_key(_id):
+func get_value(_key: Variant = null) -> Variant:
+	if !check_key(_key) or !db.has(_key):
 		return null
-	return db.get(_id, null)
+	return db.get(_key, null)
 
 # Cập nhật giá trị nếu key đã tồn tại
-func set_value(_id: Variant = null, _val: Variant = null) -> bool:
-	if !check_key(_id) or !check_value(_val):
+func set_value(_key: Variant = null, _val: Variant = null) -> bool:
+	if !check_key(_key) or !check_value(_val) or !db.has(_key):
 		return false
-	db[_id] = _val # Cho phép tạo mới nếu chưa tồn tại
+	db[_key] = _val # Cho phép tạo mới nếu chưa tồn tại
 	return true
 
 # Thêm key-value mới (không ghi đè nếu key đã tồn tại)
-func add(_id: Variant = null, _val: Variant = null) -> bool:
-	if !check_key(_id) or !check_value(_val):
+func add(_key: Variant = null, _val: Variant = null) -> bool:
+	if max_size > 0 and db.size() >= max_size:
 		return false
-	if db.has(_id):
+	if !check_key(_key) or !check_value(_val):
 		return false
-	db[_id] = _val
+	if db.has(_key):
+		return false
+	db[_key] = _val
 	return true
 
 # Kiểm tra sự tồn tại của key
-func has(_id: Variant = null) -> bool:
-	return check_key(_id) and db.has(_id)
+func has(_key: Variant = null) -> bool:
+	return check_key(_key) and db.has(_key)
 
 # Kiểm tra sự tồn tại của value
 func has_value(_val: Variant = null) -> bool:
@@ -51,13 +67,11 @@ func clear():
 	db.clear()
 
 # Xóa một phần tử dựa trên key
-func delete(_id: Variant = null) -> bool:
-	if !check_key(_id):
+func delete(_key: Variant = null) -> bool:
+	if !check_key(_key) or !db.has(_key):
 		return false
-	if db.has(_id):
-		db.erase(_id)
-		return true
-	return false
+	db.erase(_key)
+	return true
 
 # Lấy tất cả keys trong Dictionary
 func get_all_keys() -> Array:
@@ -69,19 +83,11 @@ func get_all_values() -> Array:
 
 # Kiểm tra tính hợp lệ của key
 func check_key(key: Variant = null) -> bool:
-	if key == null:
-		return false
-	if keys_allowed == 0: # Không giới hạn loại key
-		return true
-	return typeof(key) == keys_allowed
+	return key != null and (keys_allowed == 0 or typeof(key) == keys_allowed)
 
 # Kiểm tra tính hợp lệ của value
 func check_value(value: Variant = null) -> bool:
-	if value == null:
-		return false
-	if values_allowed == 0: # Không giới hạn loại value
-		return true
-	return typeof(value) == values_allowed
+	return value != null and (values_allowed == 0 or typeof(value) == values_allowed)
 
 # Kiểm tra Dictionary có trống không
 func is_empty() -> bool:
@@ -94,5 +100,4 @@ func print_allowed():
 
 # In ra toàn bộ dữ liệu trong Dictionary
 func print_data():
-	for key in db:
-		print("Key: ", key, " - Value: ", db[key])
+	print("Dictionary Data: ", db)
