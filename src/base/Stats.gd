@@ -12,8 +12,11 @@ enum Type {HP, MP, ATTACK, DEFENSE, SPEED}
 
 var db: Dictionary = {}
 
-func _init():
-    update_db()
+func _init(default: bool = true):
+    if default:
+        update_db()
+    else :
+        set_stats()
 
 func get_stats(_type: Type) -> int:
     if !db.has(_type):

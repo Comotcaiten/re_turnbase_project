@@ -26,7 +26,7 @@ tonemap_mode = 2
 [sub_resource type="Resource" id="Resource_i2i4n"]
 script = ExtResource("6_ug2mc")
 base = ExtResource("7_t2gf5")
-level = 12
+level = 30
 is_player = true
 
 [sub_resource type="Resource" id="Resource_eed80"]
@@ -78,7 +78,32 @@ skill_controller = NodePath("SkillController")
 group_controller = NodePath("GameArea/UnitGroupController")
 player_group = NodePath("GameArea/UnitGroupController/UnitGroupPlayer")
 enemy_group = NodePath("GameArea/UnitGroupController/UnitGroupEnemy")
-icons_unit_in_battle = [NodePath("Control/IconUnitInBattle"), NodePath("Control/IconUnitInBattle2"), NodePath("Control/IconUnitInBattle3"), NodePath("Control/IconUnitInBattle4")]
+icons_unit_in_battle = [NodePath("CanvasLayer/HSplitContainer/IconUnitInBattle"), NodePath("CanvasLayer/HSplitContainer/IconUnitInBattle2"), NodePath("CanvasLayer/HSplitContainer/IconUnitInBattle3"), NodePath("CanvasLayer/HSplitContainer/IconUnitInBattle4")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_top = 0.878
+anchor_right = 1.0
+anchor_bottom = 1.06667
+offset_top = -0.160034
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="IconUnitInBattle" parent="CanvasLayer/HSplitContainer" instance=ExtResource("9_rvg8n")]
+position = Vector2(104, 16)
+
+[node name="IconUnitInBattle2" parent="CanvasLayer/HSplitContainer" instance=ExtResource("9_rvg8n")]
+position = Vector2(296, 16)
+
+[node name="IconUnitInBattle3" parent="CanvasLayer/HSplitContainer" instance=ExtResource("9_rvg8n")]
+position = Vector2(488, 16)
+
+[node name="IconUnitInBattle4" parent="CanvasLayer/HSplitContainer" instance=ExtResource("9_rvg8n")]
+position = Vector2(680, 16)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dfoiw")
@@ -111,24 +136,3 @@ data_unit_node = Array[ExtResource("6_ug2mc")]([SubResource("Resource_jwb2r"), S
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 3, 6)
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="IconUnitInBattle" parent="Control" instance=ExtResource("9_rvg8n")]
-position = Vector2(51, 672)
-
-[node name="IconUnitInBattle2" parent="Control" instance=ExtResource("9_rvg8n")]
-position = Vector2(304, 672)
-
-[node name="IconUnitInBattle3" parent="Control" instance=ExtResource("9_rvg8n")]
-position = Vector2(560, 672)
-
-[node name="IconUnitInBattle4" parent="Control" instance=ExtResource("9_rvg8n")]
-position = Vector2(816, 672)

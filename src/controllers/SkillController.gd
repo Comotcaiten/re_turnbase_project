@@ -59,7 +59,9 @@ func handle_start(unit: UnitModel):
 	var middle: int = int(group_targets_available.size() / 2.0)
 	set_current_target(middle)
 	set_group_targets_select()
-	refactored_slelcted_by_skill()
+
+	if unit in battle_system.group_controller.get_group_is_player().group:
+		refactored_slelcted_by_skill()
 	
 	if unit.is_player:
 		print("Selecting skill...")
@@ -112,22 +114,22 @@ func perform_handle_select(unit: UnitModel):
 	if Input.is_action_just_pressed("ui_action_1"):
 		set_index_skill(0, unit)
 		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
+		# print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
 
 	if Input.is_action_just_pressed("ui_action_2"):
 		set_index_skill(1, unit)
 		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
+		# print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
 
 	if Input.is_action_just_pressed("ui_action_3"):
 		set_index_skill(2, unit)
 		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
+		# print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
 
 	if Input.is_action_just_pressed("ui_action_4"):
 		set_index_skill(3, unit)
 		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
+		# print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
 	
 	perform_handle_select_target()
 
@@ -140,13 +142,13 @@ func perform_handle_select_target():
 		set_current_target(current_target_filter - 1)
 		set_group_targets_select()
 		refactored_slelcted_by_skill()
-		print("Skill controller >> Select target >> Left >> ", current_target, " >> ", group_targets_select)
+		# print("Skill controller >> Select target >> Left >> ", current_target, " >> ", group_targets_select)
 		return
 	if Input.is_action_just_pressed("ui_right"):
 		set_current_target(current_target_filter + 1)
 		set_group_targets_select()
 		refactored_slelcted_by_skill()
-		print("Skill controller >> Select target >> Right >> ", current_target, " >> ", group_targets_select)
+		# print("Skill controller >> Select target >> Right >> ", current_target, " >> ", group_targets_select)
 		return
 	
 	return

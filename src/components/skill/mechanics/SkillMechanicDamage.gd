@@ -24,11 +24,13 @@ func apply_mechanic(unit: UnitModel, targets: Array[UnitModel]):
     _: # Do nothing
       damage = 1.0
   
-  damage_model.set_damage(int(damage))
+  damage_model.set_damage(int(damage * Element.reactor_element_effect(unit.element, damage_model.element)))
 
-  print("Skill Mechanic Damage >> Damage >> ", damage)
+  # print("Skill Mechanic Damage >> Damage >> ", damage)
 
   for target in targets:
     # target.receive_damage(damage_model)
-    target.take_damage(damage_model)
+    var target_damage_model: DamageModel = damage_model.duplicate()
+    target_damage_model.set_damage(int(damage * Element.reactor_element_effect(unit.element, target.element)))
+    target.take_damage(target_damage_model)
   return

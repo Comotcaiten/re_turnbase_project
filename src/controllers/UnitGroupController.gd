@@ -29,12 +29,6 @@ func get_group(id: String) -> UnitGroupModel:
 		return
 	return maps_groups.get_value(id) as UnitGroupModel
 
-func get_all() -> Array[UnitModel]:
-	var arr: Array[UnitModel] = []
-	for group in maps_groups.get_all_values():
-		arr.append_array(group.group)
-	return arr
-
 func get_group_to_array(id: String) -> Array[UnitModel]:
 	if !maps_groups.get_value(id) is UnitGroupModel:
 		return []

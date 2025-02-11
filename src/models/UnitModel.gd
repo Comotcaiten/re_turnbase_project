@@ -7,13 +7,17 @@ var node: UnitNode3D
 var name: String
 var icon: Texture2D
 var id: String
-var level: int
+var level: int:
+	get:
+		if level < 1:
+			return 1
+		return level
 var element: Element.Type
 
 # Stats cơ bản
 var stats_base: Stats
 # Stats tăng/giảm phần trăm dựa trên stats cơ bản
-var stats_modified: Stats = Stats.new()
+var stats_modified: Stats = Stats.new(false)
 
 var skills: Array[SkillModel]
 
@@ -60,7 +64,9 @@ func _init(_base: UnitBase, _level: int):
 func get_stats(_stat: Stats.Type) -> int:
 	var amount_base = stats_base.get_stats(_stat) * 1.0
 	var amount_modified = stats_modified.get_stats(_stat) * 1.0
-	return int(((amount_base + (amount_modified + amount_base)) / 100.0) * level)
+	var amount: int = int(amount_base + (amount_base * amount_modified / 100.0) + (level * 2.0))
+	# print("UnitModel >> Get stats >> ", Stats.Type.find_key(_stat), " >> ", amount_base, " + ", amount_modified, " >> level:  ", level, " >>", amount)
+	return amount
 
 func get_skill(index: int):
 	if index >= skills.size() or index < 0:

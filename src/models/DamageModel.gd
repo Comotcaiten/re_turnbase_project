@@ -28,3 +28,6 @@ func set_damage(_damage: int):
 
 func get_damage() -> int:
   return max(1, damage)
+
+func duplicate() -> DamageModel:
+  return DamageModel.new(power, type_damage, true_damage, element, source)

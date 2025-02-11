@@ -19,6 +19,6 @@ script = ExtResource("1_fikkm")
 name = "Unnamed Unit A"
 icon = ExtResource("1_x5gwp")
 id = ""
-element = 0
+element = 2
 stats = SubResource("Resource_vabut")
 skills = Array[ExtResource("2_v317q")]([ExtResource("3_y4gqh")])

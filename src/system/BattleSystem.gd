@@ -57,7 +57,8 @@ func initialized():
 		map_icon_unit_in_battle.add(group_is_player[unit_index], icons_unit_in_battle[unit_index])
 		icons_unit_in_battle[unit_index].visible = true
 		if group_is_player[unit_index].icon != null:
-			icons_unit_in_battle[unit_index].icon.texture = group_is_player[unit_index].icon
+			icons_unit_in_battle[unit_index].set_icon(group_is_player[unit_index].icon)
+			icons_unit_in_battle[unit_index].set_element(Element.get_color_element(group_is_player[unit_index].element))
 
 func play():
 	if turn_controller == null or skill_controller == null or group_controller == null:
@@ -96,7 +97,7 @@ func get_next_turn():
 		change_state(State.END)
 		return
 	if map_icon_unit_in_battle.has(turn_controller.current_unit):
-		map_icon_unit_in_battle.get_value(turn_controller.current_unit).sprite_container.visible = false
+		map_icon_unit_in_battle.get_value(turn_controller.current_unit).set_select(false)
 	turn_controller.get_next_turn()
 	change_state(State.UNITTURN)
 
@@ -108,7 +109,7 @@ func handle_unit_turn():
 		# icon_unit_in_battle.visible = true
 		# if turn_controller.current_unit.icon != null:
 		# 	icon_unit_in_battle.icon.texture = turn_controller.current_unit.icon
-		map_icon_unit_in_battle.get_value(turn_controller.current_unit).sprite_container.visible = true
+		map_icon_unit_in_battle.get_value(turn_controller.current_unit).set_select(true)
 		change_state(State.SELECTSKILL)
 		return
 	print("Enemy")

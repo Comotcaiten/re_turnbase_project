@@ -101,7 +101,7 @@ func seleted_by_skill():
   sprite_3d_selected.visible = true
   if unit_model.is_fainted:
     return
-  node_mesh_intstance_3d.material_override.albedo_color = Color.html("#f1c40f")
+  # node_mesh_intstance_3d.material_override.albedo_color = Color.html("#f1c40f")
 
 func refresh():
   if unit_model == null:
