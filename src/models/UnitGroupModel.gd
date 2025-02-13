@@ -19,3 +19,6 @@ func get_units() -> Array[UnitModel]:
 	if units == null:
 		return []
 	return units
+
+func clear():
+	units.clear()

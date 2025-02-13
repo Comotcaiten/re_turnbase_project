@@ -3,7 +3,7 @@ extends Node
 # Giúp hỗ trợ khởi tạo và quản lý các unit model
 class_name UnitController
 
-enum Team { PLAYER, ENEMY } # Định nghĩa team_id
+enum Team {PLAYER, ENEMY} # Định nghĩa team_id
 
 # Quản lý bằng cách sử dụng dictionary ==> Maps
 # Vì trong game có 2 phe và bên kẻ thù và người chơi => Cần cách để biết unit thuộc phe nào
@@ -32,13 +32,16 @@ func set_team(group: UnitGroupModel, type_team: Team) -> bool:
 
 # Thêm unit vào phe tương ứng
 func add_unit(unit: UnitModel, team_id: Team) -> bool:
-	return unit_groups.add(team_id, unit)
+	print("- Add ", unit, " into ", team_id)
+	var unit_group_model: UnitGroupModel = unit_groups.get_value(team_id) as UnitGroupModel
+	return unit_group_model.add_unit(unit)
 
 # Xóa unit khỏi phe tương ứng
-func remove_unit(unit: UnitModel, team_id: Team):
-	var unit_remove = unit_groups.get_value(team_id)
-	if unit_remove is UnitGroupModel:
-		unit_groups.remove_unit(unit)
+func remove_unit(unit: UnitModel, team_id: Team) -> bool:
+	var unit_group_model = unit_groups.get_value(team_id)
+	if unit_group_model is UnitGroupModel:
+		return unit_group_model.remove_unit(unit)
+	return false
 
 # Lấy danh sách unit theo phe
 func get_units_by_team(team_id: Team) -> Array[UnitModel]:
@@ -51,4 +54,5 @@ func get_all_units() -> Array[UnitModel]:
 # Xóa toàn bộ unit trong game
 func clear_all_units():
 	for group in unit_groups.values():
-		group.clear()
+		if group is UnitGroupModel:
+			group.clear()

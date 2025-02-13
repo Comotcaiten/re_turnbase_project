@@ -15,7 +15,7 @@ static var type_effect = [
 static var color_element = [ # Color
     Color.html("BFBBA9"), # Physical
     Color.html("E52020"), # Fire
-    Color.html("0D92F4")  # Water
+    Color.html("0D92F4") # Water
 ]
 
 static func reactor_element_effect(attacker: Type, defender: Type) -> int:

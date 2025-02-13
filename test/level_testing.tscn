@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbn3uj2pr61ui"]
+[gd_scene load_steps=13 format=3 uid="uid://ko657xbfar3x"]
 
 [ext_resource type="Script" path="res://src/system/BattleSystem.gd" id="1_ngqel"]
 [ext_resource type="Script" path="res://src/controllers/UnitController.gd" id="2_ixr07"]
