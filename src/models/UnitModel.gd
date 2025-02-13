@@ -24,7 +24,8 @@ var stats_base: StatsBase = StatsBase.new(false)
 # Stats modified
 var stats_modified: StatsBase = StatsBase.new(true)
 
-# Các giá trị từ stats
+# Các chỉ số của nhân vật
+# 1. Các giá trị từ stats
 var stats: Dictionary = {
 	Stats.HP: 1,
 	Stats.MP: 1,
@@ -34,6 +35,9 @@ var stats: Dictionary = {
 	Stats.DEFENSE: get_stats(StatsBase.Type.DEFENSE),
 	Stats.SPEED: get_stats(StatsBase.Type.SPEED)
 }
+
+# 2. Các chỉ số khác
+var is_player: bool
 
 # Dữ liệu level scaling của các chỉ số ứng với level
 const LEVEL_SCALING = {
@@ -53,8 +57,8 @@ func _init(_base: UnitBase, _level: int = 1):
 	element = _base.element
 	stats_base = _base.stats_base
 
-	set_stats(stats[Stats.HP], stats.get(Stats.MAXHP, 1))
-	set_stats(stats[Stats.MP], stats.get(Stats.MAXMP, 1))
+	set_stats(stats[Stats.HP], stats.get(Stats.MAXHP, 1)) # Khởi tạo mặc định máu hiện tại = máu tối đa
+	set_stats(stats[Stats.MP], stats.get(Stats.MAXMP, 1)) # Khởi tạo mặc định mp = max mp
 	pass
 
 # Get

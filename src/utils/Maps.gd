@@ -18,12 +18,12 @@ var max_size: int = -1 # -1: Không giới hạn
 
 # Hàm khởi tạo
 func _init(_keys_allowed: int = 0, _values_allowed: int = 0, _db: Dictionary = {}, _max_size: int = -1):
-	if _keys_allowed < 0 or _keys_allowed > 27: # Giới hạn theo typeof()
-		push_error("Invalid keys_allowed type")
-		return
-	if _values_allowed < 0 or _values_allowed > 27:
-		push_error("Invalid values_allowed type")
-		return
+	# if _keys_allowed < 0 or _keys_allowed > 27: # Giới hạn theo typeof()
+	# 	push_error("Invalid keys_allowed type")
+	# 	return
+	# if _values_allowed < 0 or _values_allowed > 27:
+	# 	push_error("Invalid values_allowed type")
+	# 	return
 	keys_allowed = _keys_allowed
 	values_allowed = _values_allowed
 	max_size = max(-1, _max_size)
@@ -31,10 +31,10 @@ func _init(_keys_allowed: int = 0, _values_allowed: int = 0, _db: Dictionary = {
 
 
 # Lấy giá trị dựa trên key
-func get_value(_key: Variant = null) -> Variant:
+func get_value(_key: Variant = null, _null: Variant = null) -> Variant:
 	if !check_key(_key) or !db.has(_key):
-		return null
-	return db.get(_key, null)
+		return _null
+	return db.get(_key, _null)
 
 # Cập nhật giá trị nếu key đã tồn tại
 func set_value(_key: Variant = null, _val: Variant = null) -> bool:
@@ -46,10 +46,12 @@ func set_value(_key: Variant = null, _val: Variant = null) -> bool:
 # Thêm key-value mới (không ghi đè nếu key đã tồn tại)
 func add(_key: Variant = null, _val: Variant = null) -> bool:
 	if max_size > 0 and db.size() >= max_size:
+		print("Maps lỗi  size của db lớn hơn max size")
 		return false
 	if !check_key(_key) or !check_value(_val):
+		print("Maps lỗi add vì key hoặc value đều không đúng type")
 		return false
-	if db.has(_key):
+	if !db.has(_key):
 		return false
 	db[_key] = _val
 	return true
@@ -74,11 +76,11 @@ func delete(_key: Variant = null) -> bool:
 	return true
 
 # Lấy tất cả keys trong Dictionary
-func get_all_keys() -> Array:
+func keys() -> Array:
 	return db.keys()
 
 # Lấy tất cả values trong Dictionary
-func get_all_values() -> Array:
+func values() -> Array:
 	return db.values()
 
 # Kiểm tra tính hợp lệ của key
