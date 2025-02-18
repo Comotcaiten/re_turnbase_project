@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UnitBaseModel" load_steps=2 format=3 uid="uid://b6bpuk1ujvamm"]
+
+[ext_resource type="Script" path="res://src/model/UnitBaseModel.gd" id="1_8fr0o"]
+
+[resource]
+script = ExtResource("1_8fr0o")
+name = "skeleton"
+element = 2
+health = 20
+attack = 12
+defense = 5

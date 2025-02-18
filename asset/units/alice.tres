@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UnitBaseModel" load_steps=2 format=3 uid="uid://dvym42t5khtyt"]
+
+[ext_resource type="Script" path="res://src/model/UnitBaseModel.gd" id="1_vdswx"]
+
+[resource]
+script = ExtResource("1_vdswx")
+name = "Alice"
+element = 1
+health = 10
+attack = 10
+defense = 5

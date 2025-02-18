@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="UnitBaseModel" load_steps=3 format=3 uid="uid://cf4cepeqlqsn6"]
+
+[ext_resource type="Script" path="res://src/model/UnitBaseModel.gd" id="1_rt15c"]
+[ext_resource type="Texture2D" uid="uid://cg52mfnktysps" path="res://asset/image/witch.png" id="1_xd4mv"]
+
+[resource]
+script = ExtResource("1_rt15c")
+name = "Mage"
+element = 1
+icon = ExtResource("1_xd4mv")
+health = 12
+attack = 20
+defense = 8

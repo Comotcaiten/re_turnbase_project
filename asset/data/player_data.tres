@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PlayerDB" load_steps=2 format=3 uid="uid://bb8ummmokr6vq"]
+
+[ext_resource type="Script" path="res://src/repository/PlayerDB.gd" id="1_r4r3c"]
+
+[resource]
+script = ExtResource("1_r4r3c")
+id = null
