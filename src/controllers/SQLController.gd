@@ -8,7 +8,6 @@ var table = {
         "primary_key": true,
         "not_null": true,
         "auto_increment": true},
-    "name": {"data_type": "text"},
 }
 
 func _ready():
