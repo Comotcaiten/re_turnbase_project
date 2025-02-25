@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://f2dv6nk27leg"]
-
-[ext_resource type="Script" path="res://app/test_code.gd" id="1_d4jwb"]
-[ext_resource type="Resource" uid="uid://bb8ummmokr6vq" path="res://asset/data/player_data.tres" id="2_xsv6l"]
-
-[node name="TestCode" type="Node2D"]
-script = ExtResource("1_d4jwb")
-player_data = ExtResource("2_xsv6l")

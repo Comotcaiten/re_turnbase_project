@@ -51,7 +51,8 @@ func add(_key: Variant = null, _val: Variant = null) -> bool:
 	if !check_key(_key) or !check_value(_val):
 		print("Maps lỗi add vì key hoặc value đều không đúng type")
 		return false
-	if !db.has(_key):
+	if db.has(_key):
+		print("Map da co key nay roi")
 		return false
 	db[_key] = _val
 	return true

@@ -7,9 +7,7 @@ extends Resource
 @export var icon: Texture2D
 
 @export_group('Stats')
-@export var health: int
-@export var attack: int
-@export var defense: int
+@export var stats: StatsModel
 
 func _init(_name: String = '', _element: Utils.Element = Utils.Element.PHYSICAL):
   name = _name
