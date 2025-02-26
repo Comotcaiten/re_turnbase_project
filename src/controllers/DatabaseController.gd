@@ -1,9 +1,7 @@
 class_name DatabaseController
 extends Control
 
-static var units_base: Dictionary:
-	get:
-		return {
+const units_base: Dictionary = {
 			"dragon": preload("res://asset/units/dragon.tres"),
 			"knight": preload("res://asset/units/knight.tres"),
 			"mage": preload("res://asset/units/mage.tres"),

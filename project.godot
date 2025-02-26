@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 SqlController="*res://src/controllers/SQLController.gd"
-DatabaseControllers="*res://src/controllers/DatabaseController.gd"
+Database="*res://src/controllers/DatabaseController.gd"
+UnitFactoryPatten="*res://src/design/UnitFactory.gd"
 
 [display]
 
