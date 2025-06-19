@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="UnitBaseModel" load_steps=5 format=3 uid="uid://cf4cepeqlqsn6"]
 
-[ext_resource type="Script" path="res://src/model/UnitBaseModel.gd" id="1_rt15c"]
+[ext_resource type="Script" uid="uid://cfl2uap7ovoit" path="res://src/model/UnitBaseModel.gd" id="1_rt15c"]
 [ext_resource type="Texture2D" uid="uid://cg52mfnktysps" path="res://asset/image/witch.png" id="1_xd4mv"]
-[ext_resource type="Script" path="res://src/model/StatsModel.gd" id="3_gxpwl"]
+[ext_resource type="Script" uid="uid://xclgdjalwxx" path="res://src/model/StatsModel.gd" id="3_gxpwl"]
 
 [sub_resource type="Resource" id="Resource_maupg"]
 script = ExtResource("3_gxpwl")
