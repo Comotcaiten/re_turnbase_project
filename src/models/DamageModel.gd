@@ -24,6 +24,12 @@ var is_lethal: bool = false
 var defense_applied: int = 0
 var element_multiplier: float = 1.0
 
+# Break
+var break_power: int = 0 # Lượng break giảm nếu đòn này khắc hệ mục tiêu
+var break_dealt: int = 0
+var caused_break: bool = false # Đòn này làm mục tiêu bị break
+var break_multiplier: float = 1.0 # Tăng sát thương vì mục tiêu đang bị break
+
 func _init(_power: int = 0, _type_damage: TypeDamage = TypeDamage.DAMAGE, _true_damage: bool = false, _element: Element.Type = Element.Type.PHYSICAL, _source: UnitModel = null, _skill: SkillModel = null):
   power = _power
   type_damage = _type_damage
@@ -41,11 +47,13 @@ func resolve_against(_target: UnitModel):
     defense_applied = target.defense
     amount -= defense_applied
   element_multiplier = Element.get_multiplier(element, target.element)
-  set_damage(int(amount * element_multiplier))
+  if target.is_broken:
+    break_multiplier = UnitModel.BREAK_DAMAGE_MULTIPLIER
+  set_damage(int(amount * element_multiplier * break_multiplier))
   return
 
 func _to_string() -> String:
-  return "%s -> %s | Skill: %s | Element: %s x%.1f | Defense: %d | Damage: %d | HP: %d -> %d%s" % [
+  return "%s -> %s | Skill: %s | Element: %s x%.1f | Defense: %d | Damage: %d | HP: %d -> %d | Break: -%d x%.1f%s%s" % [
     source.name if source else "None",
     target.name if target else "None",
     skill.name if skill else "None",
@@ -55,6 +63,9 @@ func _to_string() -> String:
     damage_dealt,
     hp_before,
     hp_after,
+    break_dealt,
+    break_multiplier,
+    " | BROKE" if caused_break else "",
     " | LETHAL" if is_lethal else ""
   ]
 

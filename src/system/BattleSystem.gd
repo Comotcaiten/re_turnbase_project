@@ -78,6 +78,12 @@ func is_battle_over() -> bool:
 	return player_group.get_filter_is_not_fainted().is_empty() or enemy_group.get_filter_is_not_fainted().is_empty()
 
 func handle_unit_turn():
+	var unit: UnitModel = turn_controller.current_unit
+	if not unit.begin_turn():
+		print("BattleSystem >> ", unit.name, " is broken >> Turn lost")
+		get_next_turn()
+		return
+
 	print("Player's turn.")
 	# Logic to manage player's turn
 	if turn_controller.current_unit in player_group.group:

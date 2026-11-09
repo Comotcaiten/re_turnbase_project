@@ -6,6 +6,7 @@ class_name UnitBase
 @export var id: String
 @export var element: Element.Type
 @export var stats: Stats
+@export var max_break: int = 100
 @export var skills: Array[SkillBase] = []
 
 # Hàm khởi tạo cho phép dễ dàng tạo mới một Unit
