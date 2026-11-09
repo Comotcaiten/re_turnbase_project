@@ -16,7 +16,8 @@ speed = 15
 [resource]
 script = ExtResource("1_afnyd")
 name = "Unnamed Unit B"
-id = ""
+id = "UNIT_B"
+role = 2
 element = 0
 stats = SubResource("Resource_gkax5")
 skills = Array[ExtResource("2_tmc3t")]([ExtResource("3_fbjng")])

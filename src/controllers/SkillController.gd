@@ -74,7 +74,7 @@ func handle_ai_select(unit: UnitModel):
 		change_state(State.END)
 		return
 	
-	set_index_skill(randi() % max(1, unit.skills.size() - 1), unit)
+	set_index_skill(randi() % unit.skills.size(), unit)
 
 	set_group_targets_available(unit)
 

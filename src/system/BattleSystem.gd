@@ -5,6 +5,9 @@ class_name BattleSystem
 
 enum State {START, UNITTURN, AIACTION, SELECTSKILL, END}
 
+const COLLECTION_SCENE := "res://test/collection_screen.tscn"
+const RETURN_DELAY := 2.0
+
 @export var turn_controller: TurnController
 @export var skill_controller: SkillController
 @export var group_controller: UnitGroupController
@@ -27,6 +30,8 @@ func _process(_delta):
 
 func initialized():
 	BattleEvents.damage_after.connect(_on_damage_after)
+	BattleEvents.status_applied.connect(_on_status_applied)
+	BattleEvents.status_removed.connect(_on_status_removed)
 
 	if turn_controller == null:
 		turn_controller = TurnController.new()
@@ -74,6 +79,12 @@ func get_next_turn():
 func _on_damage_after(damage_model: DamageModel):
 	print("BattleSystem >> Damage >> ", damage_model)
 
+func _on_status_applied(unit: UnitModel, status: StatusModel):
+	print("BattleSystem >> Status applied >> ", unit.name, " >> ", status.effect.name, " x", status.stacks)
+
+func _on_status_removed(unit: UnitModel, status: StatusModel):
+	print("BattleSystem >> Status removed >> ", unit.name, " >> ", status.effect.name)
+
 func is_battle_over() -> bool:
 	return player_group.get_filter_is_not_fainted().is_empty() or enemy_group.get_filter_is_not_fainted().is_empty()
 
@@ -84,6 +95,7 @@ func handle_unit_turn():
 		get_next_turn()
 		return
 
+	BattleEvents.turn_started.emit(unit)
 	print("Player's turn.")
 	# Logic to manage player's turn
 	if turn_controller.current_unit in player_group.group:
@@ -106,3 +118,9 @@ func handle_select_skill():
 func handle_end():
 	print("Battle ended.")
 	is_game_over = true
+	if PlayerCollection.battle_team.is_empty():
+		return
+	# Trận vào từ bộ sưu tập thì quay lại màn hình đó
+	PlayerCollection.finish_battle()
+	await get_tree().create_timer(RETURN_DELAY).timeout
+	get_tree().change_scene_to_file(COLLECTION_SCENE)

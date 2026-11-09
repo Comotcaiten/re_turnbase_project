@@ -10,16 +10,26 @@ var group: Array[UnitModel]
 
 var group_unit_node_3d: Array[UnitNode3D] = []
 
+const UNIT_SPACING := 2.5
+
 func initialized():
-	for unit_node in data_unit_node:
+	var unit_nodes: Array[UnitNode] = get_unit_nodes()
+	for i in unit_nodes.size():
+		var unit_node: UnitNode = unit_nodes[i]
 		if unit_node is UnitNode:
-			var unit_node_3d: UnitNode3D = UnitNode3D.new(unit_node.base, unit_node.level, is_player)
+			var unit_node_3d: UnitNode3D = UnitNode3D.new(unit_node.base, unit_node.level, is_player, unit_node.items)
 			add_child(unit_node_3d)
+			unit_node_3d.position.x = (i - (unit_nodes.size() - 1) / 2.0) * UNIT_SPACING
 			print("UnitGroupModel >> ", name, " >> Add: ", unit_node, " >> UnitModel: ", unit_node_3d.unit_model)
 			print("UnitGroupModel >> ", name, " >> Add: ", unit_node, " >> ", add_unit(unit_node_3d.unit_model))
 		else:
 			print("UnitGroupModel >> ", name, " >> Add: ", unit_node, " >> This is not Unit Node: ")
 	pass
+
+func get_unit_nodes() -> Array[UnitNode]:
+	if is_player and not PlayerCollection.battle_team.is_empty():
+		return PlayerCollection.battle_team
+	return data_unit_node
 
 func add_unit(unit: UnitModel):
 	if unit in group or unit == null:

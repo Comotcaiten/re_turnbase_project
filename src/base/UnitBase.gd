@@ -5,9 +5,16 @@ class_name UnitBase
 @export var name: String = "Unnamed Unit"
 @export var id: String
 @export var element: Element.Type
+@export var role: Role.Type
 @export var stats: Stats
 @export var max_break: int = 100
 @export var skills: Array[SkillBase] = []
+@export var passive: Passive # Passive riêng của nhân vật
+
+@export_group("Combat")
+@export_range(0, 100) var crit_chance: int = 5
+@export var crit_damage: int = 150 # % sát thương khi crit
+@export_range(0, 100) var accuracy: int = 100
 
 # Hàm khởi tạo cho phép dễ dàng tạo mới một Unit
 # func _init(_name: String = "Unnamed Unit", _stats: Stats = null, _element: Element.Type = Element.Type, _skills: Array[SkillBase] = []):

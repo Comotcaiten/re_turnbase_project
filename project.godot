@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="re_turnbase_project"
-run/main_scene="res://test/level_testing.tscn"
+run/main_scene="res://test/collection_screen.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 BattleEvents="*res://src/system/BattleEvents.gd"
+PlayerCollection="*res://src/system/PlayerCollection.gd"
 
 [display]
 

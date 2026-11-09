@@ -7,3 +7,4 @@ class_name UnitNode
   get():
     return max(1, level)
 @export var is_player: bool = true
+@export var items: Array[ItemBase] = []

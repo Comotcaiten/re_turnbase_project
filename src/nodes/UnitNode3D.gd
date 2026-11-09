@@ -13,11 +13,14 @@ var unit_model: UnitModel
 
 var is_player: bool = false
 
+var items: Array[ItemBase] = []
+
 const BAR_WIDTH := 1.2
 var hp_bar: MeshInstance3D
 var break_bar: MeshInstance3D
+var label: Label3D
 
-func _init(_base: UnitBase, _level: int = 1, _is_player: bool = false):
+func _init(_base: UnitBase, _level: int = 1, _is_player: bool = false, _items: Array[ItemBase] = []):
   node_mesh_intstance_3d = MeshInstance3D.new()
   node_mesh_intstance_3d.mesh = BoxMesh.new()
 
@@ -29,9 +32,19 @@ func _init(_base: UnitBase, _level: int = 1, _is_player: bool = false):
   hp_bar = create_bar(Color.GREEN, -0.75, 0.6)
   break_bar = create_bar(Color.ORANGE, -0.95, 0.6)
 
+  label = Label3D.new()
+  label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+  label.no_depth_test = true
+  label.pixel_size = 0.01
+  label.font_size = 28
+  label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+  label.position = Vector3(0, 0.6, 0.8)
+  add_child(label)
+
   base = _base
   level = _level
   is_player = _is_player
+  items = _items
 
   initialized()
   pass
@@ -41,9 +54,10 @@ func initialized():
     return false
   unit_model = UnitModel.new(base, level)
   unit_model.is_player = is_player
+  for item in items:
+    unit_model.equip_item(item)
   print("UnitNode3D >> ", name, " >> Initialized: ", unit_model)
-  BattleEvents.damage_after.connect(_on_damage_after)
-  BattleEvents.break_recovered.connect(_on_break_recovered)
+  unit_model.changed.connect(update)
   update()
   return true
 
@@ -54,6 +68,11 @@ func update():
   visible = not unit_model.is_fainted
   set_bar(hp_bar, float(unit_model.health) / maxi(1, unit_model.max_health))
   set_bar(break_bar, float(unit_model.break_gauge) / maxi(1, unit_model.max_break))
+
+  var text: String = "%s\n%s Lv.%d" % [unit_model.name, Role.get_display_name(unit_model.base.role), unit_model.level]
+  for status in unit_model.statuses:
+    text += "\n%s (%d)" % [status.effect.name, status.turns_left]
+  label.text = text
   return
 
 func create_bar(color: Color, z: float, y: float) -> MeshInstance3D:
@@ -77,11 +96,3 @@ func set_bar(bar: MeshInstance3D, ratio: float):
     bar.scale.x = ratio
     bar.position.x = -BAR_WIDTH * (1.0 - ratio) / 2.0
   return
-
-func _on_damage_after(damage_model: DamageModel):
-  if damage_model.target == unit_model:
-    update()
-
-func _on_break_recovered(unit: UnitModel):
-  if unit == unit_model:
-    update()

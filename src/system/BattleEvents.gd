@@ -7,3 +7,7 @@ signal damage_before(damage_model: DamageModel)
 signal damage_after(damage_model: DamageModel)
 # Unit vừa hồi đầy break. Lúc bị break: kiểm tra damage_model.caused_break ở damage_after
 signal break_recovered(unit: UnitModel)
+# Unit bắt đầu một lượt được hành động (lượt bị mất vì break không tính)
+signal turn_started(unit: UnitModel)
+signal status_applied(unit: UnitModel, status: StatusModel)
+signal status_removed(unit: UnitModel, status: StatusModel)
