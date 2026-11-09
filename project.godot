@@ -15,6 +15,10 @@ run/main_scene="res://test/level_testing.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+BattleEvents="*res://src/system/BattleEvents.gd"
+
 [display]
 
 window/size/viewport_width=1280

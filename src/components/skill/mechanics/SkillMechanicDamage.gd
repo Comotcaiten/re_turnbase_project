@@ -7,11 +7,7 @@ class_name SkillMechanicDamage
 @export var type_damage: DamageModel.TypeDamage = DamageModel.TypeDamage.DAMAGE # Kiểu thiệt hại mặc định
 @export var true_damage: bool = false # Mặc định không bỏ qua phòng thủ
 
-var damage_model: DamageModel
-
-func apply_mechanic(unit: UnitModel, targets: Array[UnitModel]):
-  damage_model = DamageModel.new(power, type_damage, true_damage, Element.Type.PHYSICAL, unit)
-
+func apply_mechanic(unit: UnitModel, targets: Array[UnitModel], skill: SkillModel):
   var damage: float = 1
 
   var attack_power: int = unit.get_stats(Stats.Type.ATTACK)
@@ -24,11 +20,11 @@ func apply_mechanic(unit: UnitModel, targets: Array[UnitModel]):
     _: # Do nothing
       damage = 1.0
   
-  damage_model.set_damage(int(damage))
-
   print("Skill Mechanic Damage >> Damage >> ", damage)
 
   for target in targets:
-    # target.receive_damage(damage_model)
+    # Mỗi mục tiêu một DamageModel riêng để kết quả không ghi đè nhau
+    var damage_model := DamageModel.new(power, type_damage, true_damage, skill.element, unit, skill)
+    damage_model.set_damage(int(damage))
     target.take_damage(damage_model)
   return

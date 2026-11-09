@@ -43,6 +43,7 @@ func _init(_base: UnitBase, _level: int):
     level = _level
     element = _base.element
     stats_base = _base.stats
+    stats_modified.set_stats() # Mặc định không tăng/giảm chỉ số nào
 
     health = max_health
     mp = max_mp
@@ -74,10 +75,16 @@ func get_skill(index: int):
 func take_damage(damage_model: DamageModel = null):
     if damage_model == null:
         return false
-    var damage: int = damage_model.get_damage()
-    set_hp_by_damage(damage)
+    damage_model.resolve_against(self)
+    BattleEvents.damage_before.emit(damage_model)
 
-    print("UnitModel >> Take damage >> ", damage, " DMG", " >> ", name, " >> ", health, "/", max_health)
+    damage_model.hp_before = health
+    set_hp_by_damage(damage_model.get_damage())
+    damage_model.hp_after = health
+    damage_model.damage_dealt = damage_model.hp_before - health
+    damage_model.is_lethal = is_fainted
+
+    BattleEvents.damage_after.emit(damage_model)
     return
 
 func set_hp_by_damage(value: int):

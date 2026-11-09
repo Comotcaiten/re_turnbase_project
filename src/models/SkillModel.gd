@@ -24,6 +24,6 @@ func excute(unit: UnitModel, targets: Array[UnitModel]):
 		return false
 	
 	for component in base.components:
-		if not component.run(unit, targets):
+		if not component.run(unit, targets, self):
 			return false
 	pass

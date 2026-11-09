@@ -25,8 +25,10 @@ func set_up():
 	return true
 
 func get_next_turn():
-	current_index += 1
-	if current_index >= turn_queue.size():
-		current_index = 0
+	# Bỏ qua unit đã gục, tối đa một vòng hàng đợi
+	for i in turn_queue.size():
+		current_index = (current_index + 1) % turn_queue.size()
+		if not current_unit.is_fainted:
+			break
 	print("Next turn: ", current_unit.name)
 	return

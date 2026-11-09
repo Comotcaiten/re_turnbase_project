@@ -26,6 +26,8 @@ func _process(_delta):
 	pass
 
 func initialized():
+	BattleEvents.damage_after.connect(_on_damage_after)
+
 	if turn_controller == null:
 		turn_controller = TurnController.new()
 	turn_controller.initialized(self)
@@ -63,8 +65,17 @@ func change_state(new_state: State):
 	state = new_state
 
 func get_next_turn():
+	if is_battle_over():
+		change_state(State.END)
+		return
 	turn_controller.get_next_turn()
 	change_state(State.UNITTURN)
+
+func _on_damage_after(damage_model: DamageModel):
+	print("BattleSystem >> Damage >> ", damage_model)
+
+func is_battle_over() -> bool:
+	return player_group.get_filter_is_not_fainted().is_empty() or enemy_group.get_filter_is_not_fainted().is_empty()
 
 func handle_unit_turn():
 	print("Player's turn.")

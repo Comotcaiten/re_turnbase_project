@@ -5,11 +5,11 @@ class_name SkillComponent
 @export var conditions: Array[SkillCondition]
 @export var mechanics: Array[SkillMechanic]
 
-func run(unit: UnitModel, targets: Array[UnitModel]):
+func run(unit: UnitModel, targets: Array[UnitModel], skill: SkillModel):
 	if not check(unit, targets):
 		return false
 	for mechanic in mechanics:
-		mechanic.apply_mechanic(unit, targets)
+		mechanic.apply_mechanic(unit, targets, skill)
 	return true
 
 func check(unit: UnitModel, targets: Array[UnitModel]) -> bool:

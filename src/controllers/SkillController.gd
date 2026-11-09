@@ -102,30 +102,24 @@ func handle_end():
 	return
 
 func perform_handle_select(unit: UnitModel):
-	if Input.is_action_just_pressed("ui_action_1"):
-		set_index_skill(0, unit)
-		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
-
-	if Input.is_action_just_pressed("ui_action_2"):
-		set_index_skill(1, unit)
-		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
-
-	if Input.is_action_just_pressed("ui_action_3"):
-		set_index_skill(2, unit)
-		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
-
-	if Input.is_action_just_pressed("ui_action_4"):
-		set_index_skill(3, unit)
-		set_group_targets_available(unit)
-		print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
+	for index in 4:
+		if Input.is_action_just_pressed("ui_action_%d" % (index + 1)):
+			select_skill(index, unit)
 	
 	perform_handle_select_target()
 
 	if Input.is_action_just_pressed("ui_accept"):
 		change_state(State.EXECUTE)
+	return
+
+func select_skill(index: int, unit: UnitModel):
+	if not set_index_skill(index, unit):
+		return
+	# Skill mới có thể có kiểu mục tiêu khác, phải tính lại toàn bộ
+	set_group_targets_available(unit)
+	set_current_target(0)
+	set_group_targets_select()
+	print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
 	return
 
 func perform_handle_select_target():
@@ -174,15 +168,17 @@ func set_group_targets_available(unit: UnitModel):
 	if current_skill == null:
 		group_targets_available = []
 		return
+	var candidates: Array[UnitModel] = []
 	match current_skill.target_type:
 		SkillBase.TargetType.SELF:
-			group_targets_available = [unit]
+			candidates = [unit]
 		SkillBase.TargetType.ENEMY:
-			group_targets_available = battle_system.group_controller.get_group_is_player(false).group
+			candidates = battle_system.group_controller.get_group_is_player(not unit.is_player).group
 		SkillBase.TargetType.ALLY:
-			group_targets_available = battle_system.group_controller.get_group_is_player(true).group
+			candidates = battle_system.group_controller.get_group_is_player(unit.is_player).group
 		SkillBase.TargetType.ANY:
-			group_targets_available = battle_system.group_controller.get_all_units()
+			candidates = battle_system.group_controller.get_all_units()
+	group_targets_available.assign(candidates.filter(func(x): return not x.is_fainted))
 	return
 		
 func set_group_targets_select():
