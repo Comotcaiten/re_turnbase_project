@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/components/passive/Passive.gd" id="1_18y0y"]
+[ext_resource type="Script" path="res://src/components/passive/passives/PassiveLifesteal.gd" id="2_bepja"]
+[ext_resource type="Script" path="res://src/base/ItemBase.gd" id="3_xsg0v"]
+
+[sub_resource type="Resource" id="Resource_ikbwl"]
+script = ExtResource("2_bepja")
+percent = 15
+name = "Hút máu"
+description = "Hồi máu bằng 15% sát thương gây ra."
+
+[resource]
+script = ExtResource("3_xsg0v")
+name = "Nanh huyết"
+id = "ITEM_BLOOD_FANG"
+cost = 2
+hp = 0
+mp = 0
+attack = 3
+defense = 0
+speed = 0
+passives = Array[ExtResource("1_18y0y")]([SubResource("Resource_ikbwl")])

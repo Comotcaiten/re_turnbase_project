@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=8 format=3 uid="uid://ch17vnywhrclb"]
+
+[ext_resource type="Script" uid="uid://cgngt4s0p4gb" path="res://src/components/skill/SkillComponent.gd" id="1_d6wj7"]
+[ext_resource type="Script" uid="uid://6pki3vpyoivg" path="res://src/components/skill/SkillCondition.gd" id="2_mvjb0"]
+[ext_resource type="Script" uid="uid://w7a5v04kkm0j" path="res://src/components/skill/SkillMechanic.gd" id="3_jve1g"]
+[ext_resource type="Script" uid="uid://cod4fkgoqjjlf" path="res://src/components/skill/mechanics/SkillMechanicDamage.gd" id="4_ywx3v"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="5_i5d0s"]
+
+[sub_resource type="Resource" id="Resource_0ny2g"]
+script = ExtResource("4_ywx3v")
+power = 6
+type_damage = 0
+true_damage = false
+break_power = 30
+
+[sub_resource type="Resource" id="Resource_7fasj"]
+script = ExtResource("1_d6wj7")
+conditions = Array[ExtResource("2_mvjb0")]([])
+mechanics = Array[ExtResource("3_jve1g")]([SubResource("Resource_0ny2g")])
+
+[resource]
+script = ExtResource("5_i5d0s")
+name = "Chém"
+id = "skill_slash"
+element = 0
+description = "Một nhát chém gọn vào một địch."
+target_type = 1
+target_mode = 1
+components = Array[ExtResource("1_d6wj7")]([SubResource("Resource_7fasj")])

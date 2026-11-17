@@ -17,6 +17,19 @@ class_name ItemBase
 @export_group("Passives")
 @export var passives: Array[Passive] = []
 
+# Tóm tắt ngắn cho giao diện, ví dụ "+40 HP +3 SPD, Giáp gai"
+func get_summary() -> String:
+	var bonuses: PackedStringArray = []
+	for entry in [[hp, "HP"], [mp, "MP"], [attack, "ATK"], [defense, "DEF"], [speed, "SPD"]]:
+		if entry[0] != 0:
+			bonuses.append("%+d %s" % entry)
+	var parts: PackedStringArray = []
+	if not bonuses.is_empty():
+		parts.append(" ".join(bonuses))
+	for passive in passives:
+		parts.append(passive.name)
+	return ", ".join(parts)
+
 func get_bonus(_type: Stats.Type) -> int:
 	match _type:
 		Stats.Type.HP:

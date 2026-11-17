@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="UnitBase" load_steps=6 format=3 uid="uid://o1an0vkac8ts"]
 
-[ext_resource type="Script" path="res://src/base/UnitBase.gd" id="1_fikkm"]
-[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_v317q"]
-[ext_resource type="Script" path="res://src/base/Stats.gd" id="3_rudpt"]
+[ext_resource type="Script" uid="uid://6dpxjquuquuu" path="res://src/base/UnitBase.gd" id="1_fikkm"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="2_v317q"]
+[ext_resource type="Script" uid="uid://bu1t5kiyps3qf" path="res://src/base/Stats.gd" id="3_rudpt"]
 [ext_resource type="Resource" uid="uid://cptyrxefu6b72" path="res://asset/skill_base/SkillBaseA.tres" id="3_y4gqh"]
 
 [sub_resource type="Resource" id="Resource_vabut"]
@@ -17,7 +17,12 @@ speed = 15
 script = ExtResource("1_fikkm")
 name = "Unnamed Unit A"
 id = "UNIT_A"
-role = 0
 element = 0
+role = 0
+description = ""
 stats = SubResource("Resource_vabut")
+max_break = 100
 skills = Array[ExtResource("2_v317q")]([ExtResource("3_y4gqh")])
+crit_chance = 5
+crit_damage = 150
+accuracy = 100

@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=12 format=3 uid="uid://drhiholgun2cf"]
+
+[ext_resource type="Script" uid="uid://cgngt4s0p4gb" path="res://src/components/skill/SkillComponent.gd" id="1_ku5ev"]
+[ext_resource type="Script" uid="uid://6pki3vpyoivg" path="res://src/components/skill/SkillCondition.gd" id="2_5aqw3"]
+[ext_resource type="Script" uid="uid://w7a5v04kkm0j" path="res://src/components/skill/SkillMechanic.gd" id="3_v7hto"]
+[ext_resource type="Script" uid="uid://cod4fkgoqjjlf" path="res://src/components/skill/mechanics/SkillMechanicDamage.gd" id="4_cq6iy"]
+[ext_resource type="Script" uid="uid://c6r8x03l7iag3" path="res://src/components/skill/mechanics/SkillMechanicApplyStatus.gd" id="5_pffgp"]
+[ext_resource type="Script" uid="uid://bi0ls75fjotjd" path="res://src/components/status/effects/StatusPoison.gd" id="6_yjpdh"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="7_pe2x8"]
+
+[sub_resource type="Resource" id="Resource_uhtpw"]
+script = ExtResource("4_cq6iy")
+power = 1
+type_damage = 0
+true_damage = false
+break_power = 30
+
+[sub_resource type="Resource" id="Resource_2q643"]
+script = ExtResource("6_yjpdh")
+percent = 10
+name = "Độc"
+duration = 3
+max_stacks = 1
+
+[sub_resource type="Resource" id="Resource_qgsyg"]
+script = ExtResource("5_pffgp")
+status = SubResource("Resource_2q643")
+chance = 100
+apply_to_self = false
+
+[sub_resource type="Resource" id="Resource_6kkrt"]
+script = ExtResource("1_ku5ev")
+conditions = Array[ExtResource("2_5aqw3")]([])
+mechanics = Array[ExtResource("3_v7hto")]([SubResource("Resource_uhtpw"), SubResource("Resource_qgsyg")])
+
+[resource]
+script = ExtResource("7_pe2x8")
+name = "Độc nha"
+id = "skill_venom"
+element = 0
+description = "Cắn một địch và gây Độc."
+target_type = 1
+target_mode = 1
+components = Array[ExtResource("1_ku5ev")]([SubResource("Resource_6kkrt")])

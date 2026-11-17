@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="UnitBase" load_steps=9 format=3 uid="uid://bxrfldhkaal7c"]
+
+[ext_resource type="Script" uid="uid://toigobh0k8rc" path="res://src/components/passive/passives/PassiveBreakBonus.gd" id="1_sbcw6"]
+[ext_resource type="Script" uid="uid://6dpxjquuquuu" path="res://src/base/UnitBase.gd" id="2_e6vjq"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="3_317eh"]
+[ext_resource type="Resource" path="res://asset/skill/skill_water_shot.tres" id="4_cffwf"]
+[ext_resource type="Resource" path="res://asset/skill/skill_water_rain.tres" id="5_4gat1"]
+[ext_resource type="Script" uid="uid://bu1t5kiyps3qf" path="res://src/base/Stats.gd" id="6_k80vr"]
+
+[sub_resource type="Resource" id="Resource_3wpfw"]
+script = ExtResource("1_sbcw6")
+percent = 30
+name = "Săn sơ hở"
+description = "Gây thêm 30% sát thương lên địch bị Break."
+
+[sub_resource type="Resource" id="Resource_efaq6"]
+script = ExtResource("6_k80vr")
+hp = 470
+mp = 50
+attack = 55
+defense = 15
+speed = 70
+
+[resource]
+script = ExtResource("2_e6vjq")
+name = "Băng Tiễn"
+id = "CHAR_MARKSMAN"
+element = 2
+role = 5
+description = "Xạ thủ kiên nhẫn, chờ địch lộ sơ hở."
+stats = SubResource("Resource_efaq6")
+max_break = 100
+skills = Array[ExtResource("3_317eh")]([ExtResource("4_cffwf"), ExtResource("5_4gat1")])
+passive = SubResource("Resource_3wpfw")
+crit_chance = 15
+crit_damage = 150
+accuracy = 100

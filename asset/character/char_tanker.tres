@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="UnitBase" load_steps=9 format=3 uid="uid://dsl0p6l212sop"]
+
+[ext_resource type="Script" uid="uid://k04biipawksp" path="res://src/components/passive/passives/PassiveThorns.gd" id="1_cbhud"]
+[ext_resource type="Script" uid="uid://6dpxjquuquuu" path="res://src/base/UnitBase.gd" id="2_k4jp6"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="3_3rmxg"]
+[ext_resource type="Resource" path="res://asset/skill/skill_bash.tres" id="4_1lncj"]
+[ext_resource type="Resource" path="res://asset/skill/skill_slash.tres" id="5_eank7"]
+[ext_resource type="Script" uid="uid://bu1t5kiyps3qf" path="res://src/base/Stats.gd" id="6_pc4ca"]
+
+[sub_resource type="Resource" id="Resource_xrlav"]
+script = ExtResource("1_cbhud")
+percent = 30
+name = "Giáp gai"
+description = "Phản lại 30% sát thương nhận vào."
+
+[sub_resource type="Resource" id="Resource_y86ha"]
+script = ExtResource("6_pc4ca")
+hp = 950
+mp = 30
+attack = 25
+defense = 45
+speed = 30
+
+[resource]
+script = ExtResource("2_k4jp6")
+name = "Thạch Bàn"
+id = "CHAR_TANKER"
+element = 0
+role = 1
+description = "Vệ binh đá, đứng trước đồng đội trong mọi trận."
+stats = SubResource("Resource_y86ha")
+max_break = 100
+skills = Array[ExtResource("3_3rmxg")]([ExtResource("4_1lncj"), ExtResource("5_eank7")])
+passive = SubResource("Resource_xrlav")
+crit_chance = 5
+crit_damage = 150
+accuracy = 100

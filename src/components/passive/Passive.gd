@@ -7,6 +7,9 @@ class_name Passive
 # File .tres được nhiều unit dùng chung nên passive không được lưu trạng thái trên chính nó.
 # UnitModel chỉ gọi hook đúng vai trò của unit, nên không cần tự lọc source/target.
 
+@export var name: String
+@export_multiline var description: String
+
 # Trước khi trừ máu: có thể đổi sát thương bằng damage_model.set_damage()
 func on_before_deal_damage(_unit: UnitModel, _damage_model: DamageModel):
 	pass

@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="UnitBase" load_steps=6 format=3 uid="uid://dqyrr3gcn4eqt"]
 
-[ext_resource type="Script" path="res://src/base/UnitBase.gd" id="1_afnyd"]
-[ext_resource type="Script" path="res://src/base/SkillBase.gd" id="2_tmc3t"]
+[ext_resource type="Script" uid="uid://6dpxjquuquuu" path="res://src/base/UnitBase.gd" id="1_afnyd"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="2_tmc3t"]
 [ext_resource type="Resource" uid="uid://cptyrxefu6b72" path="res://asset/skill_base/SkillBaseA.tres" id="3_fbjng"]
-[ext_resource type="Script" path="res://src/base/Stats.gd" id="3_hu8we"]
+[ext_resource type="Script" uid="uid://bu1t5kiyps3qf" path="res://src/base/Stats.gd" id="3_hu8we"]
 
 [sub_resource type="Resource" id="Resource_gkax5"]
 script = ExtResource("3_hu8we")
@@ -17,7 +17,12 @@ speed = 15
 script = ExtResource("1_afnyd")
 name = "Unnamed Unit B"
 id = "UNIT_B"
-role = 2
 element = 0
+role = 2
+description = ""
 stats = SubResource("Resource_gkax5")
+max_break = 100
 skills = Array[ExtResource("2_tmc3t")]([ExtResource("3_fbjng")])
+crit_chance = 5
+crit_damage = 150
+accuracy = 100

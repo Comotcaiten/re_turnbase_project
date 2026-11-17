@@ -6,6 +6,8 @@ class_name UnitBase
 @export var id: String
 @export var element: Element.Type
 @export var role: Role.Type
+@export var icon: Texture2D # Bỏ trống thì giao diện vẽ ô màu theo hệ
+@export_multiline var description: String
 @export var stats: Stats
 @export var max_break: int = 100
 @export var skills: Array[SkillBase] = []

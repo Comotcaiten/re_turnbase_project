@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="UnitBase" load_steps=11 format=3 uid="uid://bmq6essoc18q4"]
+
+[ext_resource type="Script" uid="uid://bdtq3v38l0xm6" path="res://src/components/passive/passives/PassiveContactStatus.gd" id="1_75f8x"]
+[ext_resource type="Script" uid="uid://bi0ls75fjotjd" path="res://src/components/status/effects/StatusPoison.gd" id="2_2mkr8"]
+[ext_resource type="Script" uid="uid://6dpxjquuquuu" path="res://src/base/UnitBase.gd" id="3_rscei"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="4_kthj8"]
+[ext_resource type="Resource" path="res://asset/skill/skill_fireball.tres" id="5_8usbo"]
+[ext_resource type="Resource" path="res://asset/skill/skill_fire_wave.tres" id="6_oe0yc"]
+[ext_resource type="Script" uid="uid://bu1t5kiyps3qf" path="res://src/base/Stats.gd" id="7_y3k68"]
+
+[sub_resource type="Resource" id="Resource_ukrco"]
+script = ExtResource("2_2mkr8")
+percent = 10
+name = "Độc"
+duration = 3
+max_stacks = 1
+
+[sub_resource type="Resource" id="Resource_3yeqa"]
+script = ExtResource("1_75f8x")
+status = SubResource("Resource_ukrco")
+chance = 30
+name = "Hỏa độc"
+description = "Khi bị đánh, 30% gây Độc lên kẻ tấn công."
+
+[sub_resource type="Resource" id="Resource_x4vux"]
+script = ExtResource("7_y3k68")
+hp = 480
+mp = 80
+attack = 60
+defense = 15
+speed = 55
+
+[resource]
+script = ExtResource("3_rscei")
+name = "Hỏa Linh"
+id = "CHAR_MAGE"
+element = 1
+role = 2
+description = "Pháp sư sinh ra từ lò lửa cổ."
+stats = SubResource("Resource_x4vux")
+max_break = 100
+skills = Array[ExtResource("4_kthj8")]([ExtResource("5_8usbo"), ExtResource("6_oe0yc")])
+passive = SubResource("Resource_3yeqa")
+crit_chance = 5
+crit_damage = 150
+accuracy = 100

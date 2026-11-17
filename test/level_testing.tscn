@@ -1,12 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://ko657xbfar3x"]
+[gd_scene load_steps=15 format=3 uid="uid://ko657xbfar3x"]
 
-[ext_resource type="Script" path="res://src/system/BattleSystem.gd" id="1_ofsmf"]
-[ext_resource type="Script" path="res://src/models/UnitGroupModel.gd" id="2_vndew"]
-[ext_resource type="Script" path="res://src/controllers/TurnController.gd" id="3_g5guy"]
-[ext_resource type="Script" path="res://src/controllers/SkillController.gd" id="4_764ma"]
-[ext_resource type="Script" path="res://src/controllers/UnitGroupController.gd" id="4_yl1gg"]
-[ext_resource type="Script" path="res://src/nodes/UnitNode.gd" id="6_ug2mc"]
+[ext_resource type="Script" uid="uid://nped1jgajrv2" path="res://src/system/BattleSystem.gd" id="1_ofsmf"]
+[ext_resource type="Script" uid="uid://b6qi5vcjbk17c" path="res://src/models/UnitGroupModel.gd" id="2_vndew"]
+[ext_resource type="Script" uid="uid://bk4yjq3aaqocq" path="res://src/controllers/TurnController.gd" id="3_g5guy"]
+[ext_resource type="Script" uid="uid://d37vew55468do" path="res://src/controllers/SkillController.gd" id="4_764ma"]
+[ext_resource type="Script" uid="uid://bgr3vqcdcmrw5" path="res://src/controllers/UnitGroupController.gd" id="4_yl1gg"]
+[ext_resource type="Script" uid="uid://d374t724aj5ga" path="res://src/nodes/UnitNode.gd" id="6_ug2mc"]
 [ext_resource type="Resource" uid="uid://o1an0vkac8ts" path="res://asset/character_base/UnitA.tres" id="7_t2gf5"]
+[ext_resource type="Script" uid="uid://b7w4bb7u08clt" path="res://src/base/ItemBase.gd" id="8_blpgd"]
 [ext_resource type="Resource" uid="uid://dqyrr3gcn4eqt" path="res://asset/character_base/UnitB.tres" id="8_j8ikc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dnusm"]
@@ -26,12 +27,14 @@ script = ExtResource("6_ug2mc")
 base = ExtResource("7_t2gf5")
 level = 10
 is_player = true
+items = Array[ExtResource("8_blpgd")]([])
 
 [sub_resource type="Resource" id="Resource_jwb2r"]
 script = ExtResource("6_ug2mc")
 base = ExtResource("8_j8ikc")
 level = 10
 is_player = true
+items = Array[ExtResource("8_blpgd")]([])
 
 [node name="LevelTesting" type="Node3D" node_paths=PackedStringArray("turn_controller", "skill_controller", "group_controller", "player_group", "enemy_group")]
 script = ExtResource("1_ofsmf")

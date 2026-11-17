@@ -1,0 +1,109 @@
+[gd_scene load_steps=22 format=3 uid="uid://byyrcdleep7p6"]
+
+[ext_resource type="Script" uid="uid://nped1jgajrv2" path="res://src/system/BattleSystem.gd" id="1_battle"]
+[ext_resource type="Script" uid="uid://b6qi5vcjbk17c" path="res://src/models/UnitGroupModel.gd" id="2_group"]
+[ext_resource type="Script" uid="uid://bk4yjq3aaqocq" path="res://src/controllers/TurnController.gd" id="3_turn"]
+[ext_resource type="Script" uid="uid://d37vew55468do" path="res://src/controllers/SkillController.gd" id="4_skill"]
+[ext_resource type="Script" uid="uid://bgr3vqcdcmrw5" path="res://src/controllers/UnitGroupController.gd" id="5_groups"]
+[ext_resource type="Script" uid="uid://d374t724aj5ga" path="res://src/nodes/UnitNode.gd" id="6_unit_node"]
+[ext_resource type="Script" uid="uid://cnamhkwbrxltj" path="res://src/ui/BattleHUD.gd" id="7_hud"]
+[ext_resource type="Resource" uid="uid://dl04mrwrnrq14" path="res://asset/character/char_fighter.tres" id="8_fighter"]
+[ext_resource type="Script" uid="uid://b7w4bb7u08clt" path="res://src/base/ItemBase.gd" id="8_o18kk"]
+[ext_resource type="Resource" uid="uid://bxrfldhkaal7c" path="res://asset/character/char_marksman.tres" id="9_marksman"]
+[ext_resource type="Resource" uid="uid://b4oplt4tkvscf" path="res://asset/enemy/enemy_fire_fiend.tres" id="10_fiend"]
+[ext_resource type="Resource" uid="uid://diydc4q1o17r3" path="res://asset/enemy/enemy_fire_guard.tres" id="11_guard"]
+[ext_resource type="Resource" uid="uid://3liktx83kfqx" path="res://asset/enemy/enemy_viper.tres" id="12_viper"]
+
+[sub_resource type="ProceduralSkyMaterial" id="Sky_material"]
+sky_top_color = Color(0.1, 0.12, 0.2, 1)
+sky_horizon_color = Color(0.16, 0.16, 0.22, 1)
+ground_bottom_color = Color(0.1, 0.1, 0.14, 1)
+ground_horizon_color = Color(0.16, 0.16, 0.22, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("Sky_material")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+tonemap_mode = 2
+
+[sub_resource type="Resource" id="Player_1"]
+script = ExtResource("6_unit_node")
+base = ExtResource("8_fighter")
+level = 10
+is_player = true
+items = Array[ExtResource("8_o18kk")]([])
+
+[sub_resource type="Resource" id="Player_2"]
+script = ExtResource("6_unit_node")
+base = ExtResource("9_marksman")
+level = 10
+is_player = true
+items = Array[ExtResource("8_o18kk")]([])
+
+[sub_resource type="Resource" id="Enemy_1"]
+script = ExtResource("6_unit_node")
+base = ExtResource("10_fiend")
+level = 10
+is_player = false
+items = Array[ExtResource("8_o18kk")]([])
+
+[sub_resource type="Resource" id="Enemy_2"]
+script = ExtResource("6_unit_node")
+base = ExtResource("11_guard")
+level = 10
+is_player = false
+items = Array[ExtResource("8_o18kk")]([])
+
+[sub_resource type="Resource" id="Enemy_3"]
+script = ExtResource("6_unit_node")
+base = ExtResource("12_viper")
+level = 10
+is_player = false
+items = Array[ExtResource("8_o18kk")]([])
+
+[node name="Battle" type="Node3D" node_paths=PackedStringArray("turn_controller", "skill_controller", "group_controller", "player_group", "enemy_group")]
+script = ExtResource("1_battle")
+turn_controller = NodePath("TurnController")
+skill_controller = NodePath("SkillController")
+group_controller = NodePath("GameArea/UnitGroupController")
+player_group = NodePath("GameArea/UnitGroupController/UnitGroupPlayer")
+enemy_group = NodePath("GameArea/UnitGroupController/UnitGroupEnemy")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="TurnController" type="Node" parent="."]
+script = ExtResource("3_turn")
+
+[node name="SkillController" type="Node" parent="."]
+script = ExtResource("4_skill")
+ai_delay = 0.8
+
+[node name="GameArea" type="Node3D" parent="."]
+
+[node name="UnitGroupController" type="Node3D" parent="GameArea"]
+script = ExtResource("5_groups")
+
+[node name="UnitGroupPlayer" type="Node3D" parent="GameArea/UnitGroupController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+script = ExtResource("2_group")
+data_unit_node = Array[ExtResource("6_unit_node")]([SubResource("Player_1"), SubResource("Player_2")])
+
+[node name="UnitGroupEnemy" type="Node3D" parent="GameArea/UnitGroupController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.5)
+script = ExtResource("2_group")
+is_player = false
+data_unit_node = Array[ExtResource("6_unit_node")]([SubResource("Enemy_1"), SubResource("Enemy_2"), SubResource("Enemy_3")])
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 12, 1)
+
+[node name="BattleHUD" type="CanvasLayer" parent="." node_paths=PackedStringArray("battle_system")]
+script = ExtResource("7_hud")
+battle_system = NodePath("..")

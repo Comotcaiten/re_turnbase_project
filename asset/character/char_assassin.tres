@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="UnitBase" load_steps=9 format=3 uid="uid://dylsmyvn3l52v"]
+
+[ext_resource type="Script" uid="uid://cj4shik714ehf" path="res://src/components/passive/passives/PassiveLifesteal.gd" id="1_vr5x3"]
+[ext_resource type="Script" uid="uid://6dpxjquuquuu" path="res://src/base/UnitBase.gd" id="2_hqm5u"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="3_vx2kw"]
+[ext_resource type="Resource" path="res://asset/skill/skill_shadow_cut.tres" id="4_nhkex"]
+[ext_resource type="Resource" path="res://asset/skill/skill_slash.tres" id="5_2sdxg"]
+[ext_resource type="Script" uid="uid://bu1t5kiyps3qf" path="res://src/base/Stats.gd" id="6_w1cfc"]
+
+[sub_resource type="Resource" id="Resource_yo81o"]
+script = ExtResource("1_vr5x3")
+percent = 25
+name = "Huyết ẩm"
+description = "Hồi máu bằng 25% sát thương gây ra."
+
+[sub_resource type="Resource" id="Resource_6em78"]
+script = ExtResource("6_w1cfc")
+hp = 450
+mp = 50
+attack = 65
+defense = 15
+speed = 85
+
+[resource]
+script = ExtResource("2_hqm5u")
+name = "Dạ Ảnh"
+id = "CHAR_ASSASSIN"
+element = 0
+role = 4
+description = "Bóng đêm có tên, ra tay rồi biến mất."
+stats = SubResource("Resource_6em78")
+max_break = 100
+skills = Array[ExtResource("3_vx2kw")]([ExtResource("4_nhkex"), ExtResource("5_2sdxg")])
+passive = SubResource("Resource_yo81o")
+crit_chance = 25
+crit_damage = 150
+accuracy = 100

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=8 format=3 uid="uid://creie5gis7iaw"]
+
+[ext_resource type="Script" uid="uid://cgngt4s0p4gb" path="res://src/components/skill/SkillComponent.gd" id="1_8ltan"]
+[ext_resource type="Script" uid="uid://6pki3vpyoivg" path="res://src/components/skill/SkillCondition.gd" id="2_2ddln"]
+[ext_resource type="Script" uid="uid://w7a5v04kkm0j" path="res://src/components/skill/SkillMechanic.gd" id="3_vu55o"]
+[ext_resource type="Script" uid="uid://cod4fkgoqjjlf" path="res://src/components/skill/mechanics/SkillMechanicDamage.gd" id="4_r5fqo"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="5_q54sg"]
+
+[sub_resource type="Resource" id="Resource_06hoi"]
+script = ExtResource("4_r5fqo")
+power = 2
+type_damage = 0
+true_damage = false
+break_power = 34
+
+[sub_resource type="Resource" id="Resource_x2wcr"]
+script = ExtResource("1_8ltan")
+conditions = Array[ExtResource("2_2ddln")]([])
+mechanics = Array[ExtResource("3_vu55o")]([SubResource("Resource_06hoi")])
+
+[resource]
+script = ExtResource("5_q54sg")
+name = "Mưa nước"
+id = "skill_water_rain"
+element = 2
+description = "Đánh mục tiêu và hai bên cạnh."
+target_type = 1
+target_mode = 2
+components = Array[ExtResource("1_8ltan")]([SubResource("Resource_x2wcr")])

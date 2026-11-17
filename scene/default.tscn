@@ -1,0 +1,213 @@
+[gd_scene load_steps=7 format=3 uid="uid://bnbcqwt7e2gdg"]
+
+[ext_resource type="Script" uid="uid://dhvxsfqyrwvxb" path="res://src/ui/DefaultScene.gd" id="1_default"]
+[ext_resource type="Script" uid="uid://bqmvwuq7usvwu" path="res://src/ui/MainPage.gd" id="2_main"]
+[ext_resource type="Script" uid="uid://cijpt0couhf4r" path="res://src/ui/CharacterPage.gd" id="3_character"]
+[ext_resource type="Script" uid="uid://k6eoaxqkikx7" path="res://src/ui/TeamPage.gd" id="4_team"]
+
+[sub_resource type="StyleBoxEmpty" id="Pages_style"]
+
+[sub_resource type="StyleBoxFlat" id="Start_style"]
+bg_color = Color(0.24, 0.45, 0.85, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="DefaultScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_default")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.22, 0.3, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NavBar" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NavMain" type="Button" parent="Margin/Layout/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+text = "Trang chính"
+
+[node name="NavCharacters" type="Button" parent="Margin/Layout/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+text = "Nhân vật"
+
+[node name="NavTeam" type="Button" parent="Margin/Layout/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+text = "Đội hình"
+
+[node name="Pages" type="PanelContainer" parent="Margin/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("Pages_style")
+
+[node name="MainPage" type="CenterContainer" parent="Margin/Layout/Pages"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("2_main")
+
+[node name="StartButton" type="Button" parent="Margin/Layout/Pages/MainPage"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 96)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/hover = SubResource("Start_style")
+theme_override_styles/pressed = SubResource("Start_style")
+theme_override_styles/normal = SubResource("Start_style")
+text = "Vào đấu"
+
+[node name="CharacterPage" type="HBoxContainer" parent="Margin/Layout/Pages"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 24
+script = ExtResource("3_character")
+
+[node name="CharacterScroll" type="ScrollContainer" parent="Margin/Layout/Pages/CharacterPage"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="CharacterGrid" type="GridContainer" parent="Margin/Layout/Pages/CharacterPage/CharacterScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="DetailPanel" type="VBoxContainer" parent="Margin/Layout/Pages/CharacterPage"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="DetailHeader" type="HBoxContainer" parent="Margin/Layout/Pages/CharacterPage/DetailPanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="DetailIcon" type="CenterContainer" parent="Margin/Layout/Pages/CharacterPage/DetailPanel/DetailHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DetailTitle" type="VBoxContainer" parent="Margin/Layout/Pages/CharacterPage/DetailPanel/DetailHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DetailName" type="Label" parent="Margin/Layout/Pages/CharacterPage/DetailPanel/DetailHeader/DetailTitle"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="DetailInfo" type="Label" parent="Margin/Layout/Pages/CharacterPage/DetailPanel/DetailHeader/DetailTitle"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LevelUpButton" type="Button" parent="Margin/Layout/Pages/CharacterPage/DetailPanel/DetailHeader"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+text = "Lên cấp"
+
+[node name="DetailDescription" type="Label" parent="Margin/Layout/Pages/CharacterPage/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="DetailStats" type="Label" parent="Margin/Layout/Pages/CharacterPage/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DetailSkills" type="Label" parent="Margin/Layout/Pages/CharacterPage/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="ItemLabel" type="Label" parent="Margin/Layout/Pages/CharacterPage/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EquippedRow" type="HBoxContainer" parent="Margin/Layout/Pages/CharacterPage/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ItemGrid" type="GridContainer" parent="Margin/Layout/Pages/CharacterPage/DetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 4
+
+[node name="TeamPage" type="VBoxContainer" parent="Margin/Layout/Pages"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+script = ExtResource("4_team")
+
+[node name="TeamLabel" type="Label" parent="Margin/Layout/Pages/TeamPage"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="TeamSlots" type="HBoxContainer" parent="Margin/Layout/Pages/TeamPage"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="OwnedLabel" type="Label" parent="Margin/Layout/Pages/TeamPage"]
+layout_mode = 2
+text = "Nhân vật sở hữu (bấm để thêm hoặc bỏ khỏi đội)"
+
+[node name="TeamScroll" type="ScrollContainer" parent="Margin/Layout/Pages/TeamPage"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TeamGrid" type="GridContainer" parent="Margin/Layout/Pages/TeamPage/TeamScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 8

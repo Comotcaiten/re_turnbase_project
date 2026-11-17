@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/components/passive/Passive.gd" id="1_0l4vl"]
+[ext_resource type="Script" path="res://src/components/passive/passives/PassiveBreakBonus.gd" id="2_aj58d"]
+[ext_resource type="Script" path="res://src/base/ItemBase.gd" id="3_xl80k"]
+
+[sub_resource type="Resource" id="Resource_owk32"]
+script = ExtResource("2_aj58d")
+percent = 25
+name = "Săn mồi"
+description = "Gây thêm 25% sát thương lên địch bị Break."
+
+[resource]
+script = ExtResource("3_xl80k")
+name = "Đao săn"
+id = "ITEM_HUNTER_BLADE"
+cost = 3
+hp = 0
+mp = 0
+attack = 8
+defense = 0
+speed = 0
+passives = Array[ExtResource("1_0l4vl")]([SubResource("Resource_owk32")])

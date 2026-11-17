@@ -5,9 +5,6 @@ class_name BattleSystem
 
 enum State {START, UNITTURN, AIACTION, SELECTSKILL, END}
 
-const COLLECTION_SCENE := "res://test/collection_screen.tscn"
-const RETURN_DELAY := 2.0
-
 @export var turn_controller: TurnController
 @export var skill_controller: SkillController
 @export var group_controller: UnitGroupController
@@ -91,7 +88,8 @@ func is_battle_over() -> bool:
 func handle_unit_turn():
 	var unit: UnitModel = turn_controller.current_unit
 	if not unit.begin_turn():
-		print("BattleSystem >> ", unit.name, " is broken >> Turn lost")
+		print("BattleSystem >> ", unit.name, " >> Turn lost")
+		BattleEvents.turn_skipped.emit(unit)
 		get_next_turn()
 		return
 
@@ -118,9 +116,4 @@ func handle_select_skill():
 func handle_end():
 	print("Battle ended.")
 	is_game_over = true
-	if PlayerCollection.battle_team.is_empty():
-		return
-	# Trận vào từ bộ sưu tập thì quay lại màn hình đó
-	PlayerCollection.finish_battle()
-	await get_tree().create_timer(RETURN_DELAY).timeout
-	get_tree().change_scene_to_file(COLLECTION_SCENE)
+	BattleEvents.battle_ended.emit(not player_group.get_filter_is_not_fainted().is_empty())

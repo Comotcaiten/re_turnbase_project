@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=8 format=3 uid="uid://ucdo8b7ir7ji"]
+
+[ext_resource type="Script" uid="uid://cgngt4s0p4gb" path="res://src/components/skill/SkillComponent.gd" id="1_13hkr"]
+[ext_resource type="Script" uid="uid://6pki3vpyoivg" path="res://src/components/skill/SkillCondition.gd" id="2_qa8vo"]
+[ext_resource type="Script" uid="uid://w7a5v04kkm0j" path="res://src/components/skill/SkillMechanic.gd" id="3_gk2g7"]
+[ext_resource type="Script" uid="uid://cod4fkgoqjjlf" path="res://src/components/skill/mechanics/SkillMechanicDamage.gd" id="4_gyf03"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="5_y7mrf"]
+
+[sub_resource type="Resource" id="Resource_vcbmx"]
+script = ExtResource("4_gyf03")
+power = 14
+type_damage = 0
+true_damage = false
+break_power = 50
+
+[sub_resource type="Resource" id="Resource_yikfy"]
+script = ExtResource("1_13hkr")
+conditions = Array[ExtResource("2_qa8vo")]([])
+mechanics = Array[ExtResource("3_gk2g7")]([SubResource("Resource_vcbmx")])
+
+[resource]
+script = ExtResource("5_y7mrf")
+name = "Cầu lửa"
+id = "skill_fireball"
+element = 1
+description = "Quả cầu lửa mạnh vào một địch."
+target_type = 1
+target_mode = 1
+components = Array[ExtResource("1_13hkr")]([SubResource("Resource_yikfy")])

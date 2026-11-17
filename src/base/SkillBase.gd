@@ -5,6 +5,7 @@ class_name SkillBase
 @export var name: String
 @export var id: String
 @export var element: Element.Type
+@export_multiline var description: String
 
 @export_group("Target")
 enum TargetType {SELF, ENEMY, ALLY, ANY}

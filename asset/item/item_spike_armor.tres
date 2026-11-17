@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/components/passive/Passive.gd" id="1_ylvd3"]
+[ext_resource type="Script" path="res://src/components/passive/passives/PassiveThorns.gd" id="2_jkxkx"]
+[ext_resource type="Script" path="res://src/base/ItemBase.gd" id="3_fp6ke"]
+
+[sub_resource type="Resource" id="Resource_8bhlg"]
+script = ExtResource("2_jkxkx")
+percent = 25
+name = "Phản đòn"
+description = "Phản lại 25% sát thương nhận vào."
+
+[resource]
+script = ExtResource("3_fp6ke")
+name = "Giáp nhọn"
+id = "ITEM_SPIKE_ARMOR"
+cost = 3
+hp = 40
+mp = 0
+attack = 0
+defense = 4
+speed = 0
+passives = Array[ExtResource("1_ylvd3")]([SubResource("Resource_8bhlg")])

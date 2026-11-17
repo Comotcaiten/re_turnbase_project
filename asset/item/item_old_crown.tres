@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/components/passive/Passive.gd" id="1_jqqhh"]
+[ext_resource type="Script" path="res://src/base/ItemBase.gd" id="2_afuxh"]
+
+[resource]
+script = ExtResource("2_afuxh")
+name = "Vương miện cổ"
+id = "ITEM_OLD_CROWN"
+cost = 4
+hp = 40
+mp = 0
+attack = 10
+defense = 0
+speed = 3
+passives = Array[ExtResource("1_jqqhh")]([])

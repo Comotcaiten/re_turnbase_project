@@ -54,6 +54,11 @@ func initialized():
     return false
   unit_model = UnitModel.new(base, level)
   unit_model.is_player = is_player
+
+  var material := StandardMaterial3D.new()
+  material.albedo_color = Element.get_color(base.element)
+  node_mesh_intstance_3d.material_override = material
+
   for item in items:
     unit_model.equip_item(item)
   print("UnitNode3D >> ", name, " >> Initialized: ", unit_model)
@@ -70,10 +75,20 @@ func update():
   set_bar(break_bar, float(unit_model.break_gauge) / maxi(1, unit_model.max_break))
 
   var text: String = "%s\n%s Lv.%d" % [unit_model.name, Role.get_display_name(unit_model.base.role), unit_model.level]
+  if not unit_model.items.is_empty():
+    text += "\n%d item" % unit_model.items.size()
   for status in unit_model.statuses:
     text += "\n%s (%d)" % [status.effect.name, status.turns_left]
   label.text = text
   return
+
+func set_highlight(is_active: bool, is_targeted: bool):
+  if is_targeted:
+    label.modulate = Color.YELLOW
+  elif is_active:
+    label.modulate = Color.AQUA
+  else:
+    label.modulate = Color.WHITE
 
 func create_bar(color: Color, z: float, y: float) -> MeshInstance3D:
   var material := StandardMaterial3D.new()

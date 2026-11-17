@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=10 format=3 uid="uid://bu81l33slqx1d"]
+
+[ext_resource type="Script" uid="uid://cgngt4s0p4gb" path="res://src/components/skill/SkillComponent.gd" id="1_gfh4g"]
+[ext_resource type="Script" uid="uid://6pki3vpyoivg" path="res://src/components/skill/SkillCondition.gd" id="2_70qis"]
+[ext_resource type="Script" uid="uid://w7a5v04kkm0j" path="res://src/components/skill/SkillMechanic.gd" id="3_m1ebw"]
+[ext_resource type="Script" uid="uid://c6r8x03l7iag3" path="res://src/components/skill/mechanics/SkillMechanicApplyStatus.gd" id="4_w0het"]
+[ext_resource type="Script" uid="uid://bqm24p4jgaj0i" path="res://src/components/status/effects/StatusClarity.gd" id="5_2dehm"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="6_tsvr0"]
+
+[sub_resource type="Resource" id="Resource_lsr85"]
+script = ExtResource("5_2dehm")
+crit_bonus = 30
+name = "Minh mẫn"
+duration = 3
+max_stacks = 1
+
+[sub_resource type="Resource" id="Resource_v2bx3"]
+script = ExtResource("4_w0het")
+status = SubResource("Resource_lsr85")
+chance = 100
+apply_to_self = false
+
+[sub_resource type="Resource" id="Resource_37kfu"]
+script = ExtResource("1_gfh4g")
+conditions = Array[ExtResource("2_70qis")]([])
+mechanics = Array[ExtResource("3_m1ebw")]([SubResource("Resource_v2bx3")])
+
+[resource]
+script = ExtResource("6_tsvr0")
+name = "Tập trung"
+id = "skill_focus"
+element = 0
+description = "Bản thân nhận Minh mẫn, tăng tỉ lệ chí mạng."
+target_type = 0
+target_mode = 1
+components = Array[ExtResource("1_gfh4g")]([SubResource("Resource_37kfu")])

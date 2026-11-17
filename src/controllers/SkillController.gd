@@ -2,7 +2,13 @@ extends Node
 
 class_name SkillController
 
+# Trạng thái, skill đang chọn hoặc mục tiêu đang chọn thay đổi
+signal selection_changed
+
 enum State {START, SELECT, AISELECT, EXECUTE, END}
+
+@export var ai_delay: float = 0.0 # Số giây AI "suy nghĩ" trước khi hành động
+var ai_wait: float = 0.0
 
 var state: State = State.START
 
@@ -29,6 +35,10 @@ func play(unit: UnitModel):
 			# print("Skill controller >> Select skill!")
 			handle_select(unit)
 		State.AISELECT:
+			ai_wait += get_process_delta_time()
+			if ai_wait < ai_delay:
+				return
+			ai_wait = 0.0
 			print("Skill controller >> AI select skill!")
 			handle_ai_select(unit)
 		State.EXECUTE:
@@ -41,6 +51,7 @@ func play(unit: UnitModel):
 
 func change_state(_state: State):
 	state = _state
+	selection_changed.emit()
 
 func handle_start(unit: UnitModel):
 	if unit.skills.is_empty():
@@ -120,17 +131,25 @@ func select_skill(index: int, unit: UnitModel):
 	set_current_target(0)
 	set_group_targets_select()
 	print("Skill controller >> Select skill >> ", current_skill.name, " >> Group target available: ", group_targets_available)
+	selection_changed.emit()
 	return
+
+func select_target(index: int):
+	set_current_target(index)
+	set_group_targets_select()
+	selection_changed.emit()
+
+func confirm():
+	if state == State.SELECT and current_skill != null and not group_targets_select.is_empty():
+		change_state(State.EXECUTE)
 
 func perform_handle_select_target():
 	if Input.is_action_just_pressed("ui_left"):
-		set_current_target(current_target + 1)
-		set_group_targets_select()
+		select_target(current_target + 1)
 		print("Skill controller >> Select target >> Left >> ", current_target, " >> ", group_targets_select)
 		return
 	if Input.is_action_just_pressed("ui_right"):
-		set_current_target(current_target - 1)
-		set_group_targets_select()
+		select_target(current_target - 1)
 		print("Skill controller >> Select target >> Right >> ", current_target, " >> ", group_targets_select)
 		return
 	

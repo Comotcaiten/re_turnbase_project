@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="SkillBase" load_steps=12 format=3 uid="uid://clxl2l3kook6n"]
+
+[ext_resource type="Script" uid="uid://cgngt4s0p4gb" path="res://src/components/skill/SkillComponent.gd" id="1_5js4a"]
+[ext_resource type="Script" uid="uid://6pki3vpyoivg" path="res://src/components/skill/SkillCondition.gd" id="2_5hu47"]
+[ext_resource type="Script" uid="uid://w7a5v04kkm0j" path="res://src/components/skill/SkillMechanic.gd" id="3_3sxcm"]
+[ext_resource type="Script" uid="uid://cod4fkgoqjjlf" path="res://src/components/skill/mechanics/SkillMechanicDamage.gd" id="4_8hl3a"]
+[ext_resource type="Script" uid="uid://c6r8x03l7iag3" path="res://src/components/skill/mechanics/SkillMechanicApplyStatus.gd" id="5_0g8hw"]
+[ext_resource type="Script" uid="uid://cw00nvnoy57uc" path="res://src/components/status/effects/StatusStun.gd" id="6_ewees"]
+[ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="7_4vs7r"]
+
+[sub_resource type="Resource" id="Resource_gk1m0"]
+script = ExtResource("4_8hl3a")
+power = 2
+type_damage = 0
+true_damage = false
+break_power = 30
+
+[sub_resource type="Resource" id="Resource_hg2vm"]
+script = ExtResource("6_ewees")
+lose_turn = true
+accuracy_penalty = 0
+crit_penalty = 0
+name = "Choáng"
+duration = 1
+max_stacks = 1
+
+[sub_resource type="Resource" id="Resource_o8y1k"]
+script = ExtResource("5_0g8hw")
+status = SubResource("Resource_hg2vm")
+chance = 40
+apply_to_self = false
+
+[sub_resource type="Resource" id="Resource_8qv7v"]
+script = ExtResource("1_5js4a")
+conditions = Array[ExtResource("2_5hu47")]([])
+mechanics = Array[ExtResource("3_3sxcm")]([SubResource("Resource_gk1m0"), SubResource("Resource_o8y1k")])
+
+[resource]
+script = ExtResource("7_4vs7r")
+name = "Đập choáng"
+id = "skill_bash"
+element = 0
+description = "Đánh một địch, 40% gây Choáng."
+target_type = 1
+target_mode = 1
+components = Array[ExtResource("1_5js4a")]([SubResource("Resource_8qv7v")])
