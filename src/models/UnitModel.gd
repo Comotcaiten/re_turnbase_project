@@ -129,6 +129,8 @@ func heal(amount: int) -> int:
     var healed: int = mini(amount, max_health - health)
     health += healed
     changed.emit()
+    if healed > 0:
+        BattleEvents.healed.emit(self, healed)
     return healed
 
 func get_crit_chance() -> int:

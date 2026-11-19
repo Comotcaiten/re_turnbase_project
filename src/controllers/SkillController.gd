@@ -21,6 +21,9 @@ var group_targets_select: Array[UnitModel] = []
 
 var battle_system: BattleSystem
 
+# Bật thì nhân vật người chơi cũng để AI chọn skill/mục tiêu
+var auto_battle: bool = false
+
 func initialized(_battle_system: BattleSystem):
 		battle_system = _battle_system
 		pass
@@ -65,7 +68,7 @@ func handle_start(unit: UnitModel):
 	set_current_target(0)
 	set_group_targets_select()
 	
-	if unit.is_player:
+	if unit.is_player and not auto_battle:
 		print("Selecting skill...")
 		change_state(State.SELECT)
 		return
@@ -138,6 +141,11 @@ func select_target(index: int):
 	set_current_target(index)
 	set_group_targets_select()
 	selection_changed.emit()
+
+func set_auto_battle(value: bool):
+	auto_battle = value
+	if auto_battle and state == State.SELECT:
+		change_state(State.AISELECT)
 
 func confirm():
 	if state == State.SELECT and current_skill != null and not group_targets_select.is_empty():

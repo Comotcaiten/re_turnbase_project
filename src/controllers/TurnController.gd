@@ -45,3 +45,32 @@ func sort_turn_queue():
 			return a.speed > b.speed
 		return order.find(a) < order.find(b)
 	)
+
+
+# Dự đoán count lượt kế tiếp (bắt đầu từ unit hiện tại) cho Turn Order HUD.
+# Mô phỏng y hệt get_next_turn(): bỏ unit đã gục, hết vòng thì xếp lại theo speed.
+func get_preview(count: int) -> Array[UnitModel]:
+	var preview: Array[UnitModel] = []
+	if turn_queue.is_empty():
+		return preview
+	var queue: Array[UnitModel] = turn_queue.duplicate()
+	var index: int = current_index
+	var alive: int = queue.filter(func(x): return not x.is_fainted).size()
+	if alive == 0:
+		return preview
+	var order: Array[UnitModel] = battle_system.group_controller.get_all()
+	var guard: int = count * (queue.size() + 1)
+	while preview.size() < count and guard > 0:
+		guard -= 1
+		var unit: UnitModel = queue[index]
+		if not unit.is_fainted:
+			preview.append(unit)
+		index += 1
+		if index >= queue.size():
+			index = 0
+			queue.sort_custom(func(a, b):
+				if a.speed != b.speed:
+					return a.speed > b.speed
+				return order.find(a) < order.find(b)
+			)
+	return preview
