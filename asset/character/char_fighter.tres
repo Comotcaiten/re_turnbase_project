@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://61g5csyxq8ev" path="res://src/components/passive/passives/PassiveLowHpBoost.gd" id="1_5i0ky"]
 [ext_resource type="Script" uid="uid://6dpxjquuquuu" path="res://src/base/UnitBase.gd" id="2_q7ghj"]
 [ext_resource type="Script" uid="uid://csqwg1enkli2j" path="res://src/base/SkillBase.gd" id="3_1av3m"]
-[ext_resource type="Resource" path="res://asset/skill/skill_slash.tres" id="4_5i14x"]
-[ext_resource type="Resource" path="res://asset/skill/skill_focus.tres" id="5_giiyu"]
+[ext_resource type="Resource" uid="uid://ch17vnywhrclb" path="res://asset/skill/skill_slash.tres" id="4_5i14x"]
+[ext_resource type="Resource" uid="uid://bu81l33slqx1d" path="res://asset/skill/skill_focus.tres" id="5_giiyu"]
 [ext_resource type="Script" uid="uid://bu1t5kiyps3qf" path="res://src/base/Stats.gd" id="6_8c0vt"]
 
 [sub_resource type="Resource" id="Resource_4x8pi"]
